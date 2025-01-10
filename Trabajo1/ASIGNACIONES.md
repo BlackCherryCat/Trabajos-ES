@@ -1,3 +1,5 @@
+**Aquellas partes las cuales desarrollemos varias personas deberá ser indicada al principio del documento de quien es cada una, para luego así ponerlo en común y quedarnos con una version definitiva**
+
 **Explicación Teórica**
 ```
 Dani: 
