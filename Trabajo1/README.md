@@ -18,7 +18,7 @@ Preparar una exposición en la que se explique::
 
 ○ Diferencias entre errores y excepciones.
 
-### 2. ¿Cómo manejar errores?
+2. ¿Cómo manejar errores?
 
 ○ Uso de funciones como set_error_handler y trigger_error.
 
