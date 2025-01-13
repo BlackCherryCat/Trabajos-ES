@@ -5,17 +5,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $res = 0;
     if (is_numeric($num1) || is_numeric($num2)) {
         if ($_POST["op"] == "+") {
-            $res = (float)$_POST["num1"] + (float)$_POST["num2"];
+            $res = (float)$num1 + (float)$num2;
         }
         if ($_POST["op"] == "-") {
-            $res = (float)$_POST["num1"] - (float)$_POST["num2"];
+            $res = (float)$num1 - (float)$num2;
         }
         if ($_POST["op"] == "*") {
-            $res = (float)$_POST["num1"] * (float)$_POST["num2"];
+            $res = (float)$num1 * (float)$num2;
         }
         if ($_POST["op"] == "/") {
             try {
-                $res = (float)$_POST["num1"] / (float)$_POST["num2"];
+                $res = (float)$num1 / (float)$num2;
             } catch (Error $e) {
                 $res = "No se puede dividir entre 0";
             }
