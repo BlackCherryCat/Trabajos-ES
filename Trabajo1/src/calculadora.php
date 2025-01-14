@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         =
         <input type="text" value="<?php echo $res; ?>" size="30"> <br> <br>
         <input type="submit" value="Calcular">
+        <input type="reset" value="Borrar">
     </form>
 </body>
 
