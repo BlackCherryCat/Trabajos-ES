@@ -46,8 +46,8 @@
                 echo "<p class='mensaje'>$mensaje</p>";
             }
 
-            //Es recomendable reiniciar la función a los valores por defecto para que no se aplique a todos los errores 
-            set_error_handler();
+            //Es recomendable reiniciar la función a los valores por defecto para que no se aplique a todos los errores
+            set_error_handler("");
         }
     ?>
 </body>
