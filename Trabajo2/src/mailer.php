@@ -35,4 +35,39 @@
 </body>
 </html>
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\SMTP;
+    use PHPMailer\PHPMailer\Exception;
+    require_once "vendor/autoload.php";
+    // Activar o desactivar excepciones mediante variable
+    $debug = true;
+    try {
+        // Crear instancia de la clase PHPMailer
+        $mail = new PHPMailer($debug);
+        if ($debug) {
+            // Genera un registro detallado
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+        }
+        // Autentificación con SMTP
+        $mail->isSMTP();
+        $mail->SMTPAuth = true;
+        // Login
+        $mail->Host = "smtp.domain.es";
+        $mail->Port = 587;
+        $mail->Username = "nombre.apellido@domain.es";
+        $mail->Password = "ejemplocontraseña1234";
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->setFrom('info@example.com', 'name');
+        $mail->addAddress('info@example.com', 'name');
+        $mail->addAttachment("/home/user/Escritorio/imagendeejemplo.png", "imagendeejemplo.png");
+        $mail->CharSet = 'UTF-8';
+        $mail->Encoding = 'base64';
+        $mail->isHTML(true);
+        $mail->Subject = 'Asunto de tu correo';
+        $mail->Body = 'El contenido de tu correo en HTML. Los elementos en <b>negrita</b> también están permitidos.';
+        $mail->AltBody = 'Texto como elemento de texto simple';
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: ".$e->getMessage();
+    }
 ?>
