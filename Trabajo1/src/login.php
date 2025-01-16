@@ -12,28 +12,44 @@
 </html>
 
 <?php
+
+    session_start();
+
     if(isset($_POST["user"])){
         function wrongLogin($errno, $errstr, $errfile, $errline) {
             echo "Error personalizado: [$errno] $errstr<br>";
             echo "Error en la linea $errline en el archivo $errfile<br>";
         }
-
-        set_error_handler("wrongLogin");
         
         $usuario = $_POST["user"];
         $contrasena = $_POST["pass"];
 
-        $lineas = file("./ficheros/usuarios.txt", FILE_IGNORE_NEW_LINES);
+        try {
+            
+            if(file_exists("./ficheros/usuarios.txt")) {
+                $lineas = file("./ficheros/usuarios.txt", FILE_IGNORE_NEW_LINES);
+            } else {
+                throw new Exception ("El fichero no existe");
+            }
+        } catch(Exception $e) {
+            echo "Error: " . $e->getMessage();
+            exit();
+        }
+        
+        set_error_handler("wrongLogin");
 
         foreach ($lineas as $linea){
             list($user,$pass) = explode(":",$linea);
             if ($usuario == $user && $contrasena == $pass) {
-
-            } else {
-                trigger_error("Los datos introducidos nos son correctos");
-            }
-
+                $_SESSION["user"] = $user;
+                $_SESSION["pass"] = $pass;
+                echo "Login correcto";
+                //redireccionar a menu
+                exit();
+            } 
         }
+
+        trigger_error("Los datos introducidos nos son correctos");
     }
 
 
