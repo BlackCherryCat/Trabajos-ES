@@ -20,6 +20,8 @@
             <input type="text" name="num2" id="num2">
             <input type="submit" value="Calcular">
         </form>
+        <br>
+        <a href="menu.php">Volver</a>
 
         <?php
         $num1;
