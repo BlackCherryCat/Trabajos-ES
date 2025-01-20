@@ -29,58 +29,47 @@
                     </div>
                 </form>
             </div>
+
+<?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    
+    require '../PHPMailer/src/Exception.php';
+    require '../PHPMailer/src/PHPMailer.php';
+    require '../PHPMailer/src/SMTP.php';
+    
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'trabajoes786@gmail.com';
+        $mail->Password = 'ykic ohip fxlf epsf';  // Usar contraseña de aplicación si es necesario
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  // Usar SSL
+        $mail->Port = 465;  // Puerto para SSL
+    
+        $mail->setFrom('trabajoes786@gmail.com', 'Trabajo');
+        $mail->addAddress('trabajoes786@gmail.com', 'Cris');
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Asunto de tu correo';
+        $mail->Body    = 'El contenido de tu correo en HTML. Los elementos en <b>negrita</b> también están permitidos.';
+    
+        $mail->send();
+        echo 'Correo enviado correctamente';
+        
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+    }
+    
+    
+?>
+
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<?php
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
-
-    require '../PHPMailer/src/Exception.php';
-    /*Clase PHPMailer*/
-    require '../PHPMailer/src/PHPMailer.php';
-    /*Clase SMTP necesaria para la conexión con un servidor SMTP*/
-    require '../PHPMailer/src/SMTP.php';
-
-    // Activar o desactivar excepciones mediante variable
-    $debug = true;
-    try {
-        // Crear instancia de la clase PHPMailer
-        $mail = new PHPMailer($debug);
-        if ($debug) {
-            // Genera un registro detallado
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-        }
-
-        // Autentificación con SMTP
-        $mail->isSMTP();
-        $mail->SMTPAuth = true;
-
-        // Login
-        $mail->Host = "smtp.gmail.com";
-        $mail->Port = 465;
-        $mail->Username = "trabajoes786@gmail.com";
-        //contraseña del correo -- Jobs2-ES
-        $mail->Password = "kufd rmzo cjsd jgt";
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            )
-        );
-        $mail->SMTPDebug = 2;
-        $mail->setFrom('trabajoes786@gmail.com', 'name');
-        $mail->addAddress('cris.abril.maleny@gmail.com', 'name');
-        $mail->CharSet = 'UTF-8';
-        $mail->isHTML(true);
-        $mail->Subject = 'Asunto de tu correo';
-        $mail->Body = 'El contenido de tu correo en HTML. Los elementos en <b>negrita</b> también están permitidos.';
-        $mail->send();
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: ".$e->getMessage();
-    }
-?>
