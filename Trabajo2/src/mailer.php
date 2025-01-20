@@ -13,8 +13,8 @@
                 <h1 class="text-center mb-4">Formulario de Contacto</h1>
                 <form action="mailer.php" method="POST">
                     <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Tu correo electrónico" required>
+                        <label for="email" class="form-label">Destinatario</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="El correo electrónico de tu destinatario" required>
                     </div>
                     <div class="mb-3">
                         <label for="subject" class="form-label">Asunto</label>
