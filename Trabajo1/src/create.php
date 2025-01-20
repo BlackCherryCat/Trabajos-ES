@@ -29,7 +29,7 @@
         
         $registro = $user . ":" . $pass . PHP_EOL; // PHP_EOL --> salto de linea
         
-        file_put_contents("./ficheros/usuarios.txt",$registro,FILE_APPEND);
+        file_put_contents("./usuarios.txt",$registro,FILE_APPEND);
 
         echo "Usuario creado correctamente";
     }
