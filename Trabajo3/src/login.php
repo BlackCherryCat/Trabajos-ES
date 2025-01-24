@@ -19,6 +19,12 @@
 
 <?php
 
+    require './clases/AdminClass.php';
+
+
+    $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
+    $admin -> consultar("root", "", 1);
+
     session_start();
 
     if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["user"]) && isset($_POST["pass"])){
