@@ -38,10 +38,6 @@ abstract class Usuario {
             throw new Exception("Propiedad " . $name . " no existe o no es accesible.");
         }
     }
-
-    // Método abstracto que deben implementar las clases hijas
-    abstract public function mostrarInformacion();
-
 }
 
 ?>
