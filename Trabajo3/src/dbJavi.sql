@@ -3,14 +3,14 @@ create table usuario(
     nombre varchar(30) NOT NULL,
     email varchar(100) NOT NULL,
     pass varchar(18) NOT NULL,
-    isAdmin varchar(2) NOT NULL,
+    isAdmin BOOLEAN NOT NULL,
     primary key (idUsuario)
 );
 
 create table producto(
     idProducto int NOT NULL AUTO_INCREMENT,
     nombre varchar(50) NOT NULL,
-    precio decimal(5,2),
+    precio decimal(6,2),
     stock int NOT NULL,
     descripcion varchar(200) NOT NULL,
     primary key (idProducto)
@@ -26,16 +26,16 @@ create table compra(
 
 /*Datos de usuarios*/
 INSERT INTO usuario (nombre, email, pass, isAdmin) VALUES
-('Javier', 'javier@example.com', 'pass1234', 'true'),
-('Álvaro', 'alvaro@example.com', 'pass1234', 'true'),
-('Cristina', 'cristina@example.com', 'pass1234', 'true'),
-('Jorge', 'jorge@example.com', 'pass1234', 'true'),
-('Dani', 'dani@example.com', 'pass1234', 'true'),
-('Laura', 'laura@example.com', 'pass1234', 'false'),
-('Pedro', 'pedro@example.com', 'pass1234', 'false'),
-('Sofía', 'sofia@example.com', 'pass1234', 'false'),
-('Luis', 'luis@example.com', 'pass1234', 'false'),
-('María', 'maria@example.com', 'pass1234', 'false');
+('Javier', 'javier@example.com', 'pass1234', 1),
+('Álvaro', 'alvaro@example.com', 'pass1234', 1),
+('Cristina', 'cristina@example.com', 'pass1234', 1),
+('Jorge', 'jorge@example.com', 'pass1234', 1),
+('Dani', 'dani@example.com', 'pass1234', 1),
+('Laura', 'laura@example.com', 'pass1234', 0),
+('Pedro', 'pedro@example.com', 'pass1234', 0),
+('Sofía', 'sofia@example.com', 'pass1234', 0),
+('Luis', 'luis@example.com', 'pass1234', 0),
+('María', 'maria@example.com', 'pass1234', 0);
 /*Datos de productos*/
 INSERT INTO producto (nombre, precio, stock, descripcion) VALUES
 ('Laptop Gamer XYZ', 1200.00, 15, 'Laptop de alto rendimiento para juegos con tarjeta gráfica dedicada.'),
