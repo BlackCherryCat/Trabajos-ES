@@ -12,7 +12,7 @@
         <label for="pass">Contraseña: </label><input type="password" name="pass" require /><br><br>
         <input type="submit" value="Enviar" />
 
-        <p> Si no tienes un usuario <a href="create.php">haz click aquí</a></p>
+        <p> Si no tienes un usuario <a href="signup.php">haz click aquí</a></p>
     </form>
 </body>
 </html>
