@@ -8,7 +8,7 @@
     class Cliente extends Usuario {
         private $compras;
         private $carrito;
-        private MetodoDePago $metodoPago;
+        protected MetodoDePago $metodoPago;
 
         public function _construct(MetodoDePago $metodoDePago) {
             $this->compras = [];
@@ -39,5 +39,5 @@
         }
     }
 
-
+    
 ?>
