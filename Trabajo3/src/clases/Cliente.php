@@ -13,7 +13,7 @@
         public function _construct(MetodoDePago $metodoDePago) {
             $this->compras = [];
             $this->carrito = [];
-            $this->metodoDePago = $metodoDePago;
+            $this->metodoPago = $metodoDePago;
         }
 
         public function getCompras() {
@@ -25,7 +25,7 @@
         }
 
         public function getMetodoPago() {
-            return $this->metodoDePago;
+            return $this->metodoPago;
         }
 
         public function agregarCarrito(Producto $producto) {
@@ -33,7 +33,7 @@
         }
 
         public function cambiarMetodoDePago(MetodoDePago $nuevoMetodo) {
-            $this->metodoDePago = $nuevoMetodo;
+            $this->metodoPago = $nuevoMetodo;
         }
 
         public function realizarPedido() {
