@@ -2,10 +2,10 @@
 
 class Producto {
 
-    private string $nombre;
-    private string $descripcion;
-    private float $precio;
-    private int $stock;
+    private $nombre;
+    private $descripcion;
+    private $precio;
+    private $stock;
 
     public function __construct ($nombre, $descripcion, $precio, $stock) {
         $this->$nombre = $nombre;
