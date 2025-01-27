@@ -1,3 +1,5 @@
+use Trabajo3;
+
 create table usuario(
     idUsuario int NOT NULL AUTO_INCREMENT, 
     nombre varchar(30) NOT NULL,
@@ -18,7 +20,7 @@ create table producto(
 
 create table compra(
     idCompra int AUTO_INCREMENT NOT NULL,
-    idUsuario int NOT NULL, 
+    idUsuario int NOT NULL,
     precioTotal int NOT NULL,
     primary key(idCompra),
     foreign key(idUsuario) references usuario(idUsuario)

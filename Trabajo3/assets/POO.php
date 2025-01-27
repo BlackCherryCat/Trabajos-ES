@@ -24,9 +24,9 @@ class Empleado
         }
     }
     public function mostrarDetalles(){
-       echo "Su nombre: " . $this->nombre . ", ";
-       echo "Su edad: " . $this->edad . ", ";
-       echo "Su salario: " . $this->salario;
+        echo "Su nombre: " . $this->nombre . ", ";
+        echo "Su edad: " . $this->edad . ", ";
+        echo "Su salario: " . $this->salario;
     }
 }
 $emp = new Empleado("Javier", 24, 1204.4);

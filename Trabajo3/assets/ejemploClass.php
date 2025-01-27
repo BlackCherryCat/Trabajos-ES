@@ -29,7 +29,9 @@
         }
         //Ejemplo instanciación Objeto
         //Con el constructor por defecto, sin parámetros
-        $miCoche = new Coche();
+
+        //$miCoche = new Coche();
+        
         //Ejemplo de instanciación haciendo uso de un constructor
         //Al que se le pasan los attributos por parámetro
         $miCoche2 = new Coche("Seat", "Ibiza", "00000FFF");
