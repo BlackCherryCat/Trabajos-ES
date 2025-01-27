@@ -16,17 +16,20 @@
             $this->metodoDePago = $metodoDePago;
         }
 
-        public function getCompras() {
-            return $this->compras;
+        public function __get(string $name) {
+            if (property_exists($this, $name)) {
+                return $this->$name;
+            }
+            throw new Exception("Propiedad '$name' no encontrada.");
         }
 
-        public function getCarrito() {
-            return $this->carrito;
+        public function __set(string $name, $value) {
+        if ($name === 'metodoPago' && $value instanceof MetodoDePago) {
+            $this->$name = $value;
+        } else {
+            throw new Exception("No se puede asignar el valor a la propiedad '$name'.");
         }
-
-        public function getMetodoPago() {
-            return $this->metodoDePago;
-        }
+    }
 
         public function agregarCarrito(Producto $producto) {
             $this->carrito[] = $producto;
