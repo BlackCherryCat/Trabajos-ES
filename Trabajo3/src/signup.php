@@ -8,11 +8,11 @@
 <body>
     <h1>Registrarse</h1>
     <form action="signup.php" method="POST">
-        <label for="user">Usuario: </label><input type="text" name="user" require /><br><br>
+        <label for="user">Email: </label><input type="text" name="user" require /><br><br>
         <label for="pass">Contraseña: </label><input type="password" name="pass" require /><br><br>
         <select name="tipoUsuario" id="tipoUsuario" required>
-            <option value="empleado">Empleado</option>
-            <option value="administrador">Administrador</option>
+            <option value="0">Empleado</option>
+            <option value="1">Administrador</option>
         </select>
         <input type="submit" value="Enviar" />
 
@@ -20,3 +20,7 @@
     </form>
 </body>
 </html>
+
+<?php
+
+?>

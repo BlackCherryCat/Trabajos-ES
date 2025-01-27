@@ -24,7 +24,7 @@
             }
         
 
-           public function __set($propiedad, $valor) {
+            public function __set($propiedad, $valor) {
         if ($propiedad == "precio" && $valor <= 0) {
             echo "El precio debe ser mayor a 0.<br>";
         } else {
