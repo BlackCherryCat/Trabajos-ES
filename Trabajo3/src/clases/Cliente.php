@@ -5,7 +5,7 @@
         case CHEQUE = 'cheque';
     }
     
-    class Cliente {
+    class Cliente extends Usuario {
         private $compras;
         private $carrito;
         private MetodoDePago $metodoPago;
@@ -13,30 +13,15 @@
         public function _construct(MetodoDePago $metodoDePago) {
             $this->compras = [];
             $this->carrito = [];
-            $this->metodoDePago = $metodoDePago;
+            $this->metodoPago = $metodoDePago;
         }
-
-        public function __get(string $name) {
-            if (property_exists($this, $name)) {
-                return $this->$name;
-            }
-            throw new Exception("Propiedad '$name' no encontrada.");
-        }
-
-        public function __set(string $name, $value) {
-        if ($name === 'metodoPago' && $value instanceof MetodoDePago) {
-            $this->$name = $value;
-        } else {
-            throw new Exception("No se puede asignar el valor a la propiedad '$name'.");
-        }
-    }
 
         public function agregarCarrito(Producto $producto) {
             $this->carrito[] = $producto;
         }
 
         public function cambiarMetodoDePago(MetodoDePago $nuevoMetodo) {
-            $this->metodoDePago = $nuevoMetodo;
+            $this->metodoPago = $nuevoMetodo;
         }
 
         public function realizarPedido() {
