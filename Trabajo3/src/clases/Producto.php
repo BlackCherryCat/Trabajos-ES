@@ -13,6 +13,7 @@ class Producto {
         $this->$precio = $precio;
         $this->$stock = $stock;
     }
+
     public function __get($name) {
         if (property_exists($this, $name)) {
             return $this->$name;
