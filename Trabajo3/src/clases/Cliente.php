@@ -13,7 +13,8 @@ require_once 'Usuarios.php';
         private $carrito;
         protected MetodoDePago $metodoPago;
 
-        public function _construct(MetodoDePago $metodoDePago) {
+        public function _construct($idUsuario, $email, $pass, $nombre, MetodoDePago $metodoDePago) {
+            parent::__construct($idUsuario, $email, $pass, $nombre);
             $this->compras = [];
             $this->carrito = [];
             $this->metodoPago = $metodoDePago;
