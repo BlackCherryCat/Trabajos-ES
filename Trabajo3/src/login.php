@@ -20,6 +20,7 @@
 <?php
 
     require_once './clases/AdminClass.php';
+    require_once './clases/Cliente.php';
     session_start();
     /*
     $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
@@ -41,7 +42,7 @@
         $query = "Select * from usuario where email = '$email' and pass = '$passU'";
         //Consultamos en la base de datos
         $resultado = mysqli_query($conexion, $query);
-
+        //Si obtenemos un resultado, login correcto
         if(mysqli_num_rows($resultado) == 1){
             //Sacamos el usuario logeado
             $logIn = mysqli_fetch_assoc($resultado);
@@ -50,16 +51,17 @@
             if($logIn["isAdmin"] == 1){
                 $administrador = new Admin($logIn["idUsuario"], $logIn["email"],$logIn["pass"], $logIn["nombre"], "Modificar Credenciales");
                 $_SESSION["admin"] = $administrador;
-                //Redirigimos a la página de productos
+                //Redirigimos a la página panel.php de administrados
                 header("location: panel.php");
             }else{
-                echo "no admin";
+                //Si no es admin, lo llevamos a la página de productos
+                //Creamos el objeto cliente
+                $cliente = new Cliente($logIn["idUsuario"], $logIn["email"],$logIn["pass"], $logIn["nombre"], MetodoDePago::TARJETA );
+                $_SESSION["cliente"] = $cliente;
+                header("location: productos.php");
             }
         }else{
-            echo "Login inválido";
+            echo "El usuario no existe o la contraseña no es válida";
         }
     }
-
-
-    
 ?>
