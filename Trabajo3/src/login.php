@@ -53,12 +53,12 @@
                 //Redirigimos a la página de productos
                 header("location: panel.php");
             }else{
-                //Cliente a la espera de constructor
+                echo "no admin";
             }
-        }
         }else{
-            echo "Login Incorrecto";
+            echo "Login inválido";
         }
+    }
 
 
     
