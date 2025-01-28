@@ -19,8 +19,8 @@
 
 <?php
 
-    require_once './clases/AdminClass.php';
-    require_once './clases/Cliente.php';
+    require_once 'clases/AdminClass.php';
+    require_once 'clases/Cliente.php';
     session_start();
     /*
     $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
@@ -39,7 +39,7 @@
         //Establecer Conexion
         $conexion = mysqli_connect($host, $user, $pass, $name_db);
         //Sentencia SQL
-        $query = "Select * from usuario where email = '$email' and pass = '$passU'";
+        $query = "SELECT * FROM usuario WHERE email = '$email' AND pass = '$passU';";
         //Consultamos en la base de datos
         $resultado = mysqli_query($conexion, $query);
         //Si obtenemos un resultado, login correcto
@@ -53,12 +53,14 @@
                 $_SESSION["admin"] = $administrador;
                 //Redirigimos a la página panel.php de administrados
                 header("location: panel.php");
+                exit();
             }else{
                 //Si no es admin, lo llevamos a la página de productos
                 //Creamos el objeto cliente
                 $cliente = new Cliente($logIn["idUsuario"], $logIn["email"],$logIn["pass"], $logIn["nombre"], MetodoDePago::TARJETA );
                 $_SESSION["cliente"] = $cliente;
                 header("location: productos.php");
+                exit();
             }
         }else{
             echo "El usuario no existe o la contraseña no es válida";
