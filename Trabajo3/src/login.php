@@ -8,7 +8,7 @@
 <body>
     <h1>Iniciar Sesión</h1>
     <form action="login.php" method="POST">
-        <label for="user">Usuario: </label><input type="text" name="user" require /><br><br>
+        <label for="user">Email: </label><input type="email" name="email" id="user" require /><br><br>
         <label for="pass">Contraseña: </label><input type="password" name="pass" require /><br><br>
         <input type="submit" value="Enviar" />
 
@@ -19,15 +19,47 @@
 
 <?php
 
-    require './clases/AdminClass.php';
-
-
-    $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
-    $admin -> consultar("root", "", 1);
-
+    require_once './clases/AdminClass.php';
     session_start();
 
-    if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["user"]) && isset($_POST["pass"])){
+    /*
+    $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
+    $admin -> consultar("root", "", 1);
+    */
+    if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["email"]) && isset($_POST["pass"])){
+        //Definimos las credenciales de la base de datos
+        $host = "localhost";
+        $user = "root";
+        $pass = "";
+        $name_db = "Trabajo3";
+
+        $email = $_POST["email"];
+        $passU = $_POST["pass"];
+
+        //Establecer Conexion
+        $conexion = mysqli_connect($host, $user, $pass, $name_db);
+        //Sentencia SQL
+        $query = "Select * from usuario where email = '$email' and pass = '$passU'";
+        //Consultamos en la base de datos
+        $resultado = mysqli_query($conexion, $query);
+
+        if(mysqli_num_rows($resultado) == 1){
+            //Sacamos el usuario logeado
+            $logIn = mysqli_fetch_assoc($resultado);
+
+            //Si es admin, lo redirigimos a la pagina de admin;
+            if($logIn["isAdmin"] == 1){
+                $administrador = new Admin($logIn["idUsuario"], $logIn["email"],$logIn["pass"], $logIn["nombre"], "Modificar Credenciales");
+                $_SESSION["admin"] = $administrador;
+                //Redirigimos a la página de productos
+                header("location: panel.php");
+            }else{
+                //Cliente a la espera de constructor
+            }
+            
+        }else{
+            echo "Login Incorrecto";
+        }
 
     }
     
