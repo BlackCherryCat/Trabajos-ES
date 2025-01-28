@@ -8,7 +8,7 @@
 <body>
     <?php
         require 'BD.php';
-        require 'Usuarios.php';
+        require_once 'Usuarios.php';
         //La clase admin hereda de Usuario e implementa la interfaz base de datos
         class Admin extends Usuario{
 
@@ -24,7 +24,7 @@
             }
         
 
-           public function __set($propiedad, $valor) {
+            public function __set($propiedad, $valor) {
         if ($propiedad == "precio" && $valor <= 0) {
             echo "El precio debe ser mayor a 0.<br>";
         } else {

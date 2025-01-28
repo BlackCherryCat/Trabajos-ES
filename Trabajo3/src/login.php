@@ -21,7 +21,6 @@
 
     require_once './clases/AdminClass.php';
     session_start();
-
     /*
     $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
     $admin -> consultar("root", "", 1);
@@ -56,11 +55,11 @@
             }else{
                 //Cliente a la espera de constructor
             }
-            
+        }
         }else{
             echo "Login Incorrecto";
         }
 
-    }
+
     
 ?>
