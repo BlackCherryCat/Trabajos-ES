@@ -7,8 +7,8 @@
 </head>
 <body>
     <?php
-        require 'BD.php';
-        require_once 'Usuarios.php';
+        include 'BD.php';
+        include 'Usuarios.php';
         //La clase admin hereda de Usuario e implementa la interfaz base de datos
         class Admin extends Usuario{
 

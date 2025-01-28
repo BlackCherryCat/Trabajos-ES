@@ -25,8 +25,8 @@
 <?php
     // Validación si se envió el formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        require_once 'clases/Cliente.php';
-        require_once 'clases/AdminClass.php';
+        include 'clases/Cliente.php';
+        include 'clases/AdminClass.php';
 
         $name = $_POST['name'];
         $email = $_POST['email'];

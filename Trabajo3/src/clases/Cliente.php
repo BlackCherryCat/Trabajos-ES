@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Usuarios.php';
+include 'Usuarios.php';
 
     enum MetodoDePago: string {
         case TARJETA = 'tarjeta';

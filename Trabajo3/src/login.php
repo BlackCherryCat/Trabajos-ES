@@ -19,8 +19,8 @@
 
 <?php
 
-    require_once 'clases/AdminClass.php';
-    require_once 'clases/Cliente.php';
+    include 'clases/AdminClass.php';
+    include 'clases/Cliente.php';
     session_start();
     /*
     $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
@@ -29,8 +29,8 @@
     if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["email"]) && isset($_POST["pass"])){
         //Definimos las credenciales de la base de datos
         $host = "localhost";
-        $user = "root";
-        $pass = "";
+        $user = "admin";
+        $pass = "admin";
         $name_db = "Trabajo3";
 
         $email = $_POST["email"];
@@ -49,8 +49,11 @@
 
             //Si es admin, lo redirigimos a la pagina de admin;
             if($logIn["isAdmin"] == 1){
-                $administrador = new Admin($logIn["idUsuario"], $logIn["email"],$logIn["pass"], $logIn["nombre"], "Modificar Credenciales");
-                $_SESSION["admin"] = $administrador;
+                $_SESSION["idUsuario"] = $logIn["idUsuario"];
+                $_SESSION["email"] = $logIn["email"];
+                $_SESSION["pass"] = $logIn["pass"];
+                $_SESSION["nombre"] = $logIn["nombre"];
+                $_SESSION["passU"] = $logIn["pass"];
                 //Redirigimos a la página panel.php de administrados
                 header("location: panel.php");
                 exit();
