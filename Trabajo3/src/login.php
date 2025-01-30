@@ -59,9 +59,10 @@
                 exit();
             }else{
                 //Si no es admin, lo llevamos a la página de productos
-                //Creamos el objeto cliente
-                $cliente = new Cliente($logIn["idUsuario"], $logIn["email"],$logIn["pass"], $logIn["nombre"], MetodoDePago::TARJETA );
-                $_SESSION["cliente"] = $cliente;
+                $_SESSION["idUsuario"] = $logIn["idUsuario"];
+                $_SESSION["email"] = $logIn["email"];
+                $_SESSION["pass"] = $logIn["pass"];
+                $_SESSION["nombre"] = $logIn["nombre"];
                 header("location: productos.php");
                 exit();
             }
