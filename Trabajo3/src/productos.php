@@ -1,23 +1,21 @@
 <html>
     <body>
         <?php
+          include 'clases/Cliente.php';
+          include 'clases/Producto.php';
             session_start();
             if(isset($_SESSION["idUsuario"])){
-                include 'clases/Cliente.php';
-                include 'clases/AdminClass.php';
-                include 'clases/Producto.php';
-                
+              
                 $idUsuario = $_SESSION["idUsuario"];
                 $email = $_SESSION["email"];
                 $pass = $_SESSION["pass"];
                 $nombre = $_SESSION["nombre"];
 
                 $cliente = new Cliente($idUsuario, $email, $pass, $nombre, MetodoDePago::TARJETA);
-                $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
 
                 echo "<p>Hola " . $nombre . "</p><br>";
 
-                $conexion = mysqli_connect("localhost", "root", "", "Trabajo3");
+                $conexion = mysqli_connect("localhost", "admin", "admin", "Trabajo3");
                 $query = "SELECT * FROM producto WHERE idProducto = '$idProducto'";
                 $resultado = mysqli_query($conexion, $query);
 
@@ -38,7 +36,7 @@
                 mysqli_free_result($resultado);
                 mysqli_close($conexion);
 
-                $conexion = mysqli_connect("localhost", "root", "", "Trabajo3");
+                $conexion = mysqli_connect("localhost", "admin", "admin", "Trabajo3");
                 $query = "SELECT * FROM producto";
                 $resultado = mysqli_query($conexion, $query);
 

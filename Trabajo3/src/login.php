@@ -18,14 +18,7 @@
 </html>
 
 <?php
-
-    include 'clases/AdminClass.php';
-    include 'clases/Cliente.php';
     session_start();
-    /*
-    $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
-    $admin -> consultar("root", "", 1);
-    */
     if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["email"]) && isset($_POST["pass"])){
         //Definimos las credenciales de la base de datos
         $host = "localhost";
