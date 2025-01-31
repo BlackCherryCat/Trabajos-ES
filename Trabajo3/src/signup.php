@@ -34,14 +34,15 @@
         $tipoUsuario = $_POST['tipoUsuario'];
 
 
+
         if ($tipoUsuario == 0) {
             // Crear un cliente
             $nuevoUsuario = new Cliente(uniqid(), $email, $password, $name, NULL);
-            echo "<p>Cliente registrado exitosamente: </p>";
+            $nuevoUsuario -> registerBD();
         } elseif ($tipoUsuario == 1) {
             // Crear un administrador
-            $nuevoUsuario = new Admin(uniqid(), $email, $password, $name, NULL);
-            echo "<p>Administrador registrado exitosamente:</p>";
+            $nuevoUsuario = new Admin(uniqid(), $email, $password, $name, ["admin","admin"]);
+            $nuevoUsuario -> registerBD();
         } else {
             echo "<p style='color:red;'>Tipo de usuario no válido.</p>";
         }

@@ -38,6 +38,7 @@ abstract class Usuario {
             throw new Exception("Propiedad " . $name . " no existe o no es accesible.");
         }
     }
+    
 }
 
 ?>

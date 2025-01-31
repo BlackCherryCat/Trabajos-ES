@@ -19,8 +19,6 @@
 
 <?php
 
-    include 'clases/AdminClass.php';
-    include 'clases/Cliente.php';
     session_start();
     /*
     $admin = new Admin(1, "javier@example.com" , "pass1234", "Javier", "");
@@ -29,13 +27,13 @@
     if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["email"]) && isset($_POST["pass"])){
         //Definimos las credenciales de la base de datos
         $host = "localhost";
-        $user = "admin";
-        $pass = "admin";
+        $user = "root";
+        $pass = "";
         $name_db = "Trabajo3";
 
         $email = $_POST["email"];
         $passU = $_POST["pass"];
-
+        
         //Establecer Conexion
         $conexion = mysqli_connect($host, $user, $pass, $name_db);
         //Sentencia SQL
