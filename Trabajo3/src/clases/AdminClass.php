@@ -28,7 +28,6 @@
                 $this->$propiedad = $valor;
             }
             //Método que registra un usuario en la base de datos
-             //Método que registra un usuario en la base de datos
         public function registerBD(){
             $host = "localhost";
             $user = "admin";
