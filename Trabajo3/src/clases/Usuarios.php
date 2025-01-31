@@ -38,6 +38,8 @@ abstract class Usuario {
             throw new Exception("Propiedad " . $name . " no existe o no es accesible.");
         }
     }
+    //Metodo abstracto 
+    abstract public function registerBD();
     
 }
 
