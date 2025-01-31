@@ -31,8 +31,8 @@
              //Método que registra un usuario en la base de datos
         public function registerBD(){
             $host = "localhost";
-            $user = "root";
-            $pass = "";
+            $user = "admin";
+            $pass = "admin";
             $name_db = "Trabajo3";
 
             $conexion = mysqli_connect($host, $user, $pass, $name_db);

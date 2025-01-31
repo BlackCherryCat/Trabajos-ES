@@ -22,8 +22,8 @@
     if($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["email"]) && isset($_POST["pass"])){
         //Definimos las credenciales de la base de datos
         $host = "localhost";
-        $user = "root";
-        $pass = "";
+        $user = "admin";
+        $pass = "admin";
         $name_db = "Trabajo3";
 
         $email = $_POST["email"];
