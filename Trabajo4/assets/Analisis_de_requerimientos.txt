@@ -1,0 +1,14 @@
+Requerimientos:
+6 tramos por dia.
+3 grupos por tramo.
+2 botones en un formulario de tipo get para manejar los dias de este programa.
+Un login para acceder al programa, si eres subdirector te lleva a un php con un calendario para elegir dia y poder eliminar,
+registrar y dar de baja profesores (lo cual borra reservas futuras en caso que las tuviera),
+y luego un php para ver todos los tramos del dia y su informacion y,
+si eres profesor, un php con un calendario para elegir dia y una vista de sus reservas,
+al elegir dia te lleva a un php con una tabla de 6 tramos y 3 radios por tramo (1 radio por fila) para reservar
+una cantidad de tramos, la informacion del profesor aparecera en cada fila de cuyos tramos haya reservado,
+no puedes ver la informacion de los tramos ya reservados, en su caso apareceran como filas grisaceas.
+informacion de reserva: Nombre,Asignatura,Curso,NumAlumnos,NumTramos (franja horaria), dia/mes/año de la reserva
+Al reservar descargarse la informacion de la reserva como pdf
+Cuestiones:
