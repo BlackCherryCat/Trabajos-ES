@@ -12,3 +12,60 @@ no puedes ver la informacion de los tramos ya reservados, en su caso apareceran 
 informacion de reserva: Nombre,Asignatura,Curso,NumAlumnos,NumTramos (franja horaria), dia/mes/año de la reserva
 Al reservar descargarse la informacion de la reserva como pdf
 Cuestiones:
+
+// Table: Profesores
+CREATE TABLE Profesores (
+    IdUsuario INT PRIMARY KEY,
+    Nombre VARCHAR(50),
+    Apellidos VARCHAR(50),
+    Departamento VARCHAR(50),
+    Email VARCHAR(100),
+    Password VARCHAR(255),
+    Alta DATE,
+    Admin BOOLEAN
+);
+
+// Table: Clases
+CREATE TABLE Clases (
+    IdClase INT PRIMARY KEY,
+    Nombre VARCHAR(50),
+    NumAlumnos INT
+);
+
+// Table: Asignaturas
+CREATE TABLE Asignaturas (
+    IdAsignatura INT PRIMARY KEY,
+    Nombre VARCHAR(50)
+);
+
+// Table: Horas (Reserva de horas del aula)
+CREATE TABLE Horas (
+    IdReserva INT PRIMARY KEY,
+    HoraInicio TIME,
+    HoraFin TIME,
+    Fecha DATE,
+    IdUsuario INT,
+    IdClase INT,
+    IdAsignatura INT,
+    FOREIGN KEY (IdUsuario, IdClase, IdAsignatura) REFERENCES Profesor_Clase_Asignatura(IdUsuario, IdClase, IdAsignatura)
+);
+
+// Table: Clase_Asignatura (Many-to-Many relationship between Clases and Asignaturas)
+CREATE TABLE Clase_Asignatura (
+    IdClase INT,
+    IdAsignatura INT,
+    PRIMARY KEY (IdClase, IdAsignatura),
+    FOREIGN KEY (IdClase) REFERENCES Clases(IdClase),
+    FOREIGN KEY (IdAsignatura) REFERENCES Asignaturas(IdAsignatura)
+);
+
+// Table: Profesor_Clase_Asignatura (Ternary relationship between Profesores, Clases, and Asignaturas)
+CREATE TABLE Profesor_Clase_Asignatura (
+    IdUsuario INT,
+    IdClase INT,
+    IdAsignatura INT,
+    PRIMARY KEY (IdUsuario, IdClase, IdAsignatura),
+    FOREIGN KEY (IdUsuario) REFERENCES Profesores(IdUsuario),
+    FOREIGN KEY (IdClase) REFERENCES Clases(IdClase),
+    FOREIGN KEY (IdAsignatura) REFERENCES Asignaturas(IdAsignatura)
+);
