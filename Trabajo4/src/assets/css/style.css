@@ -1,0 +1,76 @@
+/* Estilos del layouts */
+.container{
+    margin-top: 80px !important;
+    padding-bottom: 50px;
+}
+
+/* Fijar el header en la parte superior */
+.navbar {
+    background: rgb(172 213 254);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 1rem !important;
+}
+
+/* Barra lateral fija en pantallas grandes */
+.sidebar-lg {
+width: 280px;
+height: 90vh; /* Ocupa toda la altura de la ventana */
+position: fixed;
+top: 80px;
+left: 0;
+z-index: 900;
+background-color: #f8f9fa;
+padding: 20px;
+border-right: 1px solid #dee2e6;
+display: flex;
+flex-direction: column;
+justify-content: space-between; /* Asegura que el contenido y el footer estén separados */
+box-sizing: border-box;
+}
+
+/* Ajuste del contenido de la barra lateral */
+.sidebar-lg .nav {
+margin-bottom: 1rem; /* Espaciado entre la lista de navegación y el footer */
+}
+
+/* Footer del copyright en la barra lateral */
+.sidebar-lg .sidebar-footer {
+text-align: center;
+color: #6c757d;
+font-size: 0.875rem; /* Tamaño de texto más pequeño */
+}
+
+
+/* Contenido principal */
+.content-lg {
+    padding-left: 300px; /* Separación del contenido de la barra lateral */
+    box-sizing: border-box;
+}
+
+/* Ajuste en pantallas pequeñas */
+@media (max-width: 991.98px) {
+    .content-lg {
+        padding: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar .navbar-brand {
+        font-size: 1.2rem!important;
+        padding: 0 !important;
+    }
+
+    .navbar .dropdown-menu {
+        font-size: 0.9rem;
+    }
+
+    .navbar img {
+        width: 28px;
+        height: 28px;
+    }
+}
