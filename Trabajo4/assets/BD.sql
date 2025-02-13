@@ -2,33 +2,33 @@ CREATE DATABASE GestionReservas;
 USE GestionReservas;
 
 CREATE TABLE Cursos (
-    IdCurso INT,
-    Nombre VARCHAR(20),
-    NumAlumnos INT,
+    IdCurso INT AUTO_INCREMENT,
+    Nombre VARCHAR(50) NOT NULL,
+    NumAlumnos INT NOT NULL CHECK (NumAlumnos >= 0),
     PRIMARY KEY (IdCurso)
 );
 
 CREATE TABLE Asignaturas (
-    IdAsignatura INT PRIMARY KEY,
-    Nombre VARCHAR(30)
+    IdAsignatura INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Curso_Asignatura (
     IdCurso INT,
     IdAsignatura INT,
     PRIMARY KEY (IdCurso, IdAsignatura),
-    FOREIGN KEY (IdCurso) REFERENCES Cursos(IdCurso),
-    FOREIGN KEY (IdAsignatura) REFERENCES Asignaturas(IdAsignatura)
+    FOREIGN KEY (IdCurso) REFERENCES Cursos(IdCurso) ON DELETE CASCADE,
+    FOREIGN KEY (IdAsignatura) REFERENCES Asignaturas(IdAsignatura) ON DELETE CASCADE
 );
 
 CREATE TABLE Profesores (
-    IdProfesor INT,
-    Nombre VARCHAR(30),
-    Apellidos VARCHAR(50),
-    Email VARCHAR(40) UNIQUE,
-    Password VARCHAR(20),
-    EsAdmin BOOLEAN,
-    FechaAlta DATE,
+    IdProfesor INT AUTO_INCREMENT,
+    Nombre VARCHAR(50) NOT NULL,
+    Apellidos VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) UNIQUE NOT NULL,
+    Passwd VARCHAR(255) NOT NULL,
+    EsAdmin BOOLEAN NOT NULL DEFAULT FALSE,
+    FechaAlta DATE NOT NULL DEFAULT CURRENT_DATE,
     PRIMARY KEY (IdProfesor)
 );
 
@@ -37,24 +37,24 @@ CREATE TABLE Profesor_Curso_Asignatura (
     IdAsignatura INT,
     IdProfesor INT,
     PRIMARY KEY (IdCurso, IdAsignatura, IdProfesor),
-    FOREIGN KEY (IdCurso, IdAsignatura) REFERENCES Curso_Asignatura(IdCurso, IdAsignatura),
-    FOREIGN KEY (IdProfesor) REFERENCES Profesores(IdProfesor)
+    FOREIGN KEY (IdCurso, IdAsignatura) REFERENCES Curso_Asignatura(IdCurso, IdAsignatura) ON DELETE CASCADE,
+    FOREIGN KEY (IdProfesor) REFERENCES Profesores(IdProfesor) ON DELETE CASCADE
 );
 
 CREATE TABLE Reservas (
-    IdReserva INT,
-    Fecha DATE,
-    NumAlumnos INT,
-    IdCurso INT,
-    IdAsignatura INT,
-    IdProfesor INT,
+    IdReserva INT AUTO_INCREMENT,
+    Fecha DATE NOT NULL,
+    NumAlumnos INT NOT NULL CHECK (NumAlumnos > 0),
+    IdCurso INT NOT NULL,
+    IdAsignatura INT NOT NULL,
+    IdProfesor INT NOT NULL,
     PRIMARY KEY (IdReserva),
-    FOREIGN KEY (IdCurso, IdAsignatura, IdProfesor) REFERENCES Profesor_Curso_Asignatura(IdCurso, IdAsignatura, IdProfesor)
+    FOREIGN KEY (IdCurso, IdAsignatura, IdProfesor) REFERENCES Profesor_Curso_Asignatura(IdCurso, IdAsignatura, IdProfesor) ON DELETE CASCADE
 );
 
 CREATE TABLE Tramos (
-    IdTramo INT ,
-    Horario VARCHAR(50),
+    IdTramo INT AUTO_INCREMENT,
+    Horario VARCHAR(50) NOT NULL,
     PRIMARY KEY (IdTramo)
 );
 
@@ -62,14 +62,21 @@ CREATE TABLE Reserva_Tramos (
     IdReserva INT,
     IdTramo INT,
     PRIMARY KEY (IdReserva, IdTramo),
-    FOREIGN KEY (IdReserva) REFERENCES Reservas(IdReserva),
-    FOREIGN KEY (IdTramo) REFERENCES Tramos(IdTramo)
+    FOREIGN KEY (IdReserva) REFERENCES Reservas(IdReserva) ON DELETE CASCADE,
+    FOREIGN KEY (IdTramo) REFERENCES Tramos(IdTramo) ON DELETE CASCADE
 );
 
 CREATE TABLE Departamentos (
-    IdDepartamento INT,
-    IdAsignatura INT,
-    Nombre VARCHAR(20),
-    PRIMARY KEY (IdDepartamento),
-    FOREIGN KEY (IdAsignatura) REFERENCES Asignaturas(IdAsignatura)
+    IdDepartamento INT AUTO_INCREMENT,
+    Nombre VARCHAR(50) NOT NULL,
+    PRIMARY KEY (IdDepartamento)
 );
+
+CREATE TABLE Departamento_Asignatura (
+    IdDepartamento INT NOT NULL,
+    IdAsignatura INT NOT NULL,
+    PRIMARY KEY (IdDepartamento, IdAsignatura),
+    FOREIGN KEY (IdDepartamento) REFERENCES Departamentos(IdDepartamento) ON DELETE CASCADE,
+    FOREIGN KEY (IdAsignatura) REFERENCES Asignaturas(IdAsignatura) ON DELETE CASCADE
+);
+
