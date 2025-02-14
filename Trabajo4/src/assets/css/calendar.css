@@ -8,6 +8,9 @@ table{
     height: 100%;
     border-collapse: separate;
 }
+th{
+    min-width: 150px;
+}
 td.cal{
     width: 200px;
     height: 120px;
@@ -18,4 +21,23 @@ td.cal{
 
 td.disabled{
     background-color:  rgb(202, 202, 202);
+    color: #150578;
+}
+h1{
+    text-align: center;
+}
+
+div.calendar-header{
+    width: calc(100% + 50px);
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    flex-direction: row;
+}
+
+div.calendar-header a{
+    color: #150578;
+    font-weight: 500;
 }
