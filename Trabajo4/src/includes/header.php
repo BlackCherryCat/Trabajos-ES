@@ -31,7 +31,7 @@ require_once 'funciones.php';
                     <li><a class="dropdown-item" href="#">Mi perfil</a></li>
                     <li><a class="dropdown-item" href="#">Configuración</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    <li><a class="dropdown-item" href="./acciones/logout.php">Cerrar sesión</a></li>
                 </ul>
             </div>
         </div>
@@ -40,9 +40,9 @@ require_once 'funciones.php';
     <!-- Barra lateral fija para pantallas grandes -->
     <div class="sidebar-lg d-none d-lg-flex flex-column">
         <ul class="nav nav-pills flex-column">
-            <li class="nav-item"><a class="nav-link" href="#">Reserva</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Mis Reservas</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Profesores</a></li>
+            <li class="nav-item"><a class="nav-link" href="./reserva.php">Reserva</a></li>
+            <li class="nav-item"><a class="nav-link" href="./mis-reservas.php">Mis Reservas</a></li>
+            <li class="nav-item"><a class="nav-link" href="./profesores.php">Profesores</a></li>
         </ul>
         <div class="sidebar-footer">
             © 2025 Reserva-Aula. Todos los derechos reservados.
