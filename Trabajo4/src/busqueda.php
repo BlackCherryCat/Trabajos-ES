@@ -21,17 +21,18 @@ require_once 'includes/header.php';
     $busqueda = htmlspecialchars(trim($_POST["buscador"]));
     $profesores = obtenerBusquedaProfesores($db, $busqueda);
     
+    $estado = ["baja","alta"];
     //pintar un card por cada profesor
     foreach ($profesores as $profesor) { ?>
         <div class="col-md-4">
             <a href="#" class="text-decoration-none">
                 <div class="card p-3">
-                    <img src="./assets/img/usuario.avif" class="card-img-top" alt="Imagen de <?= htmlspecialchars($profesor['Nombre']) ?>"
+                    <img src="<?= $profesor['ImgPerfilURL'] ?>" class="card-img-top" alt="Imagen de <?= htmlspecialchars($profesor['Nombre']) ?>"
                         data-bs-toggle="modal" data-bs-target="#modalImagen" data-bs-src="imagen.avif" />
                     
                     <h5 class="card-title m-0"><?= htmlspecialchars($profesor['Nombre']) . ' ' . htmlspecialchars($profesor['Apellidos']) ?></h5>
                     
-                    <span class="alta">Alta</span>
+                    <span class="<?= $estado[$profesor['EsAlta']] ?>"><?= ucfirst($estado[$profesor['EsAlta']]) ?></span>
                     
                     <p class="text-muted mt-2">
                         <a href="editar-profesor.php?id=<?= $profesor['IdProfesor'] ?>"><img src="./assets/img/editar.png" alt="Editar profesor" width="50"></a>
