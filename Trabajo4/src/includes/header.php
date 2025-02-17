@@ -60,9 +60,9 @@ require_once 'funciones.php';
         </div>
         <div class="offcanvas-body d-flex flex-column">
             <ul class="nav flex-column mb-auto">
-                <li class="nav-item"><a class="nav-link active" href="#">Reserva</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Mis Reservas</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Profesores</a></li>
+                <li class="nav-item"><a class="nav-link active" href="./reserva.php">Reserva</a></li>
+                <li class="nav-item"><a class="nav-link" href="./mis-reservas.php">Mis Reservas</a></li>
+                <li class="nav-item"><a class="nav-link" href="./profesores.php">Profesores</a></li>
             </ul>
             <div class="mt-auto text-center text-body-secondary">
                 © 2024 Seguros Axarquia. Todos los derechos reservados.
