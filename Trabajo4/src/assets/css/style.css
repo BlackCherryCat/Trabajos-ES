@@ -108,3 +108,7 @@ button.buscador{
 .icon-search{
     object-fit: contain;
 }
+
+.error{
+    color:red;
+}
