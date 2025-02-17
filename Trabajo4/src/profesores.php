@@ -1,4 +1,17 @@
-<?php require_once 'includes/header.php'; ?>
+<?php
+require_once 'includes/header.php';
+
+if (isset($_SESSION['error_general']) && !empty($_SESSION['error_general'])) {
+    echo "<p class='error'>" .$_SESSION['error_general']."</p>";
+    unset($_SESSION['error_general']);
+}
+
+if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
+    echo "<p class='correcto'>" .$_SESSION['correcto']."</p>";
+    unset($_SESSION['correcto']);
+}
+
+?>
 
 <h2>Profesores</h2>
 <div class="d-flex align-items-center justify-content-between">

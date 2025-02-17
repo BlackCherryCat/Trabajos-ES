@@ -43,4 +43,14 @@ function login($conexion, $email){
     return $login; // Devolver el array con los profesores
 }
 
+function borrarProfesor($conexion, $idProfesor){
+    $consulta = "DELETE FROM profesores WHERE IdProfesor = $idProfesor;";
+    $borrar = mysqli_query($conexion, $consulta);
+
+    if ($borrar) {
+        $_SESSION['correcto'] = "Profesor borrado con éxito";
+    } else {
+        $_SESSION['error_general'] = "Fallo al borrar profesor!!";
+    }
+}
 ?>

@@ -108,3 +108,15 @@ button.buscador{
 .icon-search{
     object-fit: contain;
 }
+
+.error{
+    margin: 5px;
+    text-align: center;
+    color:red;
+}
+
+.correcto{
+    margin: 5px;
+    text-align: center;
+    color:green;
+}
