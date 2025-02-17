@@ -17,3 +17,6 @@ body {
     text-align: center;
     font-weight: bold;
 }
+.error{
+    color:red;
+}
