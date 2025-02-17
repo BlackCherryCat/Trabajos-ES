@@ -41,3 +41,11 @@ div.calendar-header a{
     color: #150578;
     font-weight: 500;
 }
+
+td a{
+    cursor: pointer;
+}
+
+td a.disabled{
+    cursor: crosshair;
+}
