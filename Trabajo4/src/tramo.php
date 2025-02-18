@@ -1,6 +1,5 @@
 <?php
     require_once './includes/header.php';
-    include_once './includes/conexion.php';
 
     if(isset($_GET["date"])){
         //Tratamiento de la fecha
@@ -9,7 +8,7 @@
         $tmpFecha = explode("-", $fecha);
         $fecha = implode("/", $tmpFecha);
 
-        $today = date("Y-m-d", (time() +strtotime($fecha)));
+        $today = date("Y-m-d", strtotime($fecha));
         $day = date("d", strtotime($fecha));
         $month = monthString(date("m", strtotime($fecha)));
         $year = date("o", strtotime($fecha));
@@ -17,31 +16,19 @@
         echo "<h1>".$day." de ".$month." de ".$year."</h1>";
         //Imprimir los tramos
 
-        echo "<table class='tramo'><tr><th>08:30-09:30</th><th>09:30-10:30</th><th>10:30-11:30</th><th>11:30-12:30</th><th>12:30-13:30</th><th>13:30-14:30</th></tr>";
+        echo "<table class='tramo'><tr><th colspan='2'>Salón de Actos</th></tr>";
 
-        $horario = ["08:30", "09:30", "10:30", "11:30", "12:30", "12:30", "14:30"];
+        $horario = ["08:30", "09:30", "10:30", "11:30", "12:30", "13:30"];
 
         $i = 0;
-
-        //Aqui, hay que hacer sql, sacar las plazas disponibles por cada tramo y imprimir el tramo completo, por colores. Queda controlar el horario y dia
-        $query = "select Reserva_Tramos.IdTramo, Reserva.Fecha, Tramo.Horario, sum(Reservas.NumAlumnos) As 'Alumnos'
-                    from Reservas
-                    right join Reserva_Tramos on Reservas.IdReserva = Reserva_Tramos.IdReserva
-                    inner join Tramos on Reserva_Tramos.IdTramo = Tramos.IdTramo
-                    where Reserva.Fecha = '.$today.' AND
-                    Tramo.Horario = '.$horario[$i].'
-                    group by Reserva_Tramos.IdTramo;";
+        
 
         //Hay que sacar el número de alumnos
 
-        echo "<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>";
-
-
-
-
-
-
-
+        foreach($horario as $hora){
+          echo getOccupation($hora, $today, $db);
+        }
+        
     }else{
         header('location: reserva.php');
         exit();
@@ -94,5 +81,30 @@
             break;
         }
         return $monthText;
+      }
+
+      function getOccupation($hora, $dia, $db){
+        $cadena = "<tr><td class='hora'>$hora";
+
+        //Contenido de td, divs con reservas y nueva reserva
+        $query = "select Reservas.IdReserva, Reserva_Tramos.IdTramo, Reservas.Fecha, Tramos.Horario, sum(Reservas.NumAlumnos) As 'Alumnos'
+                    from Reservas
+                    right join Reserva_Tramos on Reservas.IdReserva = Reserva_Tramos.IdReserva
+                    inner join Tramos on Reserva_Tramos.IdTramo = Tramos.IdTramo
+                    where Reservas.Fecha = '.$dia.' AND
+                    Tramos.Horario = '.$hora.'
+                    group by Reserva_Tramos.IdTramo;";
+
+        $result = mysqli_query($db, $query);
+
+        if(mysqli_num_rows($result) == 0){
+          $cadena .="<td><div class='wrapper'><a href='#'><div class='nuevo'><span class='add'>&#43;</span>Añadir Reserva</div></a><div class='free'>Asientos Libres<br>100</div></div></td>";
+        }else{
+          //Obtenemos el número asientos ocupados de cada resultado y guardamos en una variable
+          $sumatoria = 0;
+        }
+
+        $cadena .= "</td></tr>";
+        return $cadena;
       }
 ?>
