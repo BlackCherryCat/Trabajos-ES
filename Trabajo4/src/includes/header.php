@@ -26,8 +26,8 @@ require_once 'funciones.php';
             </button>
             <a class="navbar-brand fw-bold fs-4" href="#">Reserva-Aula</a>
             <div class="dropdown ms-auto">
-                <a href="#" class="d-block text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
-                    <img src="https://github.com/mdo.png" alt="Perfil" width="32" height="32" class="rounded-circle">
+                <a href="#" class="d-block text-decoration-none <!--dropdown-toggle-->" data-bs-toggle="dropdown">
+                    <img src="<?= $_SESSION['profesor']['ImgPerfilURL'] ?>" alt="Perfil" width="40" height="40" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="#">Mi perfil</a></li>

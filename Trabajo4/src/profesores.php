@@ -1,6 +1,10 @@
 <?php
 require_once 'includes/header.php';
 
+if ($_SESSION['profesor']['EsAdmin'] != 1) {
+    header("Location: index.php");
+}
+
 if (isset($_SESSION['error_general']) && !empty($_SESSION['error_general'])) {
     echo "<p class='error'>" .$_SESSION['error_general']."</p>";
     unset($_SESSION['error_general']);
@@ -15,7 +19,7 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
 
 <h2>Profesores</h2>
 <div class="d-flex align-items-center justify-content-between">
-    <a href="alta-profesor.php"><img src="./assets/img/add.png" alt="Crear profesor" width="50"></a>
+    <a href="crear-profesor.php"><img src="./assets/img/add.png" alt="Crear profesor" width="50"></a>
     <div id="buscador">
         <form class="buscador d-flex" action=./busqueda.php method="POST">
             <input class="buscador" type="text" name="buscador" placeholder="Busqueda" required>

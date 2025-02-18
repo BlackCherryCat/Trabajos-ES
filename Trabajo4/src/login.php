@@ -26,7 +26,7 @@
             <button type="submit" class="btn btn-primary w-100 py-2">Ingresar</button>
             <?php
             if (isset($_SESSION['error_login']) && !empty($_SESSION['error_login'])) {
-                echo "<p class='error'>Login Incorrecto!!</p>";
+                echo "<p class='error'>".$_SESSION['error_login']."</p>";
                 unset($_SESSION['error_login']);
             }
             ?>

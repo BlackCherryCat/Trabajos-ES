@@ -8,7 +8,7 @@ require_once 'includes/header.php';
 
 <h2>Profesores</h2>
 <div class="d-flex align-items-center justify-content-between">
-    <a href="alta-profesor.php"><img src="./assets/img/add.png" alt="Crear profesor" width="50"></a>
+    <a href="crear-profesor.php"><img src="./assets/img/add.png" alt="Crear profesor" width="50"></a>
     <div id="buscador">
         <form class="buscador d-flex" action=./busqueda.php method="POST">
             <input class="buscador" type="text" name="buscador" placeholder="Busqueda" required>
