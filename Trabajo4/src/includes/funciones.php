@@ -61,9 +61,6 @@ function crearProfesor($conexion, $nombre, $apellidos, $email, $passwd, $esAdmin
 
     if ($insertar) {
         $_SESSION['correcto'] = "Profesor creado con éxito";
-    } else {
-        $_SESSION['error_general'] = "Fallo al crear profesor!!";
-        return false;
     }
 }
 
@@ -84,9 +81,11 @@ function subirImagen($fichero){
     // Mostrar el archivo subido
     $rutaDestino = $ruta . basename($nombreFich); // Ruta de destino
 
-    // Comprobar que el archivo de imagen
-    if ($tipoFich != "image/") {
-        $_SESSION['error_general'] = "Error: Solo se permiten formatos de imagenes.";
+    // Lista de tipos MIME permitidos
+    $tiposPermitidos = ["image/jpeg", "image/png"];
+
+    if (!in_array($tipoFich, $tiposPermitidos)) {
+        $_SESSION['error_general'] = "Error: Solo se permiten imágenes en formato JPG o PNG.";
     } elseif ($sizeFich > $maxSize) {
         $_SESSION['error_general'] = "Error: El archivo es demasiado grande (máximo: 1 MB).";
     } elseif (move_uploaded_file($tempFich, $rutaDestino)) {

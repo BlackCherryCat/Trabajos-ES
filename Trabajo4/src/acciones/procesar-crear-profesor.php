@@ -37,20 +37,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Manejo de la imagen
     $imgPerfilURL = "";
-    if (isset($_FILES['imgPerfil']) && $_FILES['imgPerfil']['error'] === UPLOAD_ERR_OK) {
+    if (isset($_FILES['imgPerfil']) && $_FILES['imgPerfil']['error'] !== 4) { // 4 = No se subió ningún archivo
         if (subirImagen($_FILES['imgPerfil'])) {
-            $imgPerfilURL = "../assets/img/perfiles/" . basename($_FILES['imgPerfil']['name']);
+            $imgPerfilURL = "./assets/img/perfiles/" . basename($_FILES['imgPerfil']['name']);
         } else {
             $_SESSION['error_general'] = "Error al subir la imagen.";
             header("Location: ../crear-profesor.php");
             exit();
         }
+    }else{
+        $imgPerfilURL = "./assets/img/perfiles/usuario.avif";
     }
     
     // Llamar a la función para crear el profesor
-    crearProfesor($db, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL);
-    
-    // Redirige al usuario a la lista de profesores después de completar la operación.
-    header("Location: ../profesores.php");
-    exit();
+    try{
+        crearProfesor($db, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL);
+    }catch(Exception $e){
+        $_SESSION['error_general'] = "Error al crear profesor.";
+    }finally{
+        // Redirige al usuario a la lista de profesores después de completar la operación.
+        header("Location: ../profesores.php");
+        exit();
+    }
 }
