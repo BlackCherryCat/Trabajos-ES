@@ -1,3 +1,12 @@
+<form action="form-reserva.php">
+  <input type="checkbox" name="tramo1" id="tramo1">
+  <input type="checkbox" name="tramo2" id="tramo2">
+  <input type="checkbox" name="tramo3" id="tramo3">
+  <input type="checkbox" name="tramo4" id="tramo4">
+  <input type="checkbox" name="tramo5" id="tramo5">
+  <input type="checkbox" name="tramo6" id="tramo6">
+
+
 <?php
     require_once './includes/header.php';
 
@@ -24,9 +33,13 @@
         
 
         //Hay que sacar el número de alumnos
-
+        /*
         foreach($horario as $hora){
           echo getOccupation($hora, $today, $db);
+        }*/
+
+        for ($i=1; $i <= count($horario); $i++) { 
+          echo getOccupation($hora, $today, $db, $i);
         }
         
     }else{
@@ -83,7 +96,7 @@
         return $monthText;
       }
 
-      function getOccupation($hora, $dia, $db){
+      function getOccupation($hora, $dia, $db, $index){
         $cadena = "<tr><td class='hora'>$hora";
 
         //Contenido de td, divs con reservas y nueva reserva
@@ -98,7 +111,7 @@
         $result = mysqli_query($db, $query);
 
         if(mysqli_num_rows($result) == 0){
-          $cadena .="<td><div class='wrapper'><a href='#'><div class='nuevo'><span class='add'>&#43;</span>Añadir Reserva</div></a><div class='free'>Asientos Libres<br>100</div></div></td>";
+          $cadena .="<td><div class='wrapper'><label for='tramo$i'><div class='nuevo'><span class='add'>&#43;</span>Añadir Reserva</div></label><div class='free'>Asientos Libres<br>100</div></div></td>";
         }else{
           //Obtenemos el número asientos ocupados de cada resultado y guardamos en una variable
           $sumatoria = 0;
@@ -108,3 +121,5 @@
         return $cadena;
       }
 ?>
+<button type="submit">Acceder a formulario de Reserva</button>
+</form>
