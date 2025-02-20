@@ -96,7 +96,7 @@
         return $monthText;
       }
 
-      function getOccupation($hora, $dia, $db, $index){
+      function getOccupation($hora, $dia, $db, $i){
         $cadena = "<tr><td class='hora'>$hora";
 
         //Contenido de td, divs con reservas y nueva reserva

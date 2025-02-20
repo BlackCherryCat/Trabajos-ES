@@ -1,7 +1,8 @@
 <?php
 
 // Obtener los profesores BD
-function obtenerProfesores($conexion){
+function obtenerProfesores($conexion)
+{
     // Consulta SQL para seleccionar todos los profesores
     $consulta = "SELECT * FROM profesores;";
     $resultado = mysqli_query($conexion, $consulta); // Ejecutar la consulta
@@ -16,7 +17,8 @@ function obtenerProfesores($conexion){
     return $profesores; // Devolver el array con los profesores
 }
 
-function obtenerBusquedaProfesores($conexion, $busqueda = null){
+function obtenerBusquedaProfesores($conexion, $busqueda = null)
+{
     // Consulta SQL para seleccionar todos los profesores que contengan la busqueda en el nombre o apellidos
     $consulta = "SELECT * FROM profesores WHERE Nombre LIKE '%$busqueda%' OR Apellidos LIKE '%$busqueda%';";
     $resultado = mysqli_query($conexion, $consulta); // Ejecutar la consulta
@@ -31,7 +33,8 @@ function obtenerBusquedaProfesores($conexion, $busqueda = null){
     return $profesores; // Devolver el array con los profesores
 }
 
-function login($conexion, $email){
+function login($conexion, $email)
+{
     $consulta = "SELECT * FROM profesores WHERE Email = '$email';";
     $resultado = mysqli_query($conexion, $consulta);
 
@@ -43,7 +46,8 @@ function login($conexion, $email){
     return $login; // Devolver el array con los profesores
 }
 
-function borrarProfesor($conexion, $idProfesor){
+function borrarProfesor($conexion, $idProfesor)
+{
     // Proceder con la eliminación y verificar si se eliminó alguna fila
     $consulta = "DELETE FROM profesores WHERE IdProfesor = $idProfesor";
     $borrar = mysqli_query($conexion, $consulta);
@@ -55,7 +59,8 @@ function borrarProfesor($conexion, $idProfesor){
     }
 }
 
-function crearProfesor($conexion, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL){
+function crearProfesor($conexion, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL)
+{
     $consulta = "INSERT INTO profesores (Nombre, Apellidos, Email, Passwd, EsAdmin, EsAlta, ImgPerfilURL) VALUES ('$nombre', '$apellidos', '$email', '$passwd', '$esAdmin', '$esAlta', '$imgPerfilURL')";
     $insertar = mysqli_query($conexion, $consulta);
 
@@ -64,7 +69,8 @@ function crearProfesor($conexion, $nombre, $apellidos, $email, $passwd, $esAdmin
     }
 }
 
-function subirImagen($fichero){
+function subirImagen($fichero)
+{
     // RUTA DONDE SE GUARDARÁ EL ARCHIVO SUBIDO
     $ruta = "../assets/img/perfiles/";
 
@@ -96,7 +102,8 @@ function subirImagen($fichero){
     return false;
 }
 
-function borrarImagen($fichero){
+function borrarImagen($fichero)
+{
     $ruta = "../assets/img/perfiles/";
     $imagen = $ruta . basename($fichero);
 
@@ -109,4 +116,60 @@ function borrarImagen($fichero){
     } else {
         echo "La imagen no existe.";
     }
+}
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../../../Trabajo2/PHPMailer/src/Exception.php';
+require '../../../Trabajo2/PHPMailer/src/PHPMailer.php';
+require '../../../Trabajo2/PHPMailer/src/SMTP.php';
+
+function enviarCorreo($destinatario, $asunto, $mensaje)
+{
+
+    $mail = new PHPMailer(true);
+
+    try {
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'trabajoes786@gmail.com';
+        $mail->Password = 'ykic ohip fxlf epsf';  // Usar contraseña de aplicación si es necesario
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  // Usar SSL
+        $mail->Port = 465;  // Puerto para SSL
+
+        $mail->setFrom('trabajoes786@gmail.com', 'Trabajo');
+        $mail->addAddress("$destinatario", 'Destinatario');
+
+        $mail->isHTML(true);
+        $mail->Subject = "$asunto";
+        $mail->Body    = "$mensaje";
+
+        $mail->send();
+    } catch (Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
+use FPDF;
+
+require '../../FPDF/fpdf.php';
+
+function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf') {
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(0, 10, 'Datos de la reserva', 0, 1, 'C');
+    $pdf->Ln(10);
+    
+    $pdf->SetFont('Arial', '', 12);
+    foreach ($datos as $clave => $valor) {
+        $pdf->Cell(0, 10, "$clave: $valor", 0, 1);
+    }
+    
+    header('Content-Type: application/pdf');
+    header("Content-Disposition: attachment; filename=\"$nombreArchivo\"");
+    $pdf->Output('D', $nombreArchivo);
+    exit;
 }

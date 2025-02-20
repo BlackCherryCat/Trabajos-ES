@@ -1,8 +1,8 @@
 <?php
 // Conexión
-$server = 'localhost';
+$server = 'db';
 $user = 'root';
-$passwd = '';
+$passwd = 'root';
 $bd = 'GestionReservas';
 $db = mysqli_connect($server, $user, $passwd, $bd);
 
