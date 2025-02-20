@@ -97,6 +97,19 @@ div.nuevo{
     background-color: rgb(255, 231, 230);
     border-radius: 35px;
 }
+div.reserva{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    height: 100%;
+    font-weight: 300;
+    font-size: 15px;
+    border: 2px solid rgb(60, 218, 107);
+    background-color: rgb(152, 240, 134);
+    border-radius: 35px;
+}
 
 div.free{
     min-width: 20%;
@@ -118,3 +131,14 @@ div.wrapper{
     align-items: center;
     background-color: rgb(236, 235, 235);
 }
+
+form#formReserva{
+    margin-top: 50px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 30px;
+}
+
+
