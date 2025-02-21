@@ -7,7 +7,7 @@
         $idAsignatura = $_POST["asignatura"];
         $numAlumnos = $_POST["alumnos"];
 
-        
+        $query = "";
         
     }else{
         header("location: ../reserva.php");

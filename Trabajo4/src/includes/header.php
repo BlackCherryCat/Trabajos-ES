@@ -1,6 +1,6 @@
 <?php
 require_once 'conexion.php';
-require_once 'redireccion.php';
+//require_once 'redireccion.php';
 require_once 'funciones.php';
 ?>
 
@@ -24,7 +24,7 @@ require_once 'funciones.php';
             <button class="navbar-toggler d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand fw-bold fs-4" href="#">Reserva-Aula</a>
+            <a class="navbar-brand fw-bold fs-4" href="./reserva.php">Reserva-Aula</a>
             <div class="dropdown ms-auto">
                 <a href="#" class="d-block text-decoration-none <!--dropdown-toggle-->" data-bs-toggle="dropdown">
                     <img src="<?= $_SESSION['profesor']['ImgPerfilURL'] ?>" alt="Perfil" width="40" height="40" class="rounded-circle">
