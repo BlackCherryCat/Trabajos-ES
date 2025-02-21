@@ -1,6 +1,9 @@
 [submodule "Trabajo2/PHPMailer"]
 	path = Trabajo2/PHPMailer
 	url = https://github.com/PHPMailer/PHPMailer
-[submodule "Trabajo4/FPDF"]
-	path = Trabajo4/FPDF
+[submodule "Trabajo4/src/includes/PHPMailer"]
+	path = Trabajo4/src/includes/PHPMailer
+	url = https://github.com/PHPMailer/PHPMailer
+[submodule "Trabajo4/src/includes/FPDF"]
+	path = Trabajo4/src/includes/FPDF
 	url = https://github.com/Setasign/FPDF

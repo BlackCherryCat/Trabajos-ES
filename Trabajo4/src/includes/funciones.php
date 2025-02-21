@@ -142,9 +142,9 @@ function borrarImagen($fichero)
     }
 }
 
-require '../../Trabajo2/PHPMailer/src/Exception.php';
-require '../../Trabajo2/PHPMailer/src/PHPMailer.php';
-require '../../Trabajo2/PHPMailer/src/SMTP.php';
+require_once 'PHPMailer/src/Exception.php';
+require_once 'PHPMailer/src/PHPMailer.php';
+require_once 'PHPMailer/src/SMTP.php';
 
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -178,7 +178,7 @@ function enviarCorreo($destinatario, $asunto, $mensaje)
 }
 
 
-require '../FPDF/fpdf.php';
+require_once 'FPDF/fpdf.php';
 
 function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf') {
     $pdf = new FPDF();
