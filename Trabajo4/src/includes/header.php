@@ -30,8 +30,7 @@ require_once 'funciones.php';
                     <img src="<?= $_SESSION['profesor']['ImgPerfilURL'] ?>" alt="Perfil" width="40" height="40" class="rounded-circle">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Mi perfil</a></li>
-                    <li><a class="dropdown-item" href="#">Configuración</a></li>
+                    <li><a class="dropdown-item" href="mi-perfil.php">Mi perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="./acciones/logout.php">Cerrar sesión</a></li>
                 </ul>

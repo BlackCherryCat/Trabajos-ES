@@ -24,7 +24,7 @@ function obtenerProfesor($conexion, $idProfesor)
     $idProfesor = (int)$idProfesor;
 
     // Consulta SQL para seleccionar el profesor con el ID especificado
-    $consulta = "SELECT * FROM profesores WHERE id = $idProfesor";
+    $consulta = "SELECT * FROM profesores WHERE IdProfesor = $idProfesor";
     
     // Ejecutar la consulta
     $resultado = mysqli_query($conexion, $consulta);
@@ -142,12 +142,13 @@ function borrarImagen($fichero)
     }
 }
 
+require 'C:/xampp/htdocs/Trabajos-ES/Trabajo2/PHPMailer/src/Exception.php';
+require 'C:/xampp/htdocs/Trabajos-ES/Trabajo2/PHPMailer/src/PHPMailer.php';
+require 'C:/xampp/htdocs/Trabajos-ES/Trabajo2/PHPMailer/src/SMTP.php';
+
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
-require '../../../Trabajo2/PHPMailer/src/Exception.php';
-require '../../../Trabajo2/PHPMailer/src/PHPMailer.php';
-require '../../../Trabajo2/PHPMailer/src/SMTP.php';
 
 function enviarCorreo($destinatario, $asunto, $mensaje)
 {
@@ -177,8 +178,8 @@ function enviarCorreo($destinatario, $asunto, $mensaje)
 }
 
 use FPDF;
+require 'C:/xampp/htdocs/Trabajos-ES/Trabajo4/FPDF/fpdf.php';
 
-require '../../FPDF/fpdf.php';
 
 function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf') {
     $pdf = new FPDF();
