@@ -5,7 +5,7 @@
         $plazas = $_SESSION["plazas"];
         $disponibles = maxAlumnos($plazas);
         $idProfe = 1;
-        echo "<form action='reserva-action.php' method='post' id='formReserva'>
+        echo "<form action='./acciones/reservar.php' method='post' id='formReserva'>
         <h2>Formulario de Reserva</h2><hr>
         <label for='clase'>Seleccione Clase</label><br>
         <select name='clase' id='clase'>";

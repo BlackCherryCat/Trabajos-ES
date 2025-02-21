@@ -105,7 +105,7 @@
         $result = mysqli_query($db, $query);
 
         if(mysqli_num_rows($result) == 0){
-          $cadena .="<td><div class='wrapper'><label for='tramo$index'><div class='nuevo'><span class='add'>&#43;</span>Añadir Reserva</div></label><div class='free'>Asientos Libres<br>100</div></div></td>";
+          $cadena .="<td><div class='wrapper'><label for='tramo$index'><div class='nuevo'>&#10133;<br>Añadir Tramo<br>a la Reserva</div><div class='remove-hover'>&#x2716;<br>Eliminar Tramo</div></label><div class='free'>Asientos Libres<br>100</div></div></td>";
           $plazas[] = 100;
         }else{
           //Obtenemos el número asientos ocupados de cada resultado y guardamos en una variable
@@ -131,7 +131,7 @@
 
 
           //Cerramos la columna 1
-          $cadena .= "<label for='tramo$index'><div class='nuevo'><span class='add'>&#43;</span>Añadir Reserva</div></label><div class='free'>Asientos Libres<br>".(100-$sumatoria)."</div></div></td>";
+          $cadena .= "<label for='tramo$index'><div class='nuevo'>&#10133;<br>Añadir Tramo<br>a la Reserva</div><div class='remove-hover'>&#x2716;<br>Eliminar Tramo</div></label><div class='free'>Asientos Libres<br>".(100-$sumatoria)."</div></div></td>";
           $sumatoria = 0;
         }
 
@@ -146,7 +146,7 @@
   <input type="checkbox" name="tramo4" id="tramo4">
   <input type="checkbox" name="tramo5" id="tramo5">
   <input type="checkbox" name="tramo6" id="tramo6">
-<button type="submit">Acceder a formulario de Reserva</button>
+<button type="submit" id="btn-sticky">Ir al Formulario de Reserva</button>
 </form>
 <script src="assets/script/tramos.js"></script>
 
