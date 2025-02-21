@@ -17,6 +17,30 @@ function obtenerProfesores($conexion)
     return $profesores; // Devolver el array con los profesores
 }
 
+// Obtener un profesor por ID desde la BD (con consulta directa)
+function obtenerProfesor($conexion, $idProfesor)
+{
+    // Sanitizar el ID para evitar inyecciones SQL (convertirlo a entero)
+    $idProfesor = (int)$idProfesor;
+
+    // Consulta SQL para seleccionar el profesor con el ID especificado
+    $consulta = "SELECT * FROM profesores WHERE id = $idProfesor";
+    
+    // Ejecutar la consulta
+    $resultado = mysqli_query($conexion, $consulta);
+
+    // Verificar si la consulta se ejecutó correctamente y si se encontró un profesor
+    if ($resultado && mysqli_num_rows($resultado) == 1) {
+        // Obtener el profesor de la consulta
+        $profesor = mysqli_fetch_assoc($resultado);
+    } else {
+        // Si no se encuentra el profesor
+        $profesor = null;
+    }
+
+    return $profesor; // Devolver el profesor encontrado o null
+}
+
 function obtenerBusquedaProfesores($conexion, $busqueda = null)
 {
     // Consulta SQL para seleccionar todos los profesores que contengan la busqueda en el nombre o apellidos
