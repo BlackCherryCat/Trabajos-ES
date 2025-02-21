@@ -177,9 +177,10 @@ function enviarCorreo($destinatario, $asunto, $mensaje)
     }
 }
 
-use FPDF;
-require 'C:/xampp/htdocs/Trabajos-ES/Trabajo4/FPDF/fpdf.php';
 
+require 'C:/xampp/htdocs/Trabajos-ES/Trabajo4/FPDF/fpdf.php';
+//Descomenta posteriormente la siguiente linea, genera un warning, revisar!!
+//use FPDF;
 
 function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf') {
     $pdf = new FPDF();
