@@ -41,6 +41,65 @@ function obtenerProfesor($conexion, $idProfesor)
     return $profesor; // Devolver el profesor encontrado o null
 }
 
+function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email, $passwd, $imgPerfilURL)
+{
+    // Primero, obtenemos los datos actuales del profesor
+    $profesorActual = obtenerProfesor($conexion, $idProfesor);
+    
+    // Iniciar la construcción de la consulta UPDATE
+    $consulta = "UPDATE profesores SET ";
+    
+    $camposActualizados = []; // Array para almacenar los campos que realmente serán actualizados
+
+    // Comprobar si el nombre ha cambiado
+    if ($nombre !== $profesorActual['Nombre']) {
+        $nombre = mysqli_real_escape_string($conexion, trim($nombre)); // Sanitizar
+        $camposActualizados[] = "Nombre = '$nombre'";
+    }
+
+    // Comprobar si los apellidos han cambiado
+    if ($apellidos !== $profesorActual['Apellidos']) {
+        $apellidos = mysqli_real_escape_string($conexion, trim($apellidos)); // Sanitizar
+        $camposActualizados[] = "Apellidos = '$apellidos'";
+    }
+
+    // Comprobar si el email ha cambiado
+    if ($email !== $profesorActual['Email']) {
+        $email = mysqli_real_escape_string($conexion, trim($email)); // Sanitizar
+        $camposActualizados[] = "Email = '$email'";
+    }
+
+    // Comprobar si la imagen de perfil ha cambiado
+    if ($imgPerfilURL !== $profesorActual['ImgPerfil']) {
+        $imgPerfilURL = mysqli_real_escape_string($conexion, trim($imgPerfilURL)); // Sanitizar
+        $camposActualizados[] = "ImgPerfil = '$imgPerfilURL'";
+    }
+
+    // Comprobar si la contraseña ha cambiado
+    if ($passwd !== null && $passwd != $profesorActual['Passwd']) {
+            $camposActualizados[] = "Passwd = '$passwd'";
+        }
+
+    // Si al menos un campo ha cambiado, actualizamos la base de datos
+    if (!empty($camposActualizados)) {
+        // Unir todos los campos actualizados con coma
+        $consulta += implode(", ", $camposActualizados);
+        $consulta += " WHERE IdProfesor = $idProfesor"; // Añadir la condición de ID
+        
+        // Ejecutar la consulta de actualización
+        $actualizacion = mysqli_query($conexion, $consulta);
+        
+        if ($actualizacion)  {
+            $_SESSION['correcto'] = "Profesor actualizado con éxito";
+        } else {
+            $_SESSION['error_general'] = "El profesor no ha podido actualizarse.";
+        }
+    }
+
+    return true; // No hubo cambios, por lo que no se realiza ninguna actualización
+}
+
+
 function obtenerBusquedaProfesores($conexion, $busqueda = null)
 {
     // Consulta SQL para seleccionar todos los profesores que contengan la busqueda en el nombre o apellidos

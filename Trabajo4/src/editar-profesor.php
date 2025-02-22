@@ -29,7 +29,7 @@ if (!$profesor) {
 
 <h2>Modificar Profesor</h2>
 <div class="form-container">
-    <form action="./acciones/procesar-modificar-profesor.php" method="POST" enctype="multipart/form-data">
+    <form action="./acciones/procesar-editar-profesor.php" method="POST" enctype="multipart/form-data">
         <!-- Campo oculto para el ID del profesor -->
         <input type="hidden" name="id" value="<?php echo $profesor['IdProfesor']; ?>">
 
