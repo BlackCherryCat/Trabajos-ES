@@ -65,14 +65,12 @@ function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email,
 
     // Comprobar si el email ha cambiado
     if ($email !== $profesorActual['Email']) {
-        $email = mysqli_real_escape_string($conexion, trim($email)); // Sanitizar
         $camposActualizados[] = "Email = '$email'";
     }
 
     // Comprobar si la imagen de perfil ha cambiado
-    if ($imgPerfilURL !== $profesorActual['ImgPerfil']) {
-        $imgPerfilURL = mysqli_real_escape_string($conexion, trim($imgPerfilURL)); // Sanitizar
-        $camposActualizados[] = "ImgPerfil = '$imgPerfilURL'";
+    if ($imgPerfilURL !== $profesorActual['ImgPerfilURL']) {
+        $camposActualizados[] = "ImgPerfilURL = '$imgPerfilURL'";
     }
 
     // Comprobar si la contraseña ha cambiado
@@ -83,8 +81,8 @@ function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email,
     // Si al menos un campo ha cambiado, actualizamos la base de datos
     if (!empty($camposActualizados)) {
         // Unir todos los campos actualizados con coma
-        $consulta += implode(", ", $camposActualizados);
-        $consulta += " WHERE IdProfesor = $idProfesor"; // Añadir la condición de ID
+        $consulta .= implode(", ", $camposActualizados);
+        $consulta .= " WHERE IdProfesor = $idProfesor"; // Añadir la condición de ID
         
         // Ejecutar la consulta de actualización
         $actualizacion = mysqli_query($conexion, $consulta);
@@ -92,10 +90,9 @@ function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email,
         if ($actualizacion)  {
             $_SESSION['correcto'] = "Profesor actualizado con éxito";
         } else {
-            $_SESSION['error_general'] = "El profesor no ha podido actualizarse.";
+            $_SESSION['error_general'] = "Error al actualizar el profesor.";
         }
     }
-
     return true; // No hubo cambios, por lo que no se realiza ninguna actualización
 }
 

@@ -41,6 +41,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_FILES['imgPerfil']) && $_FILES['imgPerfil']['error'] !== 4) { // 4 = No se subió ningún archivo
         if (subirImagen($_FILES['imgPerfil'])) {
             $imgPerfilURL = "./assets/img/perfiles/" . basename($_FILES['imgPerfil']['name']);
+
+            //borrar foto anterior
+            $profesor = obtenerProfesor($db, $idProfesor);
+            if($profesor['ImgPerfilURL'] != './assets/img/perfiles/usuario.avif'){
+                borrarImagen($profesor['ImgPerfilURL']);
+            }
+
         } else {
             $_SESSION['error_general'] = "Error al subir la imagen.";
             header("Location: ../editar-profesor.php?id=$idProfesor");
@@ -54,7 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Actualización de los datos del profesor
     try {
         actualizarProfesor($db, $idProfesor, $nombre, $apellidos, $email, $passwd, $imgPerfilURL);
-        $_SESSION['correcto'] = "Profesor actualizado correctamente.";
     } catch (Exception $e) {
         $_SESSION['error_general'] = "Error al actualizar el profesor.";
     } finally {

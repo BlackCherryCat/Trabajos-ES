@@ -24,7 +24,7 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
 
 <h2>Tu Perfil</h2>
 <div class="form-container">
-    <form action="./acciones/procesar-modificar-profesor.php" method="POST" enctype="multipart/form-data">
+    <form action="./acciones/procesar-mi-perfil.php" method="POST" enctype="multipart/form-data">
         <!-- Campo oculto para el ID del profesor -->
         <input type="hidden" name="id" value="<?php echo $profesor['IdProfesor']; ?>">
 
