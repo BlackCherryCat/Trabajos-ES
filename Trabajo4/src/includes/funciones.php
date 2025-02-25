@@ -115,7 +115,7 @@ function obtenerBusquedaProfesores($conexion, $busqueda = null)
 
 function login($conexion, $email)
 {
-    $consulta = "SELECT * FROM profesores WHERE Email = '$email';";
+    $consulta = "SELECT * FROM Profesores WHERE Email = '$email';";
     $resultado = mysqli_query($conexion, $consulta);
 
     $login = array();
@@ -198,9 +198,9 @@ function borrarImagen($fichero)
     }
 }
 
-require 'C:/xampp/htdocs/Trabajos-ES/Trabajo2/PHPMailer/src/Exception.php';
-require 'C:/xampp/htdocs/Trabajos-ES/Trabajo2/PHPMailer/src/PHPMailer.php';
-require 'C:/xampp/htdocs/Trabajos-ES/Trabajo2/PHPMailer/src/SMTP.php';
+require_once 'PHPMailer/src/Exception.php';
+require_once 'PHPMailer/src/PHPMailer.php';
+require_once 'PHPMailer/src/SMTP.php';
 
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -234,9 +234,7 @@ function enviarCorreo($destinatario, $asunto, $mensaje)
 }
 
 
-require 'C:/xampp/htdocs/Trabajos-ES/Trabajo4/FPDF/fpdf.php';
-//Descomenta posteriormente la siguiente linea, genera un warning, revisar!!
-//use FPDF;
+require_once 'FPDF/fpdf.php';
 
 function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf') {
     $pdf = new FPDF();
