@@ -9,6 +9,24 @@ window.onload = function(){
     remove.forEach(boton => {
         boton.addEventListener("click", removeActive)
     })
+
+    let submitBut = document.querySelector("#btn-sticky");
+    submitBut.addEventListener('click', e =>{
+        
+        let checkboxList = document.querySelectorAll("input[type = 'checkbox']");
+        
+        //Contador de checkbox que están checkeados
+        let checkedCount = 0;
+        checkboxList.forEach(box => {
+            if(box.checked == true) checkedCount++
+        })
+
+        if(checkedCount == 0){
+            alert("Debes seleccionar al menos 1 tramo para la reserva")
+            e.preventDefault();
+        }
+        
+    })
 }
 
 //Función que modifica los botones al clickar
@@ -37,4 +55,3 @@ function removeActive(e){
     target.innerHTML = "&#10133;<br>Añadir Tramo<br>a la Reserva";
 }
 
-//Añadir validacion al formulario, si no hay al menos un checkbox seleccionado, no se puede enviar

@@ -119,6 +119,7 @@ div.reserva{
     align-items: center;
     padding: 30px;
     height: 100%;
+    min-width: 120px;
     font-weight: 300;
     font-size: 15px;
     border: 2px solid rgb(60, 218, 107);

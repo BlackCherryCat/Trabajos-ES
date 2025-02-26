@@ -20,8 +20,6 @@
 
         $horario = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00"];
 
-        $i = 0;
-        
         //En este array vamos a guardar las plazas disponibles de cada tramo
         $plazas = [];
 
@@ -91,6 +89,16 @@
       function getOccupation($hora, $dia, $db, $index, &$plazas){
         $cadena = "<tr><td class='hora'>$hora";
 
+        $groupBy = "";
+        //Al agrupar la sentencia por reservas, vamos a poder imprimir los datos de forma más detallada para el admin
+        if($_SESSION["profesor"]["EsAdmin"] == 1){
+          $groupBy = "group by Reserva_Tramos.IdReserva;";
+        }else{
+          $groupBy = "group by Reserva_Tramos.IdTramo;";
+        }
+
+        
+
         //Contenido de td, divs con reservas y nueva reserva
         $query = "select Reservas.IdReserva, Reserva_Tramos.IdTramo, Reservas.Fecha, Tramos.Horario, sum(Reservas.NumAlumnos) As 'Alumnos', Profesores.Nombre AS 'profe', Asignaturas.Nombre
                     from Reservas
@@ -100,7 +108,7 @@
                     inner join Asignaturas on Reservas.IdAsignatura = Asignaturas.IdAsignatura
                     where Reservas.Fecha = '$dia' AND
                     Tramos.Horario = '$hora'
-                    group by Reserva_Tramos.IdTramo;";
+                    $groupBy";
 
         $result = mysqli_query($db, $query);
 
@@ -113,22 +121,37 @@
           //Iniciamos la columna
           $cadena .= "<td><div class='wrapper'>";
 
-          while($registro = mysqli_fetch_assoc($result)){
-            $cadena .= "<div class='reserva' style='width:$registro[Alumnos]%'>Reserva";
-            $cadena .= "<b>Profesor: </b>";
-            $cadena .= $registro["profe"]."<br>";
-            $cadena .= "<b>Asignatura:</b> $registro[Nombre]";
-            $sumatoria += $registro["Alumnos"];
-            $cadena .= "</div>";
+          $contador = 1;
 
-            //Añadimos el máximo de plazas disponibles al array
-            $plazas[] = 100-$sumatoria;
+          if($_SESSION["profesor"]["EsAdmin"] == 1){
+            while($registro = mysqli_fetch_assoc($result)){
+              $cadena .= "<div class='reserva' style='width:$registro[Alumnos]%'>Reserva";
+              $cadena .= "<b>Profesor: </b>";
+              $cadena .= $registro["profe"]."<br>";
+              $cadena .= "<b>Asignatura:</b> $registro[Nombre]";
+              $sumatoria += $registro["Alumnos"];
+              $cadena .= "</div>";
+  
+              
+              //Añadimos el máximo de plazas disponibles al array
+              $plazas["tramo$index"] = 100-$sumatoria;
+              $contador++;
+            }
+          }else{
+            while($registro = mysqli_fetch_assoc($result)){
+              $cadena .= "<div class='reserva' style='width:$registro[Alumnos]%'>Reserva";
+              $cadena .= "<b>Ocupado: </b>";
+              $cadena .= $registro["Alumnos"]." plazas";
+              $sumatoria += $registro["Alumnos"];
+              $cadena .= "</div>";
+  
+              
+              //Añadimos el máximo de plazas disponibles al array
+              $plazas["tramo$index"] = 100-$sumatoria;
+              $contador++;
+            }
           }
-
-          //Añadimos a la sesión el número de plazas disponibles de cada tramo
-
-
-
+          
 
           //Cerramos la columna 1
           $cadena .= "<label for='tramo$index'><div class='nuevo'>&#10133;<br>Añadir Tramo<br>a la Reserva</div><div class='remove-hover'>&#x2716;<br>Eliminar Tramo</div></label><div class='free'>Asientos Libres<br>".(100-$sumatoria)."</div></div></td>";
@@ -140,6 +163,7 @@
       }
 ?>
 <form action="form-reserva.php" class="tramos">
+
   <input type="checkbox" name="tramo1" id="tramo1">
   <input type="checkbox" name="tramo2" id="tramo2">
   <input type="checkbox" name="tramo3" id="tramo3">
