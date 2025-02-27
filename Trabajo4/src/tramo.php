@@ -90,6 +90,7 @@
         $cadena = "<tr><td class='hora'>$hora";
 
         $groupBy = "";
+
         //Al agrupar la sentencia por reservas, vamos a poder imprimir los datos de forma más detallada para el admin
         if($_SESSION["profesor"]["EsAdmin"] == 1){
           $groupBy = "group by Reserva_Tramos.IdReserva;";
@@ -122,6 +123,7 @@
           $cadena .= "<td><div class='wrapper'>";
 
           $contador = 1;
+
 
           if($_SESSION["profesor"]["EsAdmin"] == 1){
             while($registro = mysqli_fetch_assoc($result)){

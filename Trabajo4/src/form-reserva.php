@@ -5,7 +5,6 @@
         $plazas = $_SESSION["plazas"];
         $disponibles = maxAlumnos($plazas);
         selectedTramos();
-        //$idProfe = $_SESSION["profesor"]["IdProfesor"];
         $idProfe = $_SESSION["profesor"]["IdProfesor"];
         echo "<form action='./acciones/reservar.php' method='post' id='formReserva'>
         <input type='hidden' name='profe' value='$idProfe' id='idProfesor'>
@@ -31,8 +30,12 @@
         
         <br><br>
         
-        <label for='alumnos'>Seleccine el número de alumnos</label><br>
-        <input type='number' id='alumnos' max='$disponibles'><br><br>
+        <label for='alumnos'>Seleccione el número de alumnos</label><br>
+        <input type='number' id='alumnos' name='alumnos' max='$disponibles'><br>
+        <div style='width: 80%'>
+            <input type='checkbox' id='excederAlumnos' style='display:inline-block;'> 
+            <label for='excederAlumnos' style='display:inline'> Quiero reservar para una cantidad mayor de alumnos</label>
+        </div><br><br>
         ";
 
         echo "<button type='submit'>Reservar</button>
@@ -93,7 +96,18 @@
 
     const clase = document.getElementById("clase");
 
+    //Obtenemos el input number de alumnos
+    let input = document.getElementById("alumnos");
+
+    //Obtenemos el número máximo de alumnos que permite el tramo
+    let maxAlumnos = parseInt(input.getAttribute('max'));
+    let alumnosClase = 0;
+
     clase.addEventListener("change", cargarAsignaturas);
+
+    //Evento de checkbox para saltar el límite de alumnos
+    let check = document.getElementById('excederAlumnos');
+    check.addEventListener("change", saltarLimiteAlumnos)
 
     function cargarAsignaturas(){
         console.log("asdasdasd");
@@ -124,5 +138,39 @@
         .catch(error => {
             console.log("Ha habido un error, vuelva a intentarlo");
         })
+
+
+        //Fetch para los números de alumnos, solo lo hacemos si el número es menor y si el check está desactivado
+        if(!check.checked){
+            let claseData = new FormData();
+
+            claseData.append('clase', idClase);
+
+            fetch("./acciones/getAlumnosClase.php", {
+                method: "POST",
+                body: claseData
+            })
+            .then(respuesta => respuesta.text())
+            .then(numAlumnos => {
+                alumnosClase = parseInt(numAlumnos);
+
+
+                if(numAlumnos < maxAlumnos){
+                    input.setAttribute('max', alumnosClase)
+                    input.setAttribute('value', alumnosClase)
+                }
+                
+            })
+        }
+        
+    }
+
+    function saltarLimiteAlumnos(e){
+        if(e.target.checked){
+            input.setAttribute('max', maxAlumnos)
+        }else{
+            input.setAttribute('max', alumnosClase)
+            input.setAttribute('value', alumnosClase)
+        }
     }
 </script>

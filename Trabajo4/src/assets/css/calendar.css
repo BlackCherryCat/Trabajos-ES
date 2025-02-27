@@ -52,6 +52,11 @@ td a{
 td a.disabled{
     cursor: crosshair;
 }
+td.completo a{
+    font-weight: 400;
+    color: rgb(238, 165, 165);
+    text-decoration: none;
+}
 
 table.tramo{
     height: 600px;
@@ -181,4 +186,7 @@ button#btn-sticky{
     height: 100px;
     padding: 20px;
 
+}
+#num{
+    width: 100%;
 }

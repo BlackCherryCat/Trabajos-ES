@@ -79,7 +79,28 @@
         }else{
             if($dia <= $currentMonthDays){
                 $getDay = $year."-".$month."-".$dia;
-                echo "<td class='cal'><a href='tramo.php?date=".$getDay."'>$dia</a></td>";
+                if($x==6 || $x==7){
+                  echo "<td class='cal'>$dia</td>";
+                }else{
+                  //Sacamos el número de alumnos que tiene ese tramo en total
+                  $query = "
+                  select (NumAlumnos*count(IdTramo)) AS alumnos from Reservas
+                  inner join Reserva_Tramos on Reservas.IdReserva = Reserva_Tramos.IdReserva
+                  where Fecha = '$getDay';
+                  ";
+                  $result = mysqli_query($db, $query);
+                  $registro = mysqli_fetch_assoc($result);
+
+                  if($registro["alumnos"] && $registro["alumnos"] == 600){
+                    if($_SESSION['profesor']["EsAdmin"] == 1){
+                      echo "<td class='cal completo'><a href='tramo.php?date=".$getDay."'>$dia <br> Completo</a></td>";
+                    }else{
+                      echo "<td class='cal completo'>$dia <br> Completo</td>";
+                    }
+                  }else{
+                    echo "<td class='cal'><a href='tramo.php?date=".$getDay."'>$dia</a></td>";
+                  }
+                }
                 $dia++;
             }else{
                 echo "<td class='cal disabled'>$nextMonthDay</td>";
