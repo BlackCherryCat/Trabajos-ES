@@ -81,3 +81,79 @@ CREATE TABLE Departamento_Asignatura (
     FOREIGN KEY (IdAsignatura) REFERENCES Asignaturas(IdAsignatura) ON DELETE CASCADE
 );
 
+-- Insertar datos
+INSERT INTO Cursos (Nombre, NumAlumnos) VALUES
+('1ºA ESO', 30),
+('1ºB ESO', 28),
+('2ºA ESO', 29),
+('2ºB ESO', 27),
+('3ºA ESO', 30),
+('3ºB ESO', 28),
+('4ºA ESO', 29),
+('4ºB ESO', 27),
+('1ºA Bachillerato', 25),
+('1ºB Bachillerato', 24),
+('2ºA Bachillerato', 23),
+('2ºB Bachillerato', 22);
+
+INSERT INTO Asignaturas (Nombre) VALUES
+('Matemáticas'),
+('Lengua y Literatura'),
+('Historia'),
+('Física y Química'),
+('Biología'),
+('Inglés');
+
+INSERT INTO Curso_Asignatura (IdCurso, IdAsignatura) VALUES
+(1, 1), (1, 2), (1, 3),
+(2, 1), (2, 2), (2, 3),
+(3, 1), (3, 2), (3, 4),
+(4, 1), (4, 2), (4, 4),
+(5, 1), (5, 3), (5, 5),
+(6, 1), (6, 3), (6, 5),
+(7, 2), (7, 4), (7, 6),
+(8, 2), (8, 4), (8, 6),
+(9, 1), (9, 3), (9, 5),
+(10, 1), (10, 3), (10, 5),
+(11, 2), (11, 4), (11, 6),
+(12, 2), (12, 4), (12, 6);
+
+INSERT INTO Profesores (Nombre, Apellidos, Email, Passwd, EsAdmin, EsAlta, ImgPerfilURL) VALUES
+('Cristina', 'Vacas', 'cvaclop1911@g.educaand.es', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', TRUE, TRUE, NULL),
+('Administrador', 'Reservas', 'noemi@g.educaand.es', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', TRUE, TRUE, NULL),
+('Carlos', 'López', 'carlos@gmail.com', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', FALSE, TRUE, NULL);
+
+INSERT INTO Profesor_Curso_Asignatura (IdCurso, IdAsignatura, IdProfesor) VALUES
+(1, 1, 1), (2, 1, 1),
+(3, 2, 2), (4, 2, 2),
+(5, 3, 3), (6, 3, 3);
+
+INSERT INTO Tramos (Horario) VALUES
+('08:00 - 09:30'),
+('10:00 - 11:30'),
+('12:00 - 13:30');
+
+INSERT INTO Departamentos (Nombre) VALUES
+('Matemáticas'),
+('Lengua y Literatura'),
+('Ciencias Sociales'),
+('Ciencias Naturales'),
+('Idiomas');
+
+INSERT INTO Departamento_Asignatura (IdDepartamento, IdAsignatura) VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(4, 5),
+(5, 6);
+
+INSERT INTO Reservas (Fecha, NumAlumnos, IdCurso, IdAsignatura, IdProfesor) VALUES
+('2025-03-15', 30, 1, 1, 1),
+('2025-03-16', 28, 3, 2, 2),
+('2025-03-17', 29, 5, 3, 3);
+
+INSERT INTO Reserva_Tramos (IdReserva, IdTramo) VALUES
+(5, 1),
+(6, 2),
+(7, 3);
