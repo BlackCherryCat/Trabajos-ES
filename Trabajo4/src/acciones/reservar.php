@@ -1,6 +1,5 @@
 <?php
     include_once "../includes/conexion.php";
-    session_start();
         $idProfe = $_SESSION["profesor"]["IdProfesor"];
         $idClase = $_POST["clase"];
         $idAsignatura = $_POST["asignatura"];
