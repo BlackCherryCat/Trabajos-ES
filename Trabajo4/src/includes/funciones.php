@@ -248,8 +248,24 @@ function enviarCorreo($destinatario, $asunto, $mensaje)
 
 require_once 'FPDF/fpdf.php';
 
-function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf')
+function descargarPDF($db, $id, $nombreArchivo = 'mireserva.pdf')
 {
+    $sql = "SELECT 
+    r.IdReserva,
+    r.Fecha,
+    t.Horario,
+    r.NumAlumnos,
+    c.Nombre AS Curso,
+    a.Nombre AS Asignatura
+    FROM Reservas r
+    JOIN Cursos c ON r.IdCurso = c.IdCurso
+    JOIN Asignaturas a ON r.IdAsignatura = a.IdAsignatura
+    JOIN Reserva_Tramos rt ON r.IdReserva = rt.IdReserva
+    JOIN Tramos t ON rt.IdTramo = t.IdTramo
+    WHERE r.IdReserva = $id;
+";
+    $resultado = $db->query($sql);
+    $fila = $resultado->fetch_assoc();
     $pdf = new FPDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 16);
@@ -257,9 +273,12 @@ function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf')
     $pdf->Ln(10);
 
     $pdf->SetFont('Arial', '', 12);
-    foreach ($datos as $clave => $valor) {
-        $pdf->Cell(0, 10, "$clave: $valor", 0, 1);
-    }
+    $pdf->Cell(0, 10, "ID Reserva: " . $fila['IdReserva'], 0, 1);
+    $pdf->Cell(0, 10, "Fecha: " . $fila['Fecha'], 0, 1);
+    $pdf->Cell(0, 10, "Horario: " . $fila['Horario'], 0, 1);
+    $pdf->Cell(0, 10, mb_convert_encoding("Número de alumnos: ", 'ISO-8859-1') . $fila['NumAlumnos'], 0, 1);
+    $pdf->Cell(0, 10, "Curso: " . mb_convert_encoding($fila['Curso'], 'ISO-8859-1'), 0, 1);
+    $pdf->Cell(0, 10, "Asignatura: " . mb_convert_encoding($fila['Asignatura'], 'ISO-8859-1'), 0, 1);
 
     header('Content-Type: application/pdf');
     header("Content-Disposition: attachment; filename=\"$nombreArchivo\"");
@@ -290,11 +309,12 @@ function obtenerCursosAsignaturas($conexion)
     return $cusrosAsignaturas; // Devolver el array con los profesores
 }
 
-function actualizarProfesorCursoAsignatura($conexion, $idProfesor, $clasesSeleccionadas){
+function actualizarProfesorCursoAsignatura($conexion, $idProfesor, $clasesSeleccionadas)
+{
     // Eliminar asignaciones previas del profesor
     $sqlDelete = "DELETE FROM Profesor_Curso_Asignatura WHERE IdProfesor = $idProfesor";
-    
-    if(mysqli_query($conexion, $sqlDelete)){
+
+    if (mysqli_query($conexion, $sqlDelete)) {
         foreach ($clasesSeleccionadas as $clase) {
             list($idCurso, $idAsignatura) = explode("-", $clase);
             $idCurso = intval($idCurso);
@@ -306,21 +326,22 @@ function actualizarProfesorCursoAsignatura($conexion, $idProfesor, $clasesSelecc
     }
 }
 
-function obtenerCursoAsignaturaDelProfesor($conexion, $idProfesor) {
+function obtenerCursoAsignaturaDelProfesor($conexion, $idProfesor)
+{
     $consulta = "SELECT IdCurso, IdAsignatura
             FROM Profesor_Curso_Asignatura
-            WHERE IdProfesor = ". (int)$idProfesor;
+            WHERE IdProfesor = " . (int)$idProfesor;
 
     $resultado = mysqli_query($conexion, $consulta); // Ejecutar la consulta
 
     // Convertir los resultados en un array de strings "IdCurso-IdAsignatura"
     // Verificar si hay resultados
     if (mysqli_num_rows($resultado) > 0) {
-    $asignaturasProfesor = [];
-    while ($fila = mysqli_fetch_assoc($resultado)) {
-        $asignaturasProfesor[] = $fila['IdCurso'] . "-" . $fila['IdAsignatura']; // Formato "1-1"
-    }
-    return $asignaturasProfesor;
+        $asignaturasProfesor = [];
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $asignaturasProfesor[] = $fila['IdCurso'] . "-" . $fila['IdAsignatura']; // Formato "1-1"
+        }
+        return $asignaturasProfesor;
     } else {
         return []; // Si no hay resultados, devolver un array vacío
     }
