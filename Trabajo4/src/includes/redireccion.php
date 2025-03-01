@@ -6,6 +6,7 @@ if (!isset($_SESSION)) {
 
 if (!isset($_SESSION['profesor'])) {
     header("Location: login.php");
+    exit();
 }
 
 ?>

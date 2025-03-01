@@ -1,6 +1,6 @@
 <?php
 if (!isset($_POST['buscador'])) {
-    header("Location: index.php");
+    header("Location: reserva.php");
 }
 
 require_once 'includes/header.php'; 

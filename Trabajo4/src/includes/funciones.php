@@ -173,7 +173,11 @@ function subirImagen($fichero)
 
     // Mover el archivo subido a la carpeta del servidor "subidasFile"
     // Mostrar el archivo subido
-    $rutaDestino = $ruta . basename($nombreFich); // Ruta de destino
+    // Crear un nombre único para la imagen
+    $extension = pathinfo($nombreFich, PATHINFO_EXTENSION);  // Obtener la extensión del archivo (jpg, png, etc.)
+    $nombreUnico = uniqid('img_', true) . '.' . $extension;  // Generar un nombre único usando `uniqid` y la extensión original
+
+    $rutaDestino = $ruta . $nombreUnico;  // Ruta de destino con el nuevo nombre único
 
     // Lista de tipos MIME permitidos
     $tiposPermitidos = ["image/jpeg", "image/png"];
@@ -183,7 +187,7 @@ function subirImagen($fichero)
     } elseif ($sizeFich > $maxSize) {
         $_SESSION['error_general'] = "Error: El archivo es demasiado grande (máximo: 1 MB).";
     } elseif (move_uploaded_file($tempFich, $rutaDestino)) {
-        return true;
+        return $nombreUnico;
     } else {
         $_SESSION['error_general'] = "Error: No se pudo subir el archivo.";
     }
@@ -299,5 +303,25 @@ function actualizarProfesorCursoAsignatura($conexion, $idProfesor, $clasesSelecc
                         VALUES ($idCurso, $idAsignatura, $idProfesor)";
             $resultado = mysqli_query($conexion, $sqlInsert);
         }
+    }
+}
+
+function obtenerCursoAsignaturaDelProfesor($conexion, $idProfesor) {
+    $consulta = "SELECT IdCurso, IdAsignatura
+            FROM Profesor_Curso_Asignatura
+            WHERE IdProfesor = ". (int)$idProfesor;
+
+    $resultado = mysqli_query($conexion, $consulta); // Ejecutar la consulta
+
+    // Convertir los resultados en un array de strings "IdCurso-IdAsignatura"
+    // Verificar si hay resultados
+    if (mysqli_num_rows($resultado) > 0) {
+    $asignaturasProfesor = [];
+    while ($fila = mysqli_fetch_assoc($resultado)) {
+        $asignaturasProfesor[] = $fila['IdCurso'] . "-" . $fila['IdAsignatura']; // Formato "1-1"
+    }
+    return $asignaturasProfesor;
+    } else {
+        return []; // Si no hay resultados, devolver un array vacío
     }
 }

@@ -4,7 +4,7 @@ require_once '../includes/conexion.php';
 require_once '../includes/funciones.php';
 
 if ($_SESSION['profesor']['EsAdmin'] != 1) {
-    header("Location: index.php");
+    header("Location: ../reserva.php");
     exit();
 }
 
@@ -43,8 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Manejo de la imagen
     $imgPerfilURL = "";
     if (isset($_FILES['imgPerfil']) && $_FILES['imgPerfil']['error'] !== 4) { // 4 = No se subió ningún archivo
-        if (subirImagen($_FILES['imgPerfil'])) {
-            $imgPerfilURL = "./assets/img/perfiles/" . basename($_FILES['imgPerfil']['name']);
+        $imagen = subirImagen($_FILES['imgPerfil']);
+        if ($imagen) {
+            $imgPerfilURL = "./assets/img/perfiles/" . $imagen;
 
             //borrar foto anterior
             $profesor = obtenerProfesor($db, $idProfesor);
@@ -59,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         // Si no se sube nueva imagen, se mantiene la actual
-        $imgPerfilURL = "./assets/img/perfiles/usuario.avif";
+        $profesor = obtenerProfesor($db, $idProfesor);
+        $imgPerfilURL = $profesor['ImgPerfilURL'];
     }
 
         //Curso-Asignatura del profesor a editar

@@ -2,7 +2,7 @@
 require_once 'includes/header.php';
 
 if ($_SESSION['profesor']['EsAdmin'] != 1) {
-    header("Location: index.php");
+    header("Location: reserva.php");
 }
 
 if (isset($_SESSION['error_general']) && !empty($_SESSION['error_general'])) {
@@ -73,21 +73,6 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
                     <option value="0">Baja</option>
                 </select>
             </div>
-        </div>
-
-        <?php
-        $cursosAsignaturas = obtenerCursosAsignaturas($db);
-        ?>
-
-        <div>
-            <label  class="form-label" for="clases">Selecciona las clases que imparte:</label>
-            <select id="clases" name="clases[]" class="form-select" multiple="multiple" required>
-            <?php
-                foreach ($cursosAsignaturas as $linea) {
-                    echo "<option value='$linea[IdCurso]-$linea[IdAsignatura]'>$linea[NombreCurso] - $linea[NombreAsignatura]</option>";
-                }
-            ?>
-            </select>
         </div>
 
         <button type="submit" class="btn btn-primary w-100 mt-4">Crear Profesor</button>

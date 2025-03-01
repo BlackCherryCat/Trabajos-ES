@@ -2,7 +2,7 @@
 require_once 'includes/header.php';
 
 if ($_SESSION['profesor']['EsAdmin'] != 1) {
-    header("Location: index.php");
+    header("Location: reserva.php");
 }
 
 // Verificar si hay mensajes de error o éxito
@@ -75,35 +75,46 @@ if (!$profesor) {
             <div class="col-md-3">
                 <label class="form-label">Administrador</label>
                 <select class="form-select" id="esAdmin" name="esAdmin">
-                    <option value="1">Sí</option>
-                    <option value="0" selected>No</option>
+                    <option value="1" <?php if($profesor['EsAdmin']) echo "selected" ?>>Sí</option>
+                    <option value="0" <?php if(!$profesor['EsAdmin']) echo "selected" ?>>No</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Estado</label>
                 <select class="form-select" id="esAlta" name="esAlta">
-                    <option value="1" selected>Alta</option>
-                    <option value="0">Baja</option>
+                    <option value="1" <?php if($profesor['EsAlta']) echo "selected" ?>>Alta</option>
+                    <option value="0" <?php if(!$profesor['EsAlta']) echo "selected" ?>>Baja</option>
                 </select>
             </div>
         </div>
 
         <?php
         $cursosAsignaturas = obtenerCursosAsignaturas($db);
+        $asignaturaPropias = obtenerCursoAsignaturaDelProfesor($db, $idProfesor);
         ?>
 
         <div>
             <label  class="form-label" for="clases">Selecciona las clases que imparte:</label>
             <select id="clases" name="clases[]" class="form-select" multiple="multiple">
             <?php
-                foreach ($cursosAsignaturas as $linea) {
-                    echo "<option value='$linea[IdCurso]-$linea[IdAsignatura]'>$linea[NombreCurso] - $linea[NombreAsignatura]</option>";
-                }
-            ?>
+            // Recorrer las asignaturas y cursos
+            foreach ($cursosAsignaturas as $linea) {
+                // Crear el valor de la opción en formato "IdCurso-IdAsignatura"
+                $valor = $linea['IdCurso'] . "-" . $linea['IdAsignatura'];
+
+                // Verificar si la asignatura está seleccionada
+                $selected = in_array($valor, $asignaturaPropias) ? "selected" : "";
+
+                // Imprimir la opción
+                echo "<option value='$valor' $selected>$linea[NombreCurso] - $linea[NombreAsignatura]</option>";
+            }
+        ?>
             </select>
         </div>
         <button type="submit" class="btn btn-primary w-100 mt-4">Modificar Profesor</button>
     </form>
 </div>
+
+
 
 <?php require_once 'includes/footer.php'; ?>

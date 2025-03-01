@@ -1,8 +1,9 @@
 <?php
-require_once 'includes/header.php';
+require_once './includes/header.php';
 
 if ($_SESSION['profesor']['EsAdmin'] != 1) {
-    header("Location: index.php");
+    header("Location: ./reserva.php");
+    exit();
 }
 
 if (isset($_SESSION['error_general']) && !empty($_SESSION['error_general'])) {
