@@ -25,7 +25,7 @@ function obtenerProfesor($conexion, $idProfesor)
 
     // Consulta SQL para seleccionar el profesor con el ID especificado
     $consulta = "SELECT * FROM profesores WHERE IdProfesor = $idProfesor";
-    
+
     // Ejecutar la consulta
     $resultado = mysqli_query($conexion, $consulta);
 
@@ -41,14 +41,14 @@ function obtenerProfesor($conexion, $idProfesor)
     return $profesor; // Devolver el profesor encontrado o null
 }
 
-function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email, $passwd, $imgPerfilURL)
+function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL)
 {
     // Primero, obtenemos los datos actuales del profesor
     $profesorActual = obtenerProfesor($conexion, $idProfesor);
-    
+
     // Iniciar la construcción de la consulta UPDATE
     $consulta = "UPDATE profesores SET ";
-    
+
     $camposActualizados = []; // Array para almacenar los campos que realmente serán actualizados
 
     // Comprobar si el nombre ha cambiado
@@ -68,6 +68,14 @@ function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email,
         $camposActualizados[] = "Email = '$email'";
     }
 
+    if ($esAdmin !== $profesorActual['EsAdmin']) {
+        $camposActualizados[] = "EsAdmin = '$esAdmin'";
+    }
+
+    if ($esAlta !== $profesorActual['EsAlta']) {
+        $camposActualizados[] = "EsAlta = '$esAlta'";
+    }
+
     // Comprobar si la imagen de perfil ha cambiado
     if ($imgPerfilURL !== $profesorActual['ImgPerfilURL']) {
         $camposActualizados[] = "ImgPerfilURL = '$imgPerfilURL'";
@@ -75,19 +83,19 @@ function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email,
 
     // Comprobar si la contraseña ha cambiado
     if ($passwd !== null && $passwd != $profesorActual['Passwd']) {
-            $camposActualizados[] = "Passwd = '$passwd'";
-        }
+        $camposActualizados[] = "Passwd = '$passwd'";
+    }
 
     // Si al menos un campo ha cambiado, actualizamos la base de datos
     if (!empty($camposActualizados)) {
         // Unir todos los campos actualizados con coma
         $consulta .= implode(", ", $camposActualizados);
         $consulta .= " WHERE IdProfesor = $idProfesor"; // Añadir la condición de ID
-        
+
         // Ejecutar la consulta de actualización
         $actualizacion = mysqli_query($conexion, $consulta);
-        
-        if ($actualizacion)  {
+
+        if ($actualizacion) {
             $_SESSION['correcto'] = "Profesor actualizado con éxito";
         } else {
             $_SESSION['error_general'] = "Error al actualizar el profesor.";
@@ -236,20 +244,60 @@ function enviarCorreo($destinatario, $asunto, $mensaje)
 
 require_once 'FPDF/fpdf.php';
 
-function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf') {
+function descargarPDF($datos, $nombreArchivo = 'mireserva.pdf')
+{
     $pdf = new FPDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 16);
     $pdf->Cell(0, 10, 'Datos de la reserva', 0, 1, 'C');
     $pdf->Ln(10);
-    
+
     $pdf->SetFont('Arial', '', 12);
     foreach ($datos as $clave => $valor) {
         $pdf->Cell(0, 10, "$clave: $valor", 0, 1);
     }
-    
+
     header('Content-Type: application/pdf');
     header("Content-Disposition: attachment; filename=\"$nombreArchivo\"");
     $pdf->Output('D', $nombreArchivo);
     exit;
+}
+
+function obtenerCursosAsignaturas($conexion)
+{
+    // Consulta SQL para seleccionar todos los profesores
+    $consulta = "SELECT ca.IdCurso,
+                    c.Nombre AS NombreCurso,
+                    ca.IdAsignatura,
+                    a.Nombre AS NombreAsignatura
+                FROM Curso_Asignatura ca
+                JOIN Cursos c ON ca.IdCurso = c.IdCurso
+                JOIN Asignaturas a ON ca.IdAsignatura = a.IdAsignatura;
+                ";
+    $resultado = mysqli_query($conexion, $consulta); // Ejecutar la consulta
+
+    $cusrosAsignaturas = array();
+    if ($resultado && mysqli_num_rows($resultado) >= 1) {
+        // Recorrer cada fila del resultado y almacenarla en el array
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $cusrosAsignaturas[] = $fila; // Agregar cada profesor al array
+        }
+    }
+    return $cusrosAsignaturas; // Devolver el array con los profesores
+}
+
+function actualizarProfesorCursoAsignatura($conexion, $idProfesor, $clasesSeleccionadas){
+    // Eliminar asignaciones previas del profesor
+    $sqlDelete = "DELETE FROM Profesor_Curso_Asignatura WHERE IdProfesor = $idProfesor";
+    
+    if(mysqli_query($conexion, $sqlDelete)){
+        foreach ($clasesSeleccionadas as $clase) {
+            list($idCurso, $idAsignatura) = explode("-", $clase);
+            $idCurso = intval($idCurso);
+            $idAsignatura = intval($idAsignatura);
+            $sqlInsert = "INSERT INTO Profesor_Curso_Asignatura (IdCurso, IdAsignatura, IdProfesor)
+                        VALUES ($idCurso, $idAsignatura, $idProfesor)";
+            $resultado = mysqli_query($conexion, $sqlInsert);
+        }
+    }
 }

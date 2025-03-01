@@ -119,9 +119,9 @@ INSERT INTO Curso_Asignatura (IdCurso, IdAsignatura) VALUES
 (12, 2), (12, 4), (12, 6);
 
 INSERT INTO Profesores (Nombre, Apellidos, Email, Passwd, EsAdmin, EsAlta, ImgPerfilURL) VALUES
-('Cristina', 'Vacas', 'cvaclop1911@g.educaand.es', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', TRUE, TRUE, NULL),
-('Administrador', 'Reservas', 'noemi@g.educaand.es', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', TRUE, TRUE, NULL),
-('Carlos', 'López', 'carlos@gmail.com', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', FALSE, TRUE, NULL);
+('Cristina', 'Vacas', 'cvaclop1911@g.educaand.es', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', TRUE, TRUE, './assets/img/perfiles/usuario.avif'),
+('Administrador', 'Reservas', 'noemi@g.educaand.es', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', TRUE, TRUE, './assets/img/perfiles/usuario.avif'),
+('Carlos', 'López', 'carlos@gmail.com', '$2y$10$ays7ZVmdw9qWXM3zVJJzeedt/jk.c12NAS4MluY1Zi/V4Y4UKYGpG', FALSE, TRUE, './assets/img/perfiles/usuario.avif');
 
 INSERT INTO Profesor_Curso_Asignatura (IdCurso, IdAsignatura, IdProfesor) VALUES
 (1, 1, 1), (2, 1, 1),

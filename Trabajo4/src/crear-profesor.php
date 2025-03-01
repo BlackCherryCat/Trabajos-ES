@@ -75,7 +75,22 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100">Crear Profesor</button>
+        <?php
+        $cursosAsignaturas = obtenerCursosAsignaturas($db);
+        ?>
+
+        <div>
+            <label  class="form-label" for="clases">Selecciona las clases que imparte:</label>
+            <select id="clases" name="clases[]" class="form-select" multiple="multiple" required>
+            <?php
+                foreach ($cursosAsignaturas as $linea) {
+                    echo "<option value='$linea[IdCurso]-$linea[IdAsignatura]'>$linea[NombreCurso] - $linea[NombreAsignatura]</option>";
+                }
+            ?>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100 mt-4">Crear Profesor</button>
     </form>
 
 </div>

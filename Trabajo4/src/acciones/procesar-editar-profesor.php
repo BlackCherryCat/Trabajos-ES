@@ -35,6 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Si se ingresa una nueva contraseña, se encripta
     $passwd = !empty($_POST['passwd']) ? password_hash($_POST['passwd'], PASSWORD_BCRYPT) : null;
+    
+    $esAdmin = isset($_POST['esAdmin']) ? intval($_POST['esAdmin']) : 0;
+    $esAlta = isset($_POST['esAlta']) ? intval($_POST['esAlta']) : 1;
+    
 
     // Manejo de la imagen
     $imgPerfilURL = "";
@@ -58,9 +62,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $imgPerfilURL = "./assets/img/perfiles/usuario.avif";
     }
 
+        //Curso-Asignatura del profesor a editar
+        if (isset($_POST["clases"])) {
+        $clasesSeleccionadas = $_POST["clases"]; // Array de valores tipo "1-1", "2-3", etc.
+        try{
+            actualizarProfesorCursoAsignatura($db, $idProfesor, $clasesSeleccionadas);
+        }catch (Exception $e){
+            $_SESSION['error_general'] = "Error al actualizar el profesor en las asignaturas.";
+        }
+        
+        }
+
     // Actualización de los datos del profesor
     try {
-        actualizarProfesor($db, $idProfesor, $nombre, $apellidos, $email, $passwd, $imgPerfilURL);
+        actualizarProfesor($db, $idProfesor, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL);
     } catch (Exception $e) {
         $_SESSION['error_general'] = "Error al actualizar el profesor.";
     } finally {
