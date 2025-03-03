@@ -41,7 +41,7 @@ function changeButton(e){
     
     if(clases.contains("active")){
             clases.remove("active")
-            boton.innerHTML = "&#10133;<br>Añadir Tramo<br>a la Reserva"
+            boton.innerHTML = "&#10133;<br>Añadir Tramo"
     }else{
             clases.add("active")
             boton.innerHTML = "&#10004;<br>Tramo Añadido"
@@ -52,6 +52,6 @@ function removeActive(e){
     let target = e.target.parentNode.childNodes[0];
 
     target.classList.remove("active");
-    target.innerHTML = "&#10133;<br>Añadir Tramo<br>a la Reserva";
+    target.innerHTML = "&#10133;<br>Añadir Tramo";
 }
 

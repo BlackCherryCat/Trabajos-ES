@@ -156,7 +156,12 @@
           
 
           //Cerramos la columna 1
-          $cadena .= "<label for='tramo$index'><div class='nuevo'>&#10133;<br>Añadir Tramo<br>a la Reserva</div><div class='remove-hover'>&#x2716;<br>Eliminar Tramo</div></label><div class='free'>Asientos Libres<br>".(100-$sumatoria)."</div></div></td>";
+          if($sumatoria != 100){
+            $cadena .= "<label for='tramo$index'><div class='nuevo'>&#10133;<br>Añadir Tramo</div><div class='remove-hover'>&#x2716;<br>Eliminar Tramo</div></label><div class='free'>Asientos Libres<br>".(100-$sumatoria)."</div></div></td>";
+          }else{
+            $cadena .= "<label for='tramo$index'></label><div class='free'>Asientos Libres<br>".(100-$sumatoria)."</div></div></td>";
+          }
+          
           $sumatoria = 0;
         }
 
