@@ -7,6 +7,8 @@ require_once '../includes/funciones.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recoger los datos del formulario
     $idProfesor = $_SESSION['profesor']['IdProfesor'];
+    $esAlta = $_SESSION['profesor']['EsAlta'];
+    $esAdmin = $_SESSION['profesor']['EsAdmin'];
     $nombre = htmlspecialchars(trim($_POST['nombre']), ENT_QUOTES, 'UTF-8');
     if (empty($nombre)) {
         $_SESSION['error_general'] = "El nombre no puede estar vacío.";
@@ -55,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Actualización de los datos del profesor
     try {
-        actualizarProfesor($db, $idProfesor, $nombre, $apellidos, $email, $passwd, $imgPerfilURL);
+        actualizarProfesor($db, $idProfesor, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL);
     } catch (Exception $e) {
         $_SESSION['error_general'] = "Error al actualizar el profesor.";
     } finally {
