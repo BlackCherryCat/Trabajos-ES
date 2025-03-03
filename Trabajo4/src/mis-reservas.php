@@ -55,7 +55,7 @@ $result = $stmt->get_result();
                                     <a href="editar-reserva.php?id=<?= $row['IdReserva'] ?>" title="Editar" class="me-2">
                                         <img src="assets/img/editar.png" alt="Editar" width="28">
                                     </a>
-                                    <a href="acciones/borrar-reserva.php?id=<?= $row['IdReserva'] ?>" title="Borrar" class="me-2" onclick="return confirm('¿Estás seguro de que deseas eliminar esta reserva?');">
+                                    <a href="acciones/borrar-reserva.php?id=<?= $row['IdReserva'] ?>&idTramo=<?= $row['IdTramo'] ?>" title="Borrar" class="me-2" onclick="return confirm('¿Estás seguro de que deseas eliminar este tramo?');">
                                         <img src="assets/img/borrar.png" alt="Borrar" width="28">
                                     </a>
                                     <a href="descargar_reserva.php?id=<?= $row['IdReserva'] ?>" title="Descargar PDF">
