@@ -110,13 +110,12 @@
     check.addEventListener("change", saltarLimiteAlumnos)
 
     function cargarAsignaturas(){
-        console.log("asdasdasd");
         let idClase = document.getElementById("clase").value;
 
         let idProfe = document.getElementById("idProfesor").value;
 
-        console.log(idClase)
-        console.log(idProfe)
+        console.log("IdClase:" +idClase)
+        console.log("IdProfe" +idProfe)
         if(idClase == "Seleccione un opción"){
             return
         }
@@ -134,7 +133,10 @@
             body: data
         })
         .then(respuesta => respuesta.text())
-        .then(data => listaAsignaturas.innerHTML += data)
+        .then(data => {
+            console.log(`Data `+ data);
+            listaAsignaturas.innerHTML += data}
+        )
         .catch(error => {
             console.log("Ha habido un error, vuelva a intentarlo");
         })

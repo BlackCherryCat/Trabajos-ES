@@ -136,7 +136,6 @@ INSERT INTO Tramos (Horario) VALUES
 ('12:00 - 13:00'),
 ('13:00 - 14:00');
 
-
 INSERT INTO Departamentos (Nombre) VALUES
 ('Matemáticas'),
 ('Lengua y Literatura'),
@@ -151,3 +150,13 @@ INSERT INTO Departamento_Asignatura (IdDepartamento, IdAsignatura) VALUES
 (4, 4),
 (4, 5),
 (5, 6);
+
+INSERT INTO Reservas (Fecha, NumAlumnos, IdCurso, IdAsignatura, IdProfesor) VALUES
+('2025-03-15', 30, 1, 1, 1),
+('2025-03-16', 28, 3, 2, 2),
+('2025-03-17', 29, 5, 3, 3);
+
+INSERT INTO Reserva_Tramos (IdReserva, IdTramo) VALUES
+(1, 1),
+(2, 2),
+(3, 3);

@@ -60,7 +60,7 @@ $result = $stmt->get_result();
                                     <a href="acciones/borrar-reserva.php?id=<?= $row['IdReserva'] ?>" title="Borrar" class="me-2" onclick="return confirm('¿Estás seguro de que deseas eliminar esta reserva?');">
                                         <img src="assets/img/borrar.png" alt="Borrar" width="28">
                                     </a>
-                                    <a href="descargar_reserva.php?id=<?= $row['IdReserva'] ?>" title="Descargar PDF">
+                                    <a href="descargar-reserva.php?id=<?= $row['IdReserva'] ?>" title="Descargar PDF">
                                         <img src="assets/img/descargar.png" alt="Descargar PDF" width="28">
                                     </a>
                                 </td>

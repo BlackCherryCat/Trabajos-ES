@@ -6,6 +6,7 @@
         $profe = $_POST["profe"];
         $curso = $_POST["curso"];
         
+        echo $curso;
         //Sacamos todas las asignaturas que imparte el profesor en dicho curso
         $query = 
         "Select Asignaturas.IdAsignatura, Asignaturas.Nombre
@@ -13,15 +14,14 @@
         INNER JOIN Curso_Asignatura on Curso_Asignatura.IdAsignatura = Asignaturas.IdAsignatura
         INNER JOIN Profesor_Curso_Asignatura on Profesor_Curso_Asignatura.IdAsignatura = Curso_Asignatura.IdAsignatura
         AND Profesor_Curso_Asignatura.IdCurso = Curso_Asignatura.IdCurso
-        WHERE Profesor_Curso_Asignatura.IdCurso = $profe
-        AND Profesor_Curso_Asignatura.IdProfesor = $curso;
+        WHERE Profesor_Curso_Asignatura.IdCurso = $curso
+        AND Profesor_Curso_Asignatura.IdProfesor = $profe;
         ";
 
 
         $result = mysqli_query($db, $query);
 
         while($registro = mysqli_fetch_assoc($result)){
-            
             echo "<option value='$registro[IdAsignatura]'>$registro[Nombre]</option>";
         }
 
