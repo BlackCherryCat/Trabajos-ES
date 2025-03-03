@@ -5,6 +5,8 @@ if (isset($_GET['id']) && isset($_GET['idTramo'])) {
     $idReserva = $_GET['id'];
     $idTramo = $_GET['idTramo'];
 
+    
+
     if (is_numeric($idReserva) && is_numeric($idTramo)) {
         // Borrar solo la relación de este tramo con la reserva
         $sql = "DELETE FROM Reserva_Tramos WHERE IdReserva = ? AND IdTramo = ?";
@@ -25,7 +27,7 @@ if (isset($_GET['id']) && isset($_GET['idTramo'])) {
     } else {
         echo "ID de reserva o tramo inválido.";
     }
-} else {
+} else {    
     echo "No se proporcionó un ID de reserva o tramo.";
 }
 ?>

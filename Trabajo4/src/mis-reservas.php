@@ -12,7 +12,7 @@ if (!$db) {
 $idProfesor = $_SESSION['profesor']['IdProfesor'];
 
 // Consulta SQL para obtener las reservas, sus horarios y más
-$sql = "SELECT R.IdReserva, R.Fecha, R.NumAlumnos, C.Nombre AS Curso, A.Nombre AS Asignatura, T.Horario
+$sql = "SELECT R.IdReserva, RT.IdTramo , R.Fecha, R.NumAlumnos, C.Nombre AS Curso, A.Nombre AS Asignatura, T.Horario
         FROM Reservas R
         INNER JOIN Cursos C ON R.IdCurso = C.IdCurso
         INNER JOIN Asignaturas A ON R.IdAsignatura = A.IdAsignatura
