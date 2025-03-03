@@ -129,9 +129,13 @@ INSERT INTO Profesor_Curso_Asignatura (IdCurso, IdAsignatura, IdProfesor) VALUES
 (5, 3, 3), (6, 3, 3);
 
 INSERT INTO Tramos (Horario) VALUES
-('08:00 - 09:30'),
-('10:00 - 11:30'),
-('12:00 - 13:30');
+('08:00 - 09:00'),
+('09:00 - 10:00'),
+('10:00 - 11:00'),
+('11:00 - 12:00'),
+('12:00 - 13:00'),
+('13:00 - 14:00');
+
 
 INSERT INTO Departamentos (Nombre) VALUES
 ('Matemáticas'),
@@ -147,13 +151,3 @@ INSERT INTO Departamento_Asignatura (IdDepartamento, IdAsignatura) VALUES
 (4, 4),
 (4, 5),
 (5, 6);
-
-INSERT INTO Reservas (Fecha, NumAlumnos, IdCurso, IdAsignatura, IdProfesor) VALUES
-('2025-03-15', 30, 1, 1, 1),
-('2025-03-16', 28, 3, 2, 2),
-('2025-03-17', 29, 5, 3, 3);
-
-INSERT INTO Reserva_Tramos (IdReserva, IdTramo) VALUES
-(5, 1),
-(6, 2),
-(7, 3);
