@@ -1,38 +1,31 @@
 <?php
-// Conectar a la base de datos
 require_once '../includes/conexion.php';
 
-// Comprobar que el ID de la reserva ha sido pasado por GET
-if (isset($_GET['id'])) {
+if (isset($_GET['id']) && isset($_GET['idTramo'])) {
     $idReserva = $_GET['id'];
+    $idTramo = $_GET['idTramo'];
 
-    // Verificar que el ID de la reserva es válido
-    if (is_numeric($idReserva)) {
-        // Consulta para borrar la reserva
-        $sql = "DELETE FROM Reservas WHERE IdReserva = ?";
+    if (is_numeric($idReserva) && is_numeric($idTramo)) {
+        // Borrar solo la relación de este tramo con la reserva
+        $sql = "DELETE FROM Reserva_Tramos WHERE IdReserva = ? AND IdTramo = ?";
 
-        // Preparar la consulta
         if ($stmt = $db->prepare($sql)) {
-            $stmt->bind_param("i", $idReserva);
+            $stmt->bind_param("ii", $idReserva, $idTramo);
             $stmt->execute();
 
-            // Verificar si la eliminación fue exitosa
             if ($stmt->affected_rows > 0) {
-                // Redirigir a "Mis reservas" después de eliminarla
-                header("Location: ../mis-reservas.php?mensaje=Reserva eliminada con éxito");
+                header("Location: ../mis-reservas.php?mensaje=Tramo eliminado con éxito");
             } else {
-                // Si no se pudo eliminar
-                echo "Error al eliminar la reserva.";
+                echo "Error al eliminar el tramo.";
             }
             $stmt->close();
         } else {
             echo "Error en la preparación de la consulta.";
         }
     } else {
-        echo "ID de reserva inválido.";
+        echo "ID de reserva o tramo inválido.";
     }
 } else {
-    echo "No se proporcionó un ID de reserva.";
+    echo "No se proporcionó un ID de reserva o tramo.";
 }
-
 ?>
