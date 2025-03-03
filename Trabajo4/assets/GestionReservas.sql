@@ -129,12 +129,12 @@ INSERT INTO Profesor_Curso_Asignatura (IdCurso, IdAsignatura, IdProfesor) VALUES
 (5, 3, 3), (6, 3, 3);
 
 INSERT INTO Tramos (Horario) VALUES
-('08:00 - 09:00'),
-('09:00 - 10:00'),
-('10:00 - 11:00'),
-('11:00 - 12:00'),
-('12:00 - 13:00'),
-('13:00 - 14:00');
+('08:00'),
+('09:00'),
+('10:00'),
+('11:00'),
+('12:00'),
+('13:00');
 
 INSERT INTO Departamentos (Nombre) VALUES
 ('Matemáticas'),
