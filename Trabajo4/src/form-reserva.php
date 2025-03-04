@@ -29,7 +29,7 @@
         <br><br>
         
         <label for='alumnos'>Seleccione el número de alumnos</label><br>
-        <input type='number' id='alumnos' name='alumnos' max='<?php echo $disponibles ?>' required><br>
+        <input type='number' id='alumnos' name='alumnos' min="1" max='<?php echo $disponibles ?>' required><br>
         <div style='width: 80%'>
             <input type='checkbox' id='excederAlumnos' style='display:inline-block;'> 
             <label for='excederAlumnos' style='display:inline'> Quiero reservar para una cantidad mayor de alumnos</label>
