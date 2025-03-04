@@ -47,7 +47,7 @@ require_once 'funciones.php';
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item"><a class="nav-link" href="./reserva.php">Reserva</a></li>
                 <li class="nav-item"><a class="nav-link" href="./mis-reservas.php">Mis Reservas</a></li>
-                <li class="nav-item"><a class="nav-link" href="./profesores.php">Profesores</a></li>
+                <?php if($_SESSION["profesor"]["EsAdmin"] == 1) echo "<li class='nav-item'><a class='nav-link' href='./profesores.php'>Profesores</a></li>" ?>
             </ul>
             <div class="sidebar-footer">
                 © 2025 Reserva-Aula. Todos los derechos reservados.

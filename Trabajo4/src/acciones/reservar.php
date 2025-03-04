@@ -7,22 +7,26 @@
         $tramos = $_SESSION["selectedTramos"];
         $fecha = $_SESSION["fechaReserva"];
 
-        $query = "INSERT INTO Reservas (Fecha, NumAlumnos, IdCurso, IdAsignatura, IdProfesor)
-        values ('$fecha', $numAlumnos, $idClase, $idAsignatura, $idProfe);";
-        $result = mysqli_query($db, $query);
-        //Sacamos el id de la reserva
-        $idReserva = mysqli_insert_id($db);
+        try{
+            $query = "INSERT INTO Reservas (Fecha, NumAlumnos, IdCurso, IdAsignatura, IdProfesor)
+            values ('$fecha', $numAlumnos, $idClase, $idAsignatura, $idProfe);";
+            $result = mysqli_query($db, $query);
+            //Sacamos el id de la reserva
+            $idReserva = mysqli_insert_id($db);
 
-        
-        foreach ($tramos as $key => $value) {
-            //Hacemos otro insert en la tabla reserva_tramos para cada uno de los tramos seleccionados
-            $query2 = "INSERT INTO Reserva_Tramos (IdReserva, IdTramo)
-            values ($idReserva, $value)";
+            
+            foreach ($tramos as $key => $value) {
+                //Hacemos otro insert en la tabla reserva_tramos para cada uno de los tramos seleccionados
+                $query2 = "INSERT INTO Reserva_Tramos (IdReserva, IdTramo)
+                values ($idReserva, $value)";
 
-            $resultado =  mysqli_query($db, $query2);
+                $resultado =  mysqli_query($db, $query2);
+            }
+
+            header("location: ../confirmacionReserva.php?id=$idReserva");
+            exit();
+        }catch(Exception $e){
+            header("location: ../confirmacionReserva.php?id=NO");
+            exit();
         }
-
-        header("location: ../reserva.php");
-        exit();
-        
 ?>

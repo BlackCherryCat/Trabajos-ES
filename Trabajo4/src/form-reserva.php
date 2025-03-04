@@ -3,44 +3,42 @@
 
     if(isset($_SESSION["plazas"]) && isset($_SESSION["fechaReserva"])){
         $plazas = $_SESSION["plazas"];
-        $disponibles = maxAlumnos($plazas);
         selectedTramos();
+        $disponibles = maxAlumnos($plazas);
         $idProfe = $_SESSION["profesor"]["IdProfesor"];
-        echo "<form action='./acciones/reservar.php' method='post' id='formReserva'>
-        <input type='hidden' name='profe' value='$idProfe' id='idProfesor'>
+
+?>
+        <form action='./acciones/reservar.php' method='post' id='formReserva'>
+        <input type='hidden' name='profe' value='<?php echo $idProfe?>' id='idProfesor'>
         
         <h2>Formulario de Reserva</h2><hr>
         <label for='clase'>Seleccione Clase</label><br>
-        <select name='clase' id='clase'>
-        <option>Seleccione un opción</option>";
-
-
-
-
-        echo printClases($idProfe, $db);
-        echo "</select>
+        <select name='clase' id='clase' required>
+            <option>Seleccione un opción</option>";
+            <?php echo printClases($idProfe, $db); ?>
+        </select>
         
         <br><br>
 
 
         <label for='asignatura'>Seleccione Asignatura</label><br>
-        <select name='asignatura' id='asignatura'>
+        <select name='asignatura' id='asignatura' required>
             <option>Seleccione curso para mostrar asignaturas</option>
         </select>
         
         <br><br>
         
         <label for='alumnos'>Seleccione el número de alumnos</label><br>
-        <input type='number' id='alumnos' name='alumnos' max='$disponibles'><br>
+        <input type='number' id='alumnos' name='alumnos' max='<?php echo $disponibles ?>' required><br>
         <div style='width: 80%'>
             <input type='checkbox' id='excederAlumnos' style='display:inline-block;'> 
             <label for='excederAlumnos' style='display:inline'> Quiero reservar para una cantidad mayor de alumnos</label>
         </div><br><br>
-        ";
 
-        echo "<button type='submit'>Reservar</button>
+        <button type='submit'>Reservar</button>
         
-        </form>";
+        </form>
+        <?php
     }else{
         header("location: reserva.php");
         exit();
@@ -68,12 +66,19 @@
     //Función que calcula el máximo de almunos en función de los tramos seleccionados
     function maxAlumnos($plazas){
         $disponibles = 100;
+
+        //Obtenemos los tramos seleccionados 
+        $tramos = $_SESSION["selectedTramos"];
         
-        foreach ($plazas as $tramo => $value) {
-            if($value < $disponibles){
-                $disponibles = $value;
+        foreach ($tramos as $key => $value) {
+            //Obtenemos el valor del las plazas disponibles de ese tramo
+            $disponiblesTramo = $plazas['tramo'.$value];
+
+            if($disponiblesTramo < $disponibles){
+                $disponibles = $disponiblesTramo;
             }
         }
+
         return $disponibles;
     }
 
@@ -81,7 +86,7 @@
     function selectedTramos(){
         $tramos = [];
 
-        for ($i=1; $i < 7; $i++) { 
+        for ($i=1; $i <= 6; $i++) { 
             if(isset($_GET["tramo$i"])){
                 $tramos[] = $i;
             }

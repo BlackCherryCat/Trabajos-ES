@@ -52,9 +52,13 @@ td a{
 td a.disabled{
     cursor: crosshair;
 }
+
+td.completo{
+    color: rgb(238, 165, 165);
+}
+
 td.completo a{
     font-weight: 400;
-    color: rgb(238, 165, 165);
     text-decoration: none;
 }
 
@@ -189,4 +193,12 @@ button#btn-sticky{
 }
 #num{
     width: 100%;
+}
+td#texto-explicativo{
+    border: none;
+    height: auto;
+    text-align: center;
+    font-weight: 200;
+    font-size: 14px;
+    padding-left: 100px;
 }
