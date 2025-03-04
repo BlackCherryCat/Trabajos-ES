@@ -60,10 +60,12 @@ if (!$profesor) {
             </div>
             <div class="col-md-6">
                 <label for="passwd" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="passwd" name="passwd"
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                    title="Mínimo 8 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial.">
-                <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                <div class="passContainer">
+                    <input type="password" class="form-control" id="passwd" name="passwd"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                        title="Mínimo 8 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial.">
+                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                </div>
             </div>
         </div>
 

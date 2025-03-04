@@ -52,10 +52,36 @@ font-size: 0.875rem; /* Tamaño de texto más pequeño */
     box-sizing: border-box;
 }
 
+div.passContainer{
+    position: absolute;
+    width: 492px;
+}
+
+i.fa{
+    position: relative;
+    top: -4vh;
+    left: 93%;
+}
+
 /* Ajuste en pantallas pequeñas */
 @media (max-width: 991.98px) {
     .content-lg {
         padding: 30px;
+    }
+    div.passContainer{
+        max-width: 312px;
+    }
+}
+
+@media (max-width: 1200.00px) {
+    div.passContainer{
+        max-width: 312px;
+    }
+}
+
+@media (max-width: 1400.00px) {
+    div.passContainer{
+        width: 402px;
     }
 }
 
@@ -73,6 +99,13 @@ font-size: 0.875rem; /* Tamaño de texto más pequeño */
         width: 28px;
         height: 28px;
     }
+
+    div.passContainer{
+        min-width: 86%;
+        max-width: 86%;
+    }
+
+
 }
 
 .card{
@@ -121,8 +154,3 @@ button.buscador{
     color:green;
 }
 
-i.fa{
-    position: absolute;
-    top: 32.8%;
-    right: 16%;
-}
