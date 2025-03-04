@@ -19,7 +19,7 @@
         </select>
         
         <br><br>
-        
+
 
         <label for='asignatura'>Seleccione Asignatura</label><br>
         <select name='asignatura' id='asignatura' required>
@@ -149,6 +149,7 @@
 
         //Fetch para los números de alumnos, solo lo hacemos si el número es menor y si el check está desactivado
         if(!check.checked){
+            /* FETCH PARA HACERLO PERSONILIZADO SEGÜN LAS ASIGNATURAS
             let claseData = new FormData();
 
             claseData.append('clase', idClase);
@@ -167,7 +168,10 @@
                     input.setAttribute('value', alumnosClase)
                 }
                 
-            })
+            })*/
+
+            input.setAttribute('max', 30)
+            input.setAttribute('value', 30)
         }
         
     }
