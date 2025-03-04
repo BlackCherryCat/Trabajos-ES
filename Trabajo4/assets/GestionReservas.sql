@@ -160,3 +160,15 @@ INSERT INTO Reserva_Tramos (IdReserva, IdTramo) VALUES
 (1, 1),
 (2, 2),
 (3, 3);
+
+
+Sentencia para sacar el numero de alumnos por tramo
+$query = "select Reserva_Tramos.IdTramo, Reservas.Fecha, Tramos.Horario, sum(Reservas.NumAlumnos) As 'Alumnos' 
+                from Reservas
+                right join Reserva_Tramos on Reservas.IdReserva = Reserva_Tramos.IdReserva
+                inner join Tramos on Reserva_Tramos.IdTramo = Tramos.IdTramo
+                inner join Profesores on Reservas.IdProfesor = Profesores.IdProfesor
+                inner join Asignaturas on Reservas.IdAsignatura = Asignaturas.IdAsignatura
+                where Reservas.Fecha = '2025-03-14' AND
+                Tramos.IdTramo = 1
+                group by Reserva_Tramos.IdTramo;";

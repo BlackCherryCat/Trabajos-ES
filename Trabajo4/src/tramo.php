@@ -116,7 +116,7 @@
     
 
     //Contenido de td, divs con reservas y nueva reserva
-    $query = "select Reservas.IdReserva, Reserva_Tramos.IdTramo, Reservas.Fecha, Tramos.Horario, sum(Reservas.NumAlumnos) As 'Alumnos', Profesores.Nombre AS 'profe', Asignaturas.Nombre
+    $query = "select Reservas.IdReserva, Reserva_Tramos.IdTramo, Reservas.Fecha, Tramos.Horario, sum(Reservas.NumAlumnos) As 'Alumnos', Profesores.Nombre AS 'profe',     Asignaturas.Nombre
                 from Reservas
                 right join Reserva_Tramos on Reservas.IdReserva = Reserva_Tramos.IdReserva
                 inner join Tramos on Reserva_Tramos.IdTramo = Tramos.IdTramo
