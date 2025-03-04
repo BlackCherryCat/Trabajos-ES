@@ -32,6 +32,38 @@ if ($result->num_rows === 0) {
 }
 
 $reserva = $result->fetch_assoc();
+$stmt->close();
+
+// Obtener la fecha y el tramo de la reserva
+$sqlReserva = "SELECT R.Fecha, RT.IdTramo 
+               FROM Reservas R
+               INNER JOIN Reserva_Tramos RT ON R.IdReserva = RT.IdReserva
+               WHERE R.IdReserva = ?";
+$stmtReserva = $db->prepare($sqlReserva);
+$stmtReserva->bind_param("i", $idReserva);
+$stmtReserva->execute();
+$resultReserva = $stmtReserva->get_result();
+$reservaDatos = $resultReserva->fetch_assoc();
+$stmtReserva->close();
+
+$fecha = $reservaDatos['Fecha'];
+$idTramo = $reservaDatos['IdTramo'];
+$numAlumnosActual = $reserva['NumAlumnos'];
+
+// Calcular el número máximo de alumnos permitidos en el tramo
+$sqlMax = "SELECT SUM(NumAlumnos) - ? AS AlumnosDisponibles 
+           FROM Reservas
+           INNER JOIN Reserva_Tramos ON Reservas.IdReserva = Reserva_Tramos.IdReserva
+           WHERE Reservas.Fecha = ? AND Reserva_Tramos.IdTramo = ?";
+$stmtMax = $db->prepare($sqlMax);
+$stmtMax->bind_param("isi", $numAlumnosActual, $fecha, $idTramo);
+$stmtMax->execute();
+$resultMax = $stmtMax->get_result();
+$rowMax = $resultMax->fetch_assoc();
+$stmtMax->close();
+
+// Calcular el máximo permitido
+$maxAlumnos = ($rowMax['AlumnosDisponibles'] ?? 0) + $numAlumnosActual;
 
 // Obtener los cursos y asignaturas disponibles
 $cursosSql = "SELECT IdCurso, Nombre FROM Cursos";
@@ -48,7 +80,7 @@ $asignaturasResult = $db->query($asignaturasSql);
         
         <div class="mb-3">
             <label for="numAlumnos" class="form-label">Número de Alumnos</label>
-            <input type="number" name="numAlumnos" class="form-control" id="numAlumnos" value="<?= htmlspecialchars($reserva['NumAlumnos']) ?>" required>
+            <input type="number" name="numAlumnos" id="numAlumnos" class="form-control" min="1" max="<?= $maxAlumnos ?>" value="<?= htmlspecialchars($reserva['NumAlumnos']) ?>" required>
         </div>
 
         <div class="mb-3">
@@ -81,9 +113,5 @@ $asignaturasResult = $db->query($asignaturasSql);
         <a href="mis-reservas.php" class="btn btn-secondary">Volver</a>
     </div>
 </div>
-
-<?php
-$stmt->close();
-?>
 
 <?php require_once './includes/footer.php'; ?>

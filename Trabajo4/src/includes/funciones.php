@@ -4,7 +4,7 @@
 function obtenerProfesores($conexion)
 {
     // Consulta SQL para seleccionar todos los profesores
-    $consulta = "SELECT * FROM profesores;";
+    $consulta = "SELECT * FROM Profesores;";
     $resultado = mysqli_query($conexion, $consulta); // Ejecutar la consulta
 
     $profesores = array();
@@ -24,7 +24,7 @@ function obtenerProfesor($conexion, $idProfesor)
     $idProfesor = (int)$idProfesor;
 
     // Consulta SQL para seleccionar el profesor con el ID especificado
-    $consulta = "SELECT * FROM profesores WHERE IdProfesor = $idProfesor";
+    $consulta = "SELECT * FROM Profesores WHERE IdProfesor = $idProfesor";
 
     // Ejecutar la consulta
     $resultado = mysqli_query($conexion, $consulta);
@@ -47,7 +47,7 @@ function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email,
     $profesorActual = obtenerProfesor($conexion, $idProfesor);
 
     // Iniciar la construcción de la consulta UPDATE
-    $consulta = "UPDATE profesores SET ";
+    $consulta = "UPDATE Profesores SET ";
 
     $camposActualizados = []; // Array para almacenar los campos que realmente serán actualizados
 
@@ -108,7 +108,7 @@ function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email,
 function obtenerBusquedaProfesores($conexion, $busqueda = null)
 {
     // Consulta SQL para seleccionar todos los profesores que contengan la busqueda en el nombre o apellidos
-    $consulta = "SELECT * FROM profesores WHERE Nombre LIKE '%$busqueda%' OR Apellidos LIKE '%$busqueda%';";
+    $consulta = "SELECT * FROM Profesores WHERE Nombre LIKE '%$busqueda%' OR Apellidos LIKE '%$busqueda%';";
     $resultado = mysqli_query($conexion, $consulta); // Ejecutar la consulta
 
     $profesores = array();
@@ -137,7 +137,7 @@ function login($conexion, $email)
 function borrarProfesor($conexion, $idProfesor)
 {
     // Proceder con la eliminación y verificar si se eliminó alguna fila
-    $consulta = "DELETE FROM profesores WHERE IdProfesor = $idProfesor";
+    $consulta = "DELETE FROM Profesores WHERE IdProfesor = $idProfesor";
     $borrar = mysqli_query($conexion, $consulta);
 
     if ($borrar && mysqli_affected_rows($conexion) == 1) {
@@ -149,7 +149,7 @@ function borrarProfesor($conexion, $idProfesor)
 
 function crearProfesor($conexion, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL)
 {
-    $consulta = "INSERT INTO profesores (Nombre, Apellidos, Email, Passwd, EsAdmin, EsAlta, ImgPerfilURL) VALUES ('$nombre', '$apellidos', '$email', '$passwd', '$esAdmin', '$esAlta', '$imgPerfilURL')";
+    $consulta = "INSERT INTO Profesores (Nombre, Apellidos, Email, Passwd, EsAdmin, EsAlta, ImgPerfilURL) VALUES ('$nombre', '$apellidos', '$email', '$passwd', '$esAdmin', '$esAlta', '$imgPerfilURL')";
     $insertar = mysqli_query($conexion, $consulta);
 
     if ($insertar) {
@@ -207,41 +207,6 @@ function borrarImagen($fichero)
         }
     } else {
         echo "La imagen no existe.";
-    }
-}
-
-require_once 'PHPMailer/src/Exception.php';
-require_once 'PHPMailer/src/PHPMailer.php';
-require_once 'PHPMailer/src/SMTP.php';
-
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-function enviarCorreo($destinatario, $asunto, $mensaje)
-{
-
-    $mail = new PHPMailer(true);
-
-    try {
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'trabajoes786@gmail.com';
-        $mail->Password = 'ykic ohip fxlf epsf';  // Usar contraseña de aplicación si es necesario
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;  // Usar SSL
-        $mail->Port = 465;  // Puerto para SSL
-
-        $mail->setFrom('trabajoes786@gmail.com', 'Trabajo');
-        $mail->addAddress("$destinatario", 'Destinatario');
-
-        $mail->isHTML(true);
-        $mail->Subject = "$asunto";
-        $mail->Body    = "$mensaje";
-
-        $mail->send();
-    } catch (Exception $e) {
-        echo 'Error: ' . $e->getMessage();
     }
 }
 
