@@ -48,7 +48,12 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
                     
                     <p class="text-muted mt-2">
                         <a href="editar-profesor.php?id=<?= $profesor['IdProfesor'] ?>"><img src="./assets/img/editar.png" alt="Editar profesor" width="50"></a>
-                        <a href="./acciones/borrar-profesor.php?id=<?= $profesor['IdProfesor']?>" class="deleteProf"><img src="./assets/img/borrar.png" alt="Borrar profesor" width="50"></a>
+                        <?php 
+                        if ($profesor['EsAdmin'] != 1) {
+                            echo "<a href='acciones/borrar-profesor.php?id=" . $profesor['IdProfesor'] . "' class='deleteProf'><img src='./assets/img/borrar.png' alt='Eliminar profesor' width='50'></a>";
+                        }
+                        ?>
+                        
                     </p>
                 </div>
             </a>
