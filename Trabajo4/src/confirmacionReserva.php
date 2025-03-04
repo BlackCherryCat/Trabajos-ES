@@ -15,4 +15,4 @@
         echo "Ha ocurrido un error inesperado durante el proceso de reserva. Contacte con Servicio Técnico o vuelva a intentarlo más tarde<br>";
     }
 ?>
-<a href="mis-reservas">Ir a mis reservas</a>
+<a href="mis-reservas.php">Ir a mis reservas</a>
