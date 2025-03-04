@@ -121,4 +121,8 @@ button.buscador{
     color:green;
 }
 
-
+i.fa{
+    position: absolute;
+    top: 32.8%;
+    right: 16%;
+}

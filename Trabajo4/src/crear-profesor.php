@@ -50,6 +50,7 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                     title="Mínimo 8 caracteres, al menos una mayúscula, una minúscula, un número y un carácter especial."
                     required>
+                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
             </div>
         </div>
 
@@ -79,4 +80,25 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
     </form>
 
 </div>
+
+<script>
+    let icon = document.querySelector("i.fa");
+
+    icon.addEventListener('click', showPass);
+
+    function showPass(e){
+        //Recuperamos el input pass
+        let input = document.getElementById("passwd");
+
+        if(e.target.classList.contains("fa-eye-slash")){
+            input.setAttribute("type", "text");
+            e.target.classList.remove("fa-eye-slash");
+            e.target.classList.add("fa-eye");
+        }else{
+            input.setAttribute("type", "password");
+            e.target.classList.remove("fa-eye");
+            e.target.classList.add("fa-eye-slash");
+        }
+    }
+</script>
 <?php require_once 'includes/footer.php'; ?>
