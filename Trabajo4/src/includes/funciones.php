@@ -210,10 +210,9 @@ function borrarImagen($fichero)
     }
 }
 
-
 require_once 'FPDF/fpdf.php';
 
-function descargarPDF($db, $id, $nombreArchivo = 'mireserva.pdf')
+function descargarPDFT($db, $id, $nombreArchivo = 'mireserva.pdf')
 {
     $sql = "SELECT 
     r.IdReserva,
@@ -248,6 +247,48 @@ function descargarPDF($db, $id, $nombreArchivo = 'mireserva.pdf')
     header('Content-Type: application/pdf');
     header("Content-Disposition: attachment; filename=\"$nombreArchivo\"");
     $pdf->Output('D', $nombreArchivo);
+    exit;
+}
+
+function descargarPDFR($db, $id, $nombreArchivo = 'mireserva.pdf')
+{
+    $sql = "SELECT 
+    r.IdReserva,
+    r.Fecha,
+    t.Horario,
+    r.NumAlumnos,
+    c.Nombre AS Curso,
+    a.Nombre AS Asignatura
+    FROM Reservas r
+    JOIN Cursos c ON r.IdCurso = c.IdCurso
+    JOIN Asignaturas a ON r.IdAsignatura = a.IdAsignatura
+    JOIN Reserva_Tramos rt ON r.IdReserva = rt.IdReserva
+    JOIN Tramos t ON rt.IdTramo = t.IdTramo
+    WHERE r.IdReserva = $id
+    ORDER BY t.Horario;
+";
+    $resultado = $db->query($sql);
+    $fila = $resultado->fetch_assoc();
+
+
+    $pdf = new FPDF();
+    $pdf->AddPage();
+    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->Cell(0, 10, 'Datos de la reserva', 0, 1, 'C');
+    $pdf->Ln(10);
+
+    $pdf->SetFont('Arial', '', 12);
+    $pdf->Cell(0, 10, "ID Reserva: " . $fila['IdReserva'], 0, 1);
+    $pdf->Cell(0, 10, "Fecha: " . $fila['Fecha'], 0, 1);
+    $pdf->Cell(0, 10, "Horario: " . $fila['Horario'], 0, 1);
+    $pdf->Cell(0, 10, mb_convert_encoding("Número de alumnos: ", 'ISO-8859-1') . $fila['NumAlumnos'], 0, 1);
+    $pdf->Cell(0, 10, "Curso: " . mb_convert_encoding($fila['Curso'], 'ISO-8859-1'), 0, 1);
+    $pdf->Cell(0, 10, "Asignatura: " . mb_convert_encoding($fila['Asignatura'], 'ISO-8859-1'), 0, 1);
+
+    ob_end_clean();
+    header('Content-Type: application/pdf');
+    header("Content-Disposition: inline; filename=\"$nombreArchivo\"");
+    $pdf->Output('I', $nombreArchivo);
     exit;
 }
 
