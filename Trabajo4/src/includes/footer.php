@@ -2,7 +2,7 @@
     </div>
 
     <script defer>
-        if (location.pathname.endsWith('reserva.php') ||
+        if (location.pathname.endsWith('index.php') ||
             location.pathname.endsWith('tramo.php') ||
             location.pathname.endsWith('form-reserva.php')) {
                 let link = document.createElement('link');

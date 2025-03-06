@@ -14,7 +14,7 @@ if (isset($_POST)) {
     if ($verify && $login["EsAlta"] == 1) {
         // Utilizar una sesión para guardar los datos del usuario logueado
         $_SESSION['profesor'] = $login;
-        header('Location: ../reserva.php');
+        header('Location: ../index.php');
         exit();
     } else {
         // Si algo falla enviar una sesión con el fallo

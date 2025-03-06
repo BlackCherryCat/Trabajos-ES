@@ -27,7 +27,7 @@ require_once 'funciones.php';
                 <button class="navbar-toggler d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand fw-bold fs-4" href="./reserva.php">Reserva-Aula</a>
+                <a class="navbar-brand fw-bold fs-4" href="./index.php">Reserva-Aula</a>
                 <div class="dropdown ms-auto">
                     <a href="#" class="d-block text-decoration-none <!--dropdown-toggle-->" data-bs-toggle="dropdown">
                         <img src="<?= $_SESSION['profesor']['ImgPerfilURL'] ?>" alt="Perfil" width="40" height="40" class="rounded-circle">
@@ -46,7 +46,7 @@ require_once 'funciones.php';
         <!-- Barra lateral fija para pantallas grandes -->
         <div class="sidebar-lg d-none d-lg-flex flex-column">
             <ul class="nav nav-pills flex-column">
-                <li class="nav-item"><a class="nav-link" href="./reserva.php">Reserva</a></li>
+                <li class="nav-item"><a class="nav-link" href="./index.php">Reserva</a></li>
                 <li class="nav-item"><a class="nav-link" href="./mis-reservas.php">Mis Reservas</a></li>
                 <?php if($_SESSION["profesor"]["EsAdmin"] == 1) echo "<li class='nav-item'><a class='nav-link' href='./profesores.php'>Profesores</a></li>" ?>
             </ul>
