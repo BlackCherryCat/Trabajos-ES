@@ -297,20 +297,47 @@ function obtenerCursosAsignaturas($conexion)
 
 function actualizarProfesorCursoAsignatura($conexion, $idProfesor, $clasesSeleccionadas)
 {
-    // Eliminar asignaciones previas del profesor
-    $sqlDelete = "DELETE FROM Profesor_Curso_Asignatura WHERE IdProfesor = $idProfesor";
+    // Verificar que $clasesSeleccionadas sea un array, si no, asignar un array vacío
+    if (!is_array($clasesSeleccionadas)) {
+        $clasesSeleccionadas = [];
+    }
 
-    if (mysqli_query($conexion, $sqlDelete)) {
-        foreach ($clasesSeleccionadas as $clase) {
+    // Obtener las asignaciones actuales del profesor desde la base de datos en el mismo formato "curso-asignatura"
+    $asignaturasActuales = obtenerCursoAsignaturaDelProfesor($conexion, $idProfesor); // Retorna ["1-1", "2-3"]
+
+    // **Determinar qué asignaciones eliminar**
+    $asignacionesEliminar = array_diff($asignaturasActuales, $clasesSeleccionadas);
+
+    // **Determinar qué asignaciones insertar**
+    $asignacionesInsertar = array_diff($clasesSeleccionadas, $asignaturasActuales);
+
+    // **Eliminar asignaciones que ya no están en la nueva lista**
+    if (!empty($asignacionesEliminar)) {
+        foreach ($asignacionesEliminar as $clase) {
             list($idCurso, $idAsignatura) = explode("-", $clase);
             $idCurso = intval($idCurso);
             $idAsignatura = intval($idAsignatura);
-            $sqlInsert = "INSERT INTO Profesor_Curso_Asignatura (IdCurso, IdAsignatura, IdProfesor)
+            $sqlDelete = "DELETE FROM Profesor_Curso_Asignatura
+                        WHERE IdProfesor = $idProfesor
+                        AND IdCurso = $idCurso
+                        AND IdAsignatura = $idAsignatura";
+            mysqli_query($conexion, $sqlDelete);
+        }
+    }
+
+    // **Insertar nuevas asignaciones**
+    if (!empty($asignacionesInsertar)) {
+        foreach ($asignacionesInsertar as $clase) {
+            list($idCurso, $idAsignatura) = explode("-", $clase);
+            $idCurso = intval($idCurso);
+            $idAsignatura = intval($idAsignatura);
+            $sqlInsert = "INSERT INTO Profesor_Curso_Asignatura (IdCurso, IdAsignatura, IdProfesor) 
                         VALUES ($idCurso, $idAsignatura, $idProfesor)";
-            $resultado = mysqli_query($conexion, $sqlInsert);
+            mysqli_query($conexion, $sqlInsert);
         }
     }
 }
+
 
 function obtenerCursoAsignaturaDelProfesor($conexion, $idProfesor)
 {
