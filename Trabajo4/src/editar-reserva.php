@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'includes/header.php';
 require_once 'includes/conexion.php';
 
@@ -26,7 +27,8 @@ $stmt->bind_param("i", $idReserva);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if ($result->num_rows === 0) {
+// En caso de que no encuentre la reserva mostramos lo siguiente
+if ($result->num_rows == 0) {
     die("Reserva no encontrada.");
 }
 
@@ -49,20 +51,24 @@ $fecha = $reservaDatos['Fecha'];
 $idTramo = $reservaDatos['IdTramo'];
 $numAlumnosActual = $reserva['NumAlumnos'];
 
-// Calcular el número máximo de alumnos permitidos en el tramo
-$sqlMax = "SELECT COALESCE(SUM(NumAlumnos), 0) - ? AS AlumnosDisponibles 
-           FROM Reservas
-           INNER JOIN Reserva_Tramos ON Reservas.IdReserva = Reserva_Tramos.IdReserva
-           WHERE Reservas.Fecha = ? AND Reserva_Tramos.IdTramo = ?";
-$stmtMax = $db->prepare($sqlMax);
-$stmtMax->bind_param("isi", $numAlumnosActual, $fecha, $idTramo);
-$stmtMax->execute();
-$resultMax = $stmtMax->get_result();
-$rowMax = $resultMax->fetch_assoc();
-$stmtMax->close();
+// Obtener el número total de alumnos en ese tramo y fecha
+$queryAlumnosTotales = "SELECT SUM(Reservas.NumAlumnos) AS TotalAlumnos 
+                        FROM Reservas
+                        RIGHT JOIN Reserva_Tramos ON Reservas.IdReserva = Reserva_Tramos.IdReserva
+                        INNER JOIN Tramos ON Reserva_Tramos.IdTramo = Tramos.IdTramo
+                        WHERE Reservas.Fecha = ? AND Tramos.IdTramo = ?";
 
-// Calcular el máximo permitido
-$maxAlumnos = ($rowMax['AlumnosDisponibles'] ?? 0) + $numAlumnosActual;
+$stmtAlumnosTotales = $db->prepare($queryAlumnosTotales);
+$stmtAlumnosTotales->bind_param("si", $fecha, $idTramo);
+$stmtAlumnosTotales->execute();
+$resultAlumnosTotales = $stmtAlumnosTotales->get_result();
+$rowAlumnosTotales = $resultAlumnosTotales->fetch_assoc();
+$stmtAlumnosTotales->close();
+
+$totalAlumnosTramo = $rowAlumnosTotales['TotalAlumnos'] ?? 0;
+
+// Calcular los alumnos disponibles
+$maxAlumnos = 100 - ($totalAlumnosTramo - $numAlumnosActual);
 
 // Obtener los cursos y asignaturas disponibles
 $cursosSql = "SELECT IdCurso, Nombre FROM Cursos";
