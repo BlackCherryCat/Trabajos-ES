@@ -212,21 +212,24 @@ function borrarImagen($fichero)
 
 require_once 'FPDF/fpdf.php';
 
-function descargarPDFT($db, $id, $nombreArchivo = 'mireserva.pdf')
+function descargarPDF($op, $db, $id, $nombreArchivo = 'mireserva.pdf')
 {
     $sql = "SELECT 
-    r.IdReserva,
-    r.Fecha,
-    t.Horario,
-    r.NumAlumnos,
-    c.Nombre AS Curso,
-    a.Nombre AS Asignatura
-    FROM Reservas r
-    JOIN Cursos c ON r.IdCurso = c.IdCurso
-    JOIN Asignaturas a ON r.IdAsignatura = a.IdAsignatura
-    JOIN Reserva_Tramos rt ON r.IdReserva = rt.IdReserva
-    JOIN Tramos t ON rt.IdTramo = t.IdTramo
-    WHERE r.IdReserva = $id;
+        r.IdReserva,
+        r.Fecha,
+        t.Horario,
+        r.NumAlumnos,
+        c.Nombre AS Curso,
+        a.Nombre AS Asignatura,
+        p.Nombre AS Nombre,
+        p.Apellidos AS Apellidos
+        FROM Reservas r
+        JOIN Cursos c ON r.IdCurso = c.IdCurso
+        JOIN Asignaturas a ON r.IdAsignatura = a.IdAsignatura
+        JOIN Profesores p ON r.IdProfesor = p.IdProfesor
+        JOIN Reserva_Tramos rt ON r.IdReserva = rt.IdReserva
+        JOIN Tramos t ON rt.IdTramo = t.IdTramo
+        WHERE r.IdReserva = $id;
 ";
     $resultado = $db->query($sql);
     $fila = $resultado->fetch_assoc();
@@ -238,57 +241,34 @@ function descargarPDFT($db, $id, $nombreArchivo = 'mireserva.pdf')
 
     $pdf->SetFont('Arial', '', 12);
     $pdf->Cell(0, 10, "ID Reserva: " . $fila['IdReserva'], 0, 1);
+    $pdf->Cell(0, 10, "Nombre y apellidos: " . mb_convert_encoding($fila['Nombre'], 'ISO-8859-1') . " " . mb_convert_encoding($fila['Apellidos'], 'ISO-8859-1'), 0, 1);
     $pdf->Cell(0, 10, "Fecha: " . $fila['Fecha'], 0, 1);
-    $pdf->Cell(0, 10, "Horario: " . $fila['Horario'], 0, 1);
     $pdf->Cell(0, 10, mb_convert_encoding("Número de alumnos: ", 'ISO-8859-1') . $fila['NumAlumnos'], 0, 1);
     $pdf->Cell(0, 10, "Curso: " . mb_convert_encoding($fila['Curso'], 'ISO-8859-1'), 0, 1);
     $pdf->Cell(0, 10, "Asignatura: " . mb_convert_encoding($fila['Asignatura'], 'ISO-8859-1'), 0, 1);
+    // Imprimir los tramos (se recorrerá nuevamente para incluir todos)
+    $pdf->SetFont('Arial', 'B', 12);
+    $pdf->Cell(0, 10, "Tramos:", 0, 1);
+    // Resetear el puntero del resultado y recorrer todas las filas
+    $resultado->data_seek(0);
+    while ($fila = $resultado->fetch_assoc()) {
+        // Obtener hora de inicio y calcular la hora de fin
+        $horaInicio = DateTime::createFromFormat('H:i', explode(' - ', $fila['Horario'])[0]);
+        $horaFin = clone $horaInicio;
+        $horaFin->modify('+1 hour'); // Sumar 1 hora
 
-    header('Content-Type: application/pdf');
-    header("Content-Disposition: attachment; filename=\"$nombreArchivo\"");
-    $pdf->Output('D', $nombreArchivo);
-    exit;
-}
+        // Imprimir el tramo con la hora de fin calculada
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(0, 10, "Tramo: " . $horaInicio->format('H:i') . " - " . $horaFin->format('H:i'), 0, 1);
+    }
 
-function descargarPDFR($db, $id, $nombreArchivo = 'mireserva.pdf')
-{
-    $sql = "SELECT 
-    r.IdReserva,
-    r.Fecha,
-    t.Horario,
-    r.NumAlumnos,
-    c.Nombre AS Curso,
-    a.Nombre AS Asignatura
-    FROM Reservas r
-    JOIN Cursos c ON r.IdCurso = c.IdCurso
-    JOIN Asignaturas a ON r.IdAsignatura = a.IdAsignatura
-    JOIN Reserva_Tramos rt ON r.IdReserva = rt.IdReserva
-    JOIN Tramos t ON rt.IdTramo = t.IdTramo
-    WHERE r.IdReserva = $id
-    ORDER BY t.Horario;
-";
-    $resultado = $db->query($sql);
-    $fila = $resultado->fetch_assoc();
-
-
-    $pdf = new FPDF();
-    $pdf->AddPage();
-    $pdf->SetFont('Arial', 'B', 16);
-    $pdf->Cell(0, 10, 'Datos de la reserva', 0, 1, 'C');
-    $pdf->Ln(10);
-
-    $pdf->SetFont('Arial', '', 12);
-    $pdf->Cell(0, 10, "ID Reserva: " . $fila['IdReserva'], 0, 1);
-    $pdf->Cell(0, 10, "Fecha: " . $fila['Fecha'], 0, 1);
-    $pdf->Cell(0, 10, "Horario: " . $fila['Horario'], 0, 1);
-    $pdf->Cell(0, 10, mb_convert_encoding("Número de alumnos: ", 'ISO-8859-1') . $fila['NumAlumnos'], 0, 1);
-    $pdf->Cell(0, 10, "Curso: " . mb_convert_encoding($fila['Curso'], 'ISO-8859-1'), 0, 1);
-    $pdf->Cell(0, 10, "Asignatura: " . mb_convert_encoding($fila['Asignatura'], 'ISO-8859-1'), 0, 1);
-
-    ob_end_clean();
     header('Content-Type: application/pdf');
     header("Content-Disposition: inline; filename=\"$nombreArchivo\"");
-    $pdf->Output('I', $nombreArchivo);
+    if ($op == 'D') {
+        $pdf->Output('D', $nombreArchivo);
+    } else {
+        $pdf->Output('I', $nombreArchivo);
+    }
     exit;
 }
 

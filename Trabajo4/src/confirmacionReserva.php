@@ -9,7 +9,7 @@
         echo "<h4>Reserva nº $idReserva</h4>";
         echo "Su reserva ha sido procesada con éxito<br>";
 
-        echo "<embed src=\"descargar-reserva.php?I=1&id=$idReserva\" type=\"application/pdf\" width=\"100%\" height=\"600px\" />";
+        echo "<embed src=\"descargar-reserva.php?op=I&id=$idReserva\" type=\"application/pdf\" width=\"100%\" height=\"600px\" />";
     }else{
         echo "Ha ocurrido un error inesperado durante el proceso de reserva. Contacte con Servicio Técnico o vuelva a intentarlo más tarde<br>";
     }
