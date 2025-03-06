@@ -47,16 +47,16 @@
   
   //Enlace al mes anterior
   if($month > 1){
-    $previoustMonthLink = "<a href='reserva.php?month=".($month-1)."&year=".$year."'>&lt;&lt;Mes Anterior</a>";
+    $previoustMonthLink = "<a href='index.php?month=".($month-1)."&year=".$year."'>&lt;&lt;Mes Anterior</a>";
   }else{
-    $previoustMonthLink = "<a href='reserva.php?month=".(12)."&year=".($year-1)."'>&lt;&lt;Mes Anterior</a>";
+    $previoustMonthLink = "<a href='index.php?month=".(12)."&year=".($year-1)."'>&lt;&lt;Mes Anterior</a>";
   }
 
   //Enlace al siguiente mes
   if($month < 12){
-    $nextMonthLink = "<a href='reserva.php?month=".($month+1)."&year=".$year."'>Siguiente Mes&gt;&gt;</a>";
+    $nextMonthLink = "<a href='index.php?month=".($month+1)."&year=".$year."'>Siguiente Mes&gt;&gt;</a>";
   }else{
-    $nextMonthLink = "<a href='reserva.php?month=".(1)."&year=".($year+1)."'>Siguiente Mes&gt;&gt;</a>";
+    $nextMonthLink = "<a href='index.php?month=".(1)."&year=".($year+1)."'>Siguiente Mes&gt;&gt;</a>";
   }
 
   echo "<div class='calendar-header'>";
