@@ -15,6 +15,33 @@ $numAlumnos = $_POST['numAlumnos'];
 $idCurso = $_POST['curso'];
 $idAsignatura = $_POST['asignatura'];
 
+// Obtener el IdProfesor de la reserva actual
+$sqlProfesor = "SELECT IdProfesor FROM Reservas WHERE IdReserva = ?";
+$stmtProfesor = $db->prepare($sqlProfesor);
+$stmtProfesor->bind_param("i", $idReserva);
+$stmtProfesor->execute();
+$resultProfesor = $stmtProfesor->get_result();
+$reservaProfesor = $resultProfesor->fetch_assoc();
+$stmtProfesor->close();
+
+if (!$reservaProfesor) {
+    die("Error: No se encontró el profesor de la reserva.");
+}
+
+$idProfesorReserva = $reservaProfesor['IdProfesor'];
+
+// Verificar si la combinación de curso, asignatura y profesor existe en Profesor_Curso_Asignatura
+$sql_check_curso_asignatura_profesor = "SELECT 1 FROM Profesor_Curso_Asignatura CA
+                                        WHERE CA.IdCurso = ? AND CA.IdAsignatura = ? AND CA.IdProfesor = ?";
+$stmt_check_curso_asignatura_profesor = $db->prepare($sql_check_curso_asignatura_profesor);
+$stmt_check_curso_asignatura_profesor->bind_param("iii", $idCurso, $idAsignatura, $idProfesorReserva);
+$stmt_check_curso_asignatura_profesor->execute();
+$result_check_curso_asignatura_profesor = $stmt_check_curso_asignatura_profesor->get_result();
+
+if ($result_check_curso_asignatura_profesor->num_rows === 0) {
+    die("Error: La combinación de curso y asignatura no está asociada con el profesor.");
+}
+
 // Obtener la fecha y tramo de la reserva
 $sqlReserva = "SELECT Fecha, (SELECT IdTramo FROM Reserva_Tramos WHERE IdReserva = ?) AS IdTramo 
                FROM Reservas WHERE IdReserva = ?";
@@ -54,18 +81,6 @@ $maxAlumnos = 100 - ($totalAlumnosTramo - $numAlumnos);
 // Validar si el número de alumnos supera el límite
 if ($numAlumnos > $maxAlumnos) {
     die("Error: No puedes ingresar más alumnos de los permitidos en este tramo.");
-}
-
-// Verificar si la combinación de curso y asignatura existe en Curso_Asignatura
-$sql_check_curso_asignatura = "SELECT 1 FROM Curso_Asignatura 
-                               WHERE IdCurso = ? AND IdAsignatura = ?";
-$stmt_check_curso_asignatura = $db->prepare($sql_check_curso_asignatura);
-$stmt_check_curso_asignatura->bind_param("ii", $idCurso, $idAsignatura);
-$stmt_check_curso_asignatura->execute();
-$result_check_curso_asignatura = $stmt_check_curso_asignatura->get_result();
-
-if ($result_check_curso_asignatura->num_rows === 0) {
-    die("La combinación de curso y asignatura no existe en el sistema.");
 }
 
 // Actualizar la reserva
