@@ -169,9 +169,10 @@
                 }
                 
             })*/
-
-            input.setAttribute('max', 30)
-            input.setAttribute('value', 30)
+            if(maxAlumnos > 30){
+                input.setAttribute('max', 30)
+                input.setAttribute('value', 30)
+            }
         }
         
     }
