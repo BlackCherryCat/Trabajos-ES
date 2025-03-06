@@ -57,17 +57,10 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
         </div>
 
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <label for="imgPerfil" class="form-label">Imagen de Perfil</label>
                 <input type="file" class="form-control" id="imgPerfil" name="imgPerfil"
                     accept="image/png, image/jpeg, image/jpg">
-            </div>
-            <div class="col-md-3">
-                <label class="form-label">Administrador</label>
-                <select class="form-select" id="esAdmin" name="esAdmin">
-                    <option value="1">Sí</option>
-                    <option value="0" selected>No</option>
-                </select>
             </div>
             <div class="col-md-3">
                 <label class="form-label">Estado</label>

@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     
     $passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
-    $esAdmin = isset($_POST['esAdmin']) ? intval($_POST['esAdmin']) : 0;
+    $esAdmin = 0;
     $esAlta = isset($_POST['esAlta']) ? intval($_POST['esAlta']) : 1;
     
     // Manejo de la imagen
