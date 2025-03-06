@@ -26,7 +26,6 @@ $stmt->bind_param("i", $idReserva);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// En caso de que no encuentre la reserva mostramos lo siguiente
 if ($result->num_rows === 0) {
     die("Reserva no encontrada.");
 }
@@ -51,7 +50,7 @@ $idTramo = $reservaDatos['IdTramo'];
 $numAlumnosActual = $reserva['NumAlumnos'];
 
 // Calcular el número máximo de alumnos permitidos en el tramo
-$sqlMax = "SELECT SUM(NumAlumnos) - ? AS AlumnosDisponibles 
+$sqlMax = "SELECT COALESCE(SUM(NumAlumnos), 0) - ? AS AlumnosDisponibles 
            FROM Reservas
            INNER JOIN Reserva_Tramos ON Reservas.IdReserva = Reserva_Tramos.IdReserva
            WHERE Reservas.Fecha = ? AND Reserva_Tramos.IdTramo = ?";
