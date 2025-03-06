@@ -202,3 +202,34 @@ td#texto-explicativo{
     font-size: 14px;
     padding-left: 100px;
 }
+
+@media (max-width : 1500px){
+    table{
+        width: 100%;
+    }
+    td.cal{
+        width: 22%;
+        height: 10vh;
+        font-size: 100%;
+    }
+    th{
+        font-size: 66%;
+        min-width: 50px;
+        min-width: 20%;
+        width: 20%;
+        max-width: 20%;
+        padding: 0px 4px;
+    }
+    
+    button#btn-sticky{
+        display: block;
+        position: relative;
+        left: 1%;
+        margin: 0 auto;
+        width: 80%;
+    }
+
+    td#texto-explicativo{
+        padding-left: 0;
+    }
+}
