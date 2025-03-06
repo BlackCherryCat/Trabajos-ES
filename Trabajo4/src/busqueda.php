@@ -36,13 +36,30 @@ require_once 'includes/header.php';
                     
                     <p class="text-muted mt-2">
                         <a href="editar-profesor.php?id=<?= $profesor['IdProfesor'] ?>"><img src="./assets/img/editar.png" alt="Editar profesor" width="50"></a>
-                        <a href="./acciones/borrar-profesor.php?id=<?= $profesor['IdProfesor'] ?>"><img src="./assets/img/borrar.png" alt="Borrar profesor" width="50"></a>
+                        <?php 
+                        if ($profesor['EsAdmin'] != 1) {
+                            echo "<a href='acciones/borrar-profesor.php?id=" . $profesor['IdProfesor'] . "' class='deleteProf'><img src='./assets/img/borrar.png' alt='Eliminar profesor' width='50'></a>";
+                        }
+                        ?>
                     </p>
                 </div>
             </a>
         </div>
     <?php } ?>
 </div>
+
+<script>
+    let botonesDelete = document.querySelectorAll("a.deleteProf");
+
+    botonesDelete.forEach(boton => boton.addEventListener('click', askConfirm));
+
+    function askConfirm(e){
+        if(!window.confirm("¿Estás seguro de que deseas eliminar a este profesor?")){
+            e.preventDefault();
+            return false;
+        } 
+    }
+</script>
 
 
 <?php require_once 'includes/footer.php'; ?>
