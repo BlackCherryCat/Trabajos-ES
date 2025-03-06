@@ -65,7 +65,7 @@ require_once 'funciones.php';
             </div>
             <div class="offcanvas-body d-flex flex-column">
                 <ul class="nav flex-column mb-auto">
-                    <li class="nav-item"><a class="nav-link active" href="./reserva.php">Reserva</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="./index.php">Reserva</a></li>
                     <li class="nav-item"><a class="nav-link" href="./mis-reservas.php">Mis Reservas</a></li>
                     <li class="nav-item"><a class="nav-link" href="./profesores.php">Profesores</a></li>
                 </ul>
