@@ -11,7 +11,7 @@ if (isset($_POST)) {
     usaremos password_verify para comprobar el hash guardado en la bd con la contraseña pasada*/
     $verify = password_verify($password, $login['Passwd']);
 
-    if ($verify) {
+    if ($verify && $login["EsAlta"] == 1) {
         // Utilizar una sesión para guardar los datos del usuario logueado
         $_SESSION['profesor'] = $login;
         header('Location: ../reserva.php');
