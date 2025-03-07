@@ -21,14 +21,14 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
     <form action="./acciones/procesar-crear-profesor.php" method="POST" enctype="multipart/form-data">
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="nombre" class="form-label">Nombre</label>
+                <label for="nombre" class="form-label">Nombre <span style="color: red;">*</span></label>
                 <input type="text" class="form-control" id="nombre" name="nombre"
                     pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,50}$"
                     title="Solo letras y espacios. Mínimo 2 y máximo 50 caracteres."
                     required>
             </div>
             <div class="col-md-6">
-                <label for="apellidos" class="form-label">Apellidos</label>
+                <label for="apellidos" class="form-label">Apellidos <span style="color: red;">*</span></label>
                 <input type="text" class="form-control" id="apellidos" name="apellidos"
                     pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,50}$"
                     title="Solo letras y espacios. Mínimo 2 y máximo 50 caracteres."
@@ -38,14 +38,14 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label">Email <span style="color: red;">*</span></label>
                 <input type="email" class="form-control" id="email" name="email"
                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     title="Debe ser un email válido (ejemplo@dominio.com)."
                     required>
             </div>
             <div class="col-md-6">
-                <label for="passwd" class="form-label">Contraseña</label>
+                <label for="passwd" class="form-label">Contraseña <span style="color: red;">*</span></label>
                 <div class="passContainer">
                     <input type="password" class="form-control" id="passwd" name="passwd"
                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
@@ -63,7 +63,7 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
                     accept="image/png, image/jpeg, image/jpg">
             </div>
             <div class="col-md-3">
-                <label class="form-label">Estado</label>
+                <label class="form-label">Estado <span style="color: red;">*</span></label>
                 <select class="form-select" id="esAlta" name="esAlta">
                     <option value="1" selected>Alta</option>
                     <option value="0">Baja</option>
