@@ -38,16 +38,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Manejo de la imagen
     $imgPerfilURL = "";
     if (isset($_FILES['imgPerfil']) && $_FILES['imgPerfil']['error'] !== 4) { // 4 = No se subió ningún archivo
-        if (subirImagen($_FILES['imgPerfil'])) {
-            $imgPerfilURL = "./assets/img/perfiles/" . basename($_FILES['imgPerfil']['name']);
+        $imagen = subirImagen($_FILES['imgPerfil']);
+        if ($imagen) {
+            $imgPerfilURL = "./assets/img/perfiles/" . $imagen;
+
+            //borrar foto anterior
+            $profesor = obtenerProfesor($db, $idProfesor);
+            if($profesor['ImgPerfilURL'] != './assets/img/perfiles/usuario.avif'){
+                borrarImagen($profesor['ImgPerfilURL']);
+            }
+
         } else {
             $_SESSION['error_general'] = "Error al subir la imagen.";
             header("Location: ../crear-profesor.php");
             exit();
         }
-    }else{
-        $imgPerfilURL = "./assets/img/perfiles/usuario.avif";
+    } else {
+        // Si no se sube nueva imagen, se mantiene la actual
+        $profesor = obtenerProfesor($db, $idProfesor);
+        $imgPerfilURL = $profesor['ImgPerfilURL'];
     }
+
     
     // Llamar a la función para crear el profesor
     try{
