@@ -45,15 +45,15 @@ $stmtTramos->execute();
 $resultTramos = $stmtTramos->get_result();
 
 // Si la reserva tiene más de un tramo, manejarlo
-if ($resultTramos->num_rows > 1) {
+//if ($resultTramos->num_rows > 1) {
     // Si hay más de un tramo, puedes decidir mostrar un error o permitir seleccionar un tramo
-    die("Error: Esta reserva tiene varios tramos asignados. No se puede editar.");
-} else {
+  //  die("Error: Esta reserva tiene varios tramos asignados. No se puede editar.");
+//} else {
     // Si tiene solo un tramo, podemos proceder normalmente
     $tramo = $resultTramos->fetch_assoc();
     $idTramo = $tramo['IdTramo'];
     $horarioTramo = $tramo['Horario'];
-}
+//}
 
 $stmtTramos->close();
 
@@ -69,7 +69,7 @@ $queryAlumnosTotales = "SELECT MAX(TotalAlumnos) AS MaxTotalAlumnos
                             ) AS Subconsulta;";
 
 $stmtAlumnosTotales = $db->prepare($queryAlumnosTotales);
-$stmtAlumnosTotales->bind_param("si", $reserva['Fecha']);
+$stmtAlumnosTotales->bind_param("s", $reserva['Fecha']);
 $stmtAlumnosTotales->execute();
 $resultAlumnosTotales = $stmtAlumnosTotales->get_result();
 $rowAlumnosTotales = $resultAlumnosTotales->fetch_assoc();

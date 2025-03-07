@@ -42,11 +42,12 @@ if ($result_check_curso_asignatura_profesor->num_rows === 0) {
     die("Error: La combinación de curso y asignatura no está asociada con el profesor.");
 }
 
-// Obtener la fecha y tramo de la reserva
-$sqlReserva = "SELECT Fecha, (SELECT IdTramo FROM Reserva_Tramos WHERE IdReserva = ?) AS IdTramo 
-               FROM Reservas WHERE IdReserva = ?";
+// Obtener la fecha de la reserva
+$sqlReserva = "SELECT Fecha
+    from Reservas
+    WHERE IdReserva = ?";
 $stmtReserva = $db->prepare($sqlReserva);
-$stmtReserva->bind_param("ii", $idReserva, $idReserva);
+$stmtReserva->bind_param("i", $idReserva);
 $stmtReserva->execute();
 $resultReserva = $stmtReserva->get_result();
 $reserva = $resultReserva->fetch_assoc();
@@ -59,15 +60,20 @@ if (!$reserva) {
 $fecha = $reserva['Fecha'];
 $idTramo = $reserva['IdTramo'];
 
-// Obtener el número total de alumnos en ese tramo y fecha
-$queryAlumnosTotales = "SELECT SUM(Reservas.NumAlumnos) AS TotalAlumnos 
-                        FROM Reservas
-                        RIGHT JOIN Reserva_Tramos ON Reservas.IdReserva = Reserva_Tramos.IdReserva
-                        INNER JOIN Tramos ON Reserva_Tramos.IdTramo = Tramos.IdTramo
-                        WHERE Reservas.Fecha = ? AND Tramos.IdTramo = ?";
+
+//Número máximo de alumnos permitidos en todos los tramos
+$queryAlumnosTotales = "SELECT MAX(TotalAlumnos) AS MaxTotalAlumnos 
+                            FROM (
+                                SELECT SUM(Reservas.NumAlumnos) AS TotalAlumnos
+                                FROM Reservas
+                                RIGHT JOIN Reserva_Tramos ON Reservas.IdReserva = Reserva_Tramos.IdReserva
+                                INNER JOIN Tramos ON Reserva_Tramos.IdTramo = Tramos.IdTramo
+                                WHERE Reservas.Fecha = ?
+                                GROUP BY Tramos.IdTramo
+                            ) AS Subconsulta;";
 
 $stmtAlumnosTotales = $db->prepare($queryAlumnosTotales);
-$stmtAlumnosTotales->bind_param("si", $fecha, $idTramo);
+$stmtAlumnosTotales->bind_param("s", $fecha);
 $stmtAlumnosTotales->execute();
 $resultAlumnosTotales = $stmtAlumnosTotales->get_result();
 $rowAlumnosTotales = $resultAlumnosTotales->fetch_assoc();
