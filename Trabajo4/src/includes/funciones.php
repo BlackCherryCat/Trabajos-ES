@@ -252,14 +252,8 @@ function descargarPDF($op, $db, $id, $nombreArchivo = 'mireserva.pdf')
     // Resetear el puntero del resultado y recorrer todas las filas
     $resultado->data_seek(0);
     while ($fila = $resultado->fetch_assoc()) {
-        // Obtener hora de inicio y calcular la hora de fin
-        $horaInicio = DateTime::createFromFormat('H:i', explode(' - ', $fila['Horario'])[0]);
-        $horaFin = clone $horaInicio;
-        $horaFin->modify('+1 hour'); // Sumar 1 hora
-
-        // Imprimir el tramo con la hora de fin calculada
         $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(0, 10, "Tramo: " . $horaInicio->format('H:i') . " - " . $horaFin->format('H:i'), 0, 1);
+        $pdf->Cell(0, 10, "Tramo: " . $fila['Horario'], 0, 1);
     }
 
     header('Content-Type: application/pdf');

@@ -6,8 +6,7 @@
 <?php
     if(isset($_GET["id"]) && $_GET["id"] != "NO"){
         $idReserva = $_GET["id"];
-        echo "<h4>Reserva nº $idReserva</h4>";
-        echo "Su reserva ha sido procesada con éxito<br>";
+        echo "<p class='correcto'>Su reserva ha sido procesada con éxito</p>";
 
         echo "<embed src=\"descargar-reserva.php?op=I&id=$idReserva\" type=\"application/pdf\" width=\"100%\" height=\"600px\" />";
     }else{
