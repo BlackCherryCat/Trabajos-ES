@@ -85,6 +85,11 @@ table.tramo td.hora{
     vertical-align: middle;
 }
 
+td.hora{
+    padding: 0px;
+    font-size: 16px;
+}
+
 table.tramo a{
     text-decoration: none;
 }

@@ -1,0 +1,25 @@
+Reservas Salón de Actos
+
+Usuarios:
+- Noemí (Admin):
+- Correo: noemi@gmail.com
+- Contraseña: 1234
+- Resto de profesores:
+- Correo: nombreAlumno@gmail.com ejemplo: david@gmail.com
+(Se han definido como profesores a los alumnos de la clase 2o de DAW)
+- Contraseña: 1234
+
+Secciones:
+- Index: Se muestra una vista del calendario, donde podremos pulsar en un día del
+calendario para proceder a realizar una reserva en dicho día. A su vez se muestran
+enlaces a los apartados “Mis Reservas”, “Profesores” y “Lista de Reservas” (Estos
+dos últimos sólo serán visibles para el administrador)
+- Mis Reservas: Se ofrece un listado de las reservas realizadas por el profesor actual
+y permite editar nuestras reservas, borrar tramos de una reserva, borrar la reserva e
+imprimir el justificante de reserva.
+- Lista de reservas: Se lista la información completa de todas las reservas realizadas
+en el sistema para que el administrador pueda verlas.
+- Profesores: Sistema de gestión del profesorado que nos permite buscar profesor
+por nombre, crear un nuevo profesor, editar un profesor ya existente, dar de baja/alta
+a un profesor, así como eliminar a un profesor de la base de datos. Sólo el
+administrador tiene acceso a esta sección.
