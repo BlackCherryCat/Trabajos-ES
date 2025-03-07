@@ -95,7 +95,7 @@ $asignaturasResult = $db->query($asignaturasSql);
         <input type="hidden" name="idReserva" value="<?= $reserva['IdReserva'] ?>">
         
         <div class="mb-3">
-            <label for="numAlumnos" class="form-label">Número de Alumnos</label>
+            <label for="numAlumnos" class="form-label">Número de Alumnos<span style="color: red;">*</span></label>
             <input type="number" name="numAlumnos" id="numAlumnos" class="form-control" min="1" max="<?= $maxAlumnos ?>" value="<?= htmlspecialchars($reserva['NumAlumnos']) ?>" required>
         </div>
         <div style='width: 80%'>
@@ -104,7 +104,7 @@ $asignaturasResult = $db->query($asignaturasSql);
         </div><br><br>
 
         <div class="mb-3">
-            <label for="curso" class="form-label">Curso</label>
+            <label for="curso" class="form-label">Curso<span style="color: red;">*</span></label>
             <select name="curso" class="form-control" id="curso" required>
                 <option value="">Seleccione una opción</option>
                 <?php echo printClases($_SESSION["profesor"]["IdProfesor"], $db) ?>
@@ -112,7 +112,7 @@ $asignaturasResult = $db->query($asignaturasSql);
         </div>
 
         <div class="mb-3">
-            <label for="asignatura" class="form-label">Asignatura</label>
+            <label for="asignatura" class="form-label">Asignatura<span style="color: red;">*</span></label>
             <select name="asignatura" class="form-control" id="asignatura" required>
                 <option value="">Seleccione un curso para mostrar sus asignaturas</option>
             </select>

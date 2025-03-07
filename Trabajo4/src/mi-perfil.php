@@ -30,14 +30,14 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="nombre" class="form-label">Nombre</label>
+                <label for="nombre" class="form-label">Nombre<span style="color: red;">*</span></label>
                 <input type="text" class="form-control" id="nombre" name="nombre"
                     pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,50}$"
                     title="Solo letras y espacios. Mínimo 2 y máximo 50 caracteres."
                     value="<?php echo htmlspecialchars($profesor['Nombre']); ?>" required>
             </div>
             <div class="col-md-6">
-                <label for="apellidos" class="form-label">Apellidos</label>
+                <label for="apellidos" class="form-label">Apellidos<span style="color: red;">*</span></label>
                 <input type="text" class="form-control" id="apellidos" name="apellidos"
                     pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]{2,50}$"
                     title="Solo letras y espacios. Mínimo 2 y máximo 50 caracteres."
@@ -47,7 +47,7 @@ if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
 
         <div class="row mb-3">
             <div class="col-md-6">
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label">Email<span style="color: red;">*</span></label>
                 <input type="email" class="form-control" id="email" name="email"
                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                     title="Debe ser un email válido (ejemplo@dominio.com)."

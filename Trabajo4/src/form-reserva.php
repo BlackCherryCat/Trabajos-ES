@@ -12,7 +12,7 @@
         <input type='hidden' name='profe' value='<?php echo $idProfe?>' id='idProfesor'>
         
         <h2>Formulario de Reserva</h2><hr>
-        <label for='clase'>Seleccione Clase</label><br>
+        <label for='clase'>Seleccione Clase <span style="color: red;">*</span></label><br>
         <select name='clase' id='clase' required>
             <option>Seleccione un opción</option>";
             <?php echo printClases($idProfe, $db); ?>
@@ -21,14 +21,14 @@
         <br><br>
 
 
-        <label for='asignatura'>Seleccione Asignatura</label><br>
+        <label for='asignatura'>Seleccione Asignatura <span style="color: red;">*</span></label><br>
         <select name='asignatura' id='asignatura' required>
             <option>Seleccione curso para mostrar asignaturas</option>
         </select>
         
         <br><br>
         
-        <label for='alumnos'>Seleccione el número de alumnos</label><br>
+        <label for='alumnos'>Seleccione el número de alumnos <span style="color: red;">*</span></label><br>
         <input type='number' id='alumnos' name='alumnos' min="1" max='<?php echo $disponibles ?>' required><br>
         <div style='width: 80%'>
             <input type='checkbox' id='excederAlumnos' style='display:inline-block;'> 
