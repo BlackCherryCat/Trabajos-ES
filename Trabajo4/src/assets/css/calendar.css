@@ -175,7 +175,6 @@ label:hover div.active{
 
 label{
     height: 100%;
-    max-width: 26%;
     overflow: hidden;
 }
 
