@@ -58,14 +58,18 @@ if ($resultTramos->num_rows > 1) {
 $stmtTramos->close();
 
 // Obtener el número total de alumnos en ese tramo y fecha
-$queryAlumnosTotales = "SELECT SUM(Reservas.NumAlumnos) AS TotalAlumnos 
-                        FROM Reservas
-                        RIGHT JOIN Reserva_Tramos ON Reservas.IdReserva = Reserva_Tramos.IdReserva
-                        INNER JOIN Tramos ON Reserva_Tramos.IdTramo = Tramos.IdTramo
-                        WHERE Reservas.Fecha = ? AND Tramos.IdTramo = ?";
+$queryAlumnosTotales = "SELECT MAX(TotalAlumnos) AS MaxTotalAlumnos 
+                            FROM (
+                                SELECT SUM(Reservas.NumAlumnos) AS TotalAlumnos
+                                FROM Reservas
+                                RIGHT JOIN Reserva_Tramos ON Reservas.IdReserva = Reserva_Tramos.IdReserva
+                                INNER JOIN Tramos ON Reserva_Tramos.IdTramo = Tramos.IdTramo
+                                WHERE Reservas.Fecha = ?
+                                GROUP BY Tramos.IdTramo
+                            ) AS Subconsulta;";
 
 $stmtAlumnosTotales = $db->prepare($queryAlumnosTotales);
-$stmtAlumnosTotales->bind_param("si", $reserva['Fecha'], $idTramo);
+$stmtAlumnosTotales->bind_param("si", $reserva['Fecha']);
 $stmtAlumnosTotales->execute();
 $resultAlumnosTotales = $stmtAlumnosTotales->get_result();
 $rowAlumnosTotales = $resultAlumnosTotales->fetch_assoc();
