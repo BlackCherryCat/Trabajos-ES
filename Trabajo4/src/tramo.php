@@ -19,7 +19,7 @@
   <table class='tramo'><tr><th colspan='2'>Salón de Actos</th></tr>
   <tr><td class="hora"></td><td id="texto-explicativo">&#9432;Seleccione las horas/tramos que desea reservar / / Para añadir un tramo haga click en "Añadir Tramo"<br>Una vez que los haya seleccionado, pulse en "Ir al formulario de Reserva" para continuar con la reserva</td></tr>
 <?php
-        $horario = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00"];
+        $horario = ["08:00-09:00", "09:00-10:00", "10:00-11:00", "11:00-12:00", "12:00-13:00", "13:00-14:00"];
 
         //En este array vamos a guardar las plazas disponibles de cada tramo
         $plazas = [];
