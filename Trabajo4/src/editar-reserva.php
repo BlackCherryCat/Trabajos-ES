@@ -75,7 +75,7 @@ $resultAlumnosTotales = $stmtAlumnosTotales->get_result();
 $rowAlumnosTotales = $resultAlumnosTotales->fetch_assoc();
 $stmtAlumnosTotales->close();
 
-$totalAlumnosTramo = $rowAlumnosTotales['TotalAlumnos'] ?? 0;
+$totalAlumnosTramo = $rowAlumnosTotales['MaxTotalAlumnos'] ?? 0;
 
 // Calcular los alumnos disponibles
 $maxAlumnos = 100 - ($totalAlumnosTramo - $reserva['NumAlumnos']);

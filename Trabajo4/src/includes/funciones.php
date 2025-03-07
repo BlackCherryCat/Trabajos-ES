@@ -203,7 +203,7 @@ function subirImagen($fichero)
     $extension = pathinfo($nombreFich, PATHINFO_EXTENSION);  // Obtener la extensión del archivo (jpg, png, etc.)
     $nombreUnico = uniqid('img_', true) . '.' . $extension;  // Generar un nombre único usando `uniqid` y la extensión original
 
-    $rutaDestino = $ruta . $nombreUnico;  // Ruta de destino con el nuevo nombre único
+    $rutaDestino = $ruta . $nombreFich;  // Ruta de destino con el nuevo nombre único
 
     // Lista de tipos MIME permitidos
     $tiposPermitidos = ["image/jpeg", "image/png"];
@@ -213,6 +213,7 @@ function subirImagen($fichero)
     } elseif ($sizeFich > $maxSize) {
         $_SESSION['error_general'] = "Error: El archivo es demasiado grande (máximo: 1 MB).";
     } elseif (move_uploaded_file($tempFich, $rutaDestino)) {
+        $_SESSION['profesor']['ImgPerfilURL'] = $rutaDestino;
         return $nombreUnico;
     } else {
         $_SESSION['error_general'] = "Error: No se pudo subir el archivo.";

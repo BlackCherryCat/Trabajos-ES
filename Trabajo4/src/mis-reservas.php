@@ -16,7 +16,8 @@ $sql = "SELECT R.IdReserva, RT.IdTramo, R.Fecha, R.NumAlumnos, C.Nombre AS Curso
         LEFT JOIN Reserva_Tramos RT ON R.IdReserva = RT.IdReserva
         LEFT JOIN Tramos T ON RT.IdTramo = T.IdTramo
         WHERE R.IdProfesor = ?
-        AND R.Fecha >= CURDATE()";
+        AND R.Fecha >= CURDATE()
+        ORDER BY R.Fecha";
 
 $stmt = $db->prepare($sql);
 $stmt->bind_param("i", $idProfesor);
