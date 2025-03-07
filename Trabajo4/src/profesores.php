@@ -2,7 +2,7 @@
 require_once './includes/header.php';
 
 if ($_SESSION['profesor']['EsAdmin'] != 1) {
-    header("Location: ./reserva.php");
+    header("Location: ./index.php");
     exit();
 }
 

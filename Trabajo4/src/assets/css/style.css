@@ -19,9 +19,9 @@
 /* Barra lateral fija en pantallas grandes */
 .sidebar-lg {
 width: 280px;
-height: 90vh; /* Ocupa toda la altura de la ventana */
+height: 93vh; /* Ocupa toda la altura de la ventana */
 position: fixed;
-top: 80px;
+top: 70px;
 left: 0;
 z-index: 900;
 background-color: #f8f9fa;
