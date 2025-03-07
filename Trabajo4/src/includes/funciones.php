@@ -147,6 +147,32 @@ function borrarProfesor($conexion, $idProfesor)
     }
 }
 
+
+function obtenerReservas($db)
+{
+    $sql = "SELECT r.IdReserva, r.Fecha,
+                CONCAT(SUBSTRING_INDEX(MIN(t.Horario), '-', 1), ' - ', SUBSTRING_INDEX(MAX(t.Horario), '-', -1)) AS Horario,
+                CONCAT(p.Nombre, ' ', p.Apellidos) AS Profesor,
+                r.NumAlumnos, c.Nombre AS Curso, a.Nombre AS Asignatura
+            FROM Reservas r
+            JOIN Reserva_Tramos rt ON r.IdReserva = rt.IdReserva
+            JOIN Tramos t ON rt.IdTramo = t.IdTramo
+            JOIN Profesores p ON r.IdProfesor = p.IdProfesor
+            JOIN Cursos c ON r.IdCurso = c.IdCurso
+            JOIN Asignaturas a ON r.IdAsignatura = a.IdAsignatura
+            GROUP BY r.IdReserva
+            ORDER BY r.Fecha ASC;";
+
+    $result = mysqli_query($db, $sql);
+    $reservas = [];
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $reservas[] = $row;
+    }
+
+    return $reservas;
+}
+
 function crearProfesor($conexion, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL)
 {
     $consulta = "INSERT INTO Profesores (Nombre, Apellidos, Email, Passwd, EsAdmin, EsAlta, ImgPerfilURL) VALUES ('$nombre', '$apellidos', '$email', '$passwd', '$esAdmin', '$esAlta', '$imgPerfilURL')";

@@ -49,6 +49,7 @@ require_once 'funciones.php';
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item"><a class="nav-link" href="./index.php">Reserva</a></li>
                 <li class="nav-item"><a class="nav-link" href="./mis-reservas.php">Mis Reservas</a></li>
+                <?php if($_SESSION["profesor"]["EsAdmin"] == 1) echo "<li class='nav-item'><a class='nav-link' href='./lista-reservas.php'>Lista de reservas</a></li>" ?>
                 <?php if($_SESSION["profesor"]["EsAdmin"] == 1) echo "<li class='nav-item'><a class='nav-link' href='./profesores.php'>Profesores</a></li>" ?>
             </ul>
             <div class="sidebar-footer">
@@ -68,7 +69,8 @@ require_once 'funciones.php';
                 <ul class="nav flex-column mb-auto">
                     <li class="nav-item"><a class="nav-link active" href="./index.php">Reserva</a></li>
                     <li class="nav-item"><a class="nav-link" href="./mis-reservas.php">Mis Reservas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./profesores.php">Profesores</a></li>
+                    <?php if($_SESSION["profesor"]["EsAdmin"] == 1) echo "<li class='nav-item'><a class='nav-link' href='./lista-reservas.php'>Lista de reservas</a></li>" ?>
+                    <?php if($_SESSION["profesor"]["EsAdmin"] == 1) echo "<li class='nav-item'><a class='nav-link' href='./profesores.php'>Profesores</a></li>" ?>
                 </ul>
                 <div class="mt-auto text-center text-body-secondary">
                     © 2024 Seguros Axarquia. Todos los derechos reservados.
