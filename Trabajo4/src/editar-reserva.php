@@ -1,7 +1,5 @@
 <?php
-session_start();
-
-require_once 'includes/conexion.php';
+require_once 'includes/header.php';
 
 // Verificar que la conexión está establecida
 if (!$db) {
