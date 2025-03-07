@@ -87,32 +87,30 @@ $asignaturasResult = $db->query($asignaturasSql);
 <div class="container mt-5">
     <h2 class="mb-4 text-center">Editar Reserva</h2>
     <form action="acciones/procesar-editar-reserva.php" method="POST">
+        <input type='hidden' name='profe' value='<?php echo $_SESSION["profesor"]["IdProfesor"]?>' id='idProfesor'>
         <input type="hidden" name="idReserva" value="<?= $reserva['IdReserva'] ?>">
         
         <div class="mb-3">
             <label for="numAlumnos" class="form-label">Número de Alumnos</label>
             <input type="number" name="numAlumnos" id="numAlumnos" class="form-control" min="1" max="<?= $maxAlumnos ?>" value="<?= htmlspecialchars($reserva['NumAlumnos']) ?>" required>
         </div>
+        <div style='width: 80%'>
+            <input type='checkbox' id='excederAlumnos' style='display:inline-block;'> 
+            <label for='excederAlumnos' style='display:inline'> Quiero reservar para una cantidad mayor de alumnos</label>
+        </div><br><br>
 
         <div class="mb-3">
             <label for="curso" class="form-label">Curso</label>
             <select name="curso" class="form-control" id="curso" required>
-                <?php while ($curso = $cursosResult->fetch_assoc()): ?>
-                    <option value="<?= $curso['IdCurso'] ?>" <?= $curso['IdCurso'] == $reserva['IdCurso'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($curso['Nombre']) ?>
-                    </option>
-                <?php endwhile; ?>
+                <option value="">Seleccione una opción</option>
+                <?php echo printClases($_SESSION["profesor"]["IdProfesor"], $db) ?>
             </select>
         </div>
 
         <div class="mb-3">
             <label for="asignatura" class="form-label">Asignatura</label>
             <select name="asignatura" class="form-control" id="asignatura" required>
-                <?php while ($asignatura = $asignaturasResult->fetch_assoc()): ?>
-                    <option value="<?= $asignatura['IdAsignatura'] ?>" <?= $asignatura['IdAsignatura'] == $reserva['IdAsignatura'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($asignatura['Nombre']) ?>
-                    </option>
-                <?php endwhile; ?>
+                <option value="">Seleccione un curso para mostrar sus asignaturas</option>
             </select>
         </div>
 
@@ -125,4 +123,114 @@ $asignaturasResult = $db->query($asignaturasSql);
     </div>
 </div>
 
-<?php require_once './includes/footer.php'; ?>
+<script>
+
+    const clase = document.getElementById("curso");
+
+    console.log(clase);
+
+    //Obtenemos el input number de alumnos
+    let input = document.getElementById("numAlumnos");
+
+    //Obtenemos el número máximo de alumnos que permite el tramo
+    let maxAlumnos = parseInt(input.getAttribute('max'));
+    let alumnosClase = 0;
+
+    clase.addEventListener("change", cargarAsignaturas);
+
+    //Evento de checkbox para saltar el límite de alumnos
+    let check = document.getElementById('excederAlumnos');
+    check.addEventListener("change", saltarLimiteAlumnos)
+
+    function cargarAsignaturas(){
+        let idClase = document.getElementById("curso").value;
+
+        let idProfe = document.getElementById("idProfesor").value;
+
+        console.log("IdClase:" +idClase)
+        console.log("IdProfe" +idProfe)
+        if(idClase == "Seleccione un opción"){
+            return
+        }
+        let listaAsignaturas = document.getElementById("asignatura");
+
+        listaAsignaturas.innerHTML = "<option>Seleccione asignatura</option>";
+
+        let data = new FormData();
+
+        data.append('curso', idClase);
+        data.append('profe', idProfe);
+
+        fetch("./acciones/opt-asignaturas.php",{
+            method: "POST",
+            body: data
+        })
+        .then(respuesta => respuesta.text())
+        .then(data => {
+            console.log(`Data `+ data);
+            listaAsignaturas.innerHTML += data}
+        )
+        .catch(error => {
+            console.log("Ha habido un error, vuelva a intentarlo");
+        })
+
+
+        //Fetch para los números de alumnos, solo lo hacemos si el número es menor y si el check está desactivado
+        if(!check.checked){
+            /* FETCH PARA HACERLO PERSONILIZADO SEGÜN LAS ASIGNATURAS
+            let claseData = new FormData();
+
+            claseData.append('clase', idClase);
+
+            fetch("./acciones/getAlumnosClase.php", {
+                method: "POST",
+                body: claseData
+            })
+            .then(respuesta => respuesta.text())
+            .then(numAlumnos => {
+                alumnosClase = parseInt(numAlumnos);
+
+
+                if(numAlumnos < maxAlumnos){
+                    input.setAttribute('max', alumnosClase)
+                    input.setAttribute('value', alumnosClase)
+                }
+                
+            })*/
+            if(maxAlumnos > 30){
+                input.setAttribute('max', 30)
+                input.setAttribute('value', 30)
+            }
+        }
+        
+    }
+
+    function saltarLimiteAlumnos(e){
+        if(e.target.checked){
+            input.setAttribute('max', maxAlumnos)
+        }else{
+            input.setAttribute('max', alumnosClase)
+            input.setAttribute('value', alumnosClase)
+        }
+    }
+</script>
+
+<?php 
+    require_once './includes/footer.php'; 
+    //Función que imprime options de las clases a las que imparte un profesor
+    function printClases($idPro, $db){
+        $query = "select Cursos.IdCurso, Cursos.Nombre from Cursos
+                    inner join Profesor_Curso_Asignatura on Cursos.IdCurso = Profesor_Curso_Asignatura.IdCurso
+                    where Profesor_Curso_Asignatura.IdProfesor = $idPro
+                    group by Cursos.IdCurso";
+
+        $result = mysqli_query($db, $query);
+
+        $cadena = "";
+
+        while($registro = mysqli_fetch_assoc($result)){
+            $cadena .= "<option value='$registro[IdCurso]'>$registro[Nombre]</option>";
+        }
+        return $cadena;
+    }
+?>
