@@ -22,6 +22,11 @@ td.cal{
     border-radius: 15px;
 }
 
+td.cal a {
+    text-decoration: underline;
+    color: rgb(32, 32, 192);
+}
+
 td.disabled{
     background-color:  rgb(202, 202, 202);
     color: #150578;
@@ -53,13 +58,11 @@ td a.disabled{
     cursor: crosshair;
 }
 
-td.completo{
+td.completo a{
     color: rgb(238, 165, 165);
 }
-
-td.completo a{
-    font-weight: 400;
-    text-decoration: none;
+td.completo{
+    color: rgb(238, 165, 165);
 }
 
 table.tramo{
