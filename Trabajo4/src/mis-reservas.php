@@ -12,13 +12,14 @@ if (!$db) {
 $idProfesor = $_SESSION['profesor']['IdProfesor'];
 
 // Consulta SQL para obtener las reservas, sus horarios y más
-$sql = "SELECT R.IdReserva, RT.IdTramo , R.Fecha, R.NumAlumnos, C.Nombre AS Curso, A.Nombre AS Asignatura, T.Horario
+$sql = "SELECT R.IdReserva, RT.IdTramo, R.Fecha, R.NumAlumnos, C.Nombre AS Curso, A.Nombre AS Asignatura, T.Horario
         FROM Reservas R
         INNER JOIN Cursos C ON R.IdCurso = C.IdCurso
         INNER JOIN Asignaturas A ON R.IdAsignatura = A.IdAsignatura
         LEFT JOIN Reserva_Tramos RT ON R.IdReserva = RT.IdReserva
         LEFT JOIN Tramos T ON RT.IdTramo = T.IdTramo
-        WHERE R.IdProfesor = ?";
+        WHERE R.IdProfesor = ?
+        AND R.Fecha >= CURDATE()";
 
 $stmt = $db->prepare($sql);
 $stmt->bind_param("i", $idProfesor);
