@@ -10,6 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $esAlta = $_SESSION['profesor']['EsAlta'];
     $esAdmin = $_SESSION['profesor']['EsAdmin'];
     $nombre = htmlspecialchars(trim($_POST['nombre']), ENT_QUOTES, 'UTF-8');
+    $_SESSION['profesor']['Nombre'] = $nombre;
     if (empty($nombre)) {
         $_SESSION['error_general'] = "El nombre no puede estar vacío.";
         header("Location: ../editar-profesor.php?id=$idProfesor");
