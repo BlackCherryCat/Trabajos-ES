@@ -2,32 +2,43 @@
 require_once '../includes/conexion.php';
 
 if (isset($_GET['id']) && isset($_GET['idTramo'])) {
-    $idReserva = $_GET['id'];
-    $idTramo = $_GET['idTramo'];
+    $idReserva = (int) $_GET['id']; // Convertir a entero para evitar inyección SQL
+    $idTramo = (int) $_GET['idTramo'];
 
-    
+    if ($idReserva > 0 && $idTramo > 0) {
+        // Eliminar la relación del tramo con la reserva
+        $consulta = "DELETE FROM Reserva_Tramos WHERE IdReserva = $idReserva AND IdTramo = $idTramo";
+        $eliminarTramo = mysqli_query($db, $consulta);
 
-    if (is_numeric($idReserva) && is_numeric($idTramo)) {
-        // Borrar solo la relación de este tramo con la reserva
-        $sql = "DELETE FROM Reserva_Tramos WHERE IdReserva = ? AND IdTramo = ?";
+        if ($eliminarTramo) {
+            // Verificar si quedan más tramos en la reserva
+            $consultaCheck = "SELECT COUNT(*) AS total FROM Reserva_Tramos WHERE IdReserva = $idReserva";
+            $resultado = mysqli_query($db, $consultaCheck);
+            $fila = mysqli_fetch_assoc($resultado);
 
-        if ($stmt = $db->prepare($sql)) {
-            $stmt->bind_param("ii", $idReserva, $idTramo);
-            $stmt->execute();
+            $_SESSION['correcto'] = "Tramo eliminado con éxito.";
 
-            if ($stmt->affected_rows > 0) {
-                header("Location: ../mis-reservas.php?mensaje=Tramo eliminado con éxito");
-            } else {
-                echo "Error al eliminar el tramo.";
+            // Si no hay más tramos, eliminar la reserva
+            if ($fila['total'] == 0) {
+                $consultaEliminarReserva = "DELETE FROM Reservas WHERE IdReserva = $idReserva";
+                $eliminarReserva = mysqli_query($db, $consultaEliminarReserva);
+
+                if ($eliminarReserva) {
+                    $_SESSION['correcto'] = "Reserva eliminada correctamente.";
+                } else {
+                    $_SESSION['error_general'] = "Error al eliminar la reserva.";
+                }
             }
-            $stmt->close();
+
         } else {
-            echo "Error en la preparación de la consulta.";
+            $_SESSION['error_general'] = "Error al eliminar el tramo.";
         }
     } else {
-        echo "ID de reserva o tramo inválido.";
+        $_SESSION['error_general'] = "ID de reserva o tramo inválido.";
     }
-} else {    
-    echo "No se proporcionó un ID de reserva o tramo.";
+} else {
+    $_SESSION['error_general'] = "No se proporcionó un ID de reserva o tramo.";
 }
-?>
+
+header("Location: ../mis-reservas.php");
+exit;

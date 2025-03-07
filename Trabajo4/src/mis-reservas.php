@@ -1,8 +1,5 @@
 <?php
-session_start();
 require_once 'includes/header.php';
-require_once 'includes/conexion.php';
-
 // Comprobar que la conexión se realizo sin problema
 if (!$db) {
     die("Error al conectar con la base de datos: " . mysqli_connect_error());
@@ -29,6 +26,19 @@ $result = $stmt->get_result();
     <div class="container mt-5">
         <h2 class="mb-4 text-center">Mis Reservas</h2>
         
+        <?php
+            // Verificar si hay mensajes de error o éxito
+            if (isset($_SESSION['error_general']) && !empty($_SESSION['error_general'])) {
+                echo "<p class='error'>" . $_SESSION['error_general'] . "</p>";
+                unset($_SESSION['error_general']);
+            }
+
+            if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
+                echo "<p class='correcto'>" . $_SESSION['correcto'] . "</p>";
+                unset($_SESSION['correcto']);
+            }
+        ?>
+
         <!-- Comprobamos si hay resultados en la consulta, si es así los pintamos en forma de tabla -->
         <?php if ($result->num_rows > 0): ?>
             <div class="table-responsive">
@@ -75,7 +85,7 @@ $result = $stmt->get_result();
         
         <!-- Boton para volcer a las reservas -->
         <div class="text-center mt-4">
-            <a href="./reserva.php" class="btn btn-primary">Volver</a>
+            <a href="./index.php" class="btn btn-primary">Volver</a>
         </div>
     </div>
 </body>
