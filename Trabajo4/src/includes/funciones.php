@@ -203,7 +203,7 @@ function subirImagen($fichero)
     $extension = pathinfo($nombreFich, PATHINFO_EXTENSION);  // Obtener la extensión del archivo (jpg, png, etc.)
     $nombreUnico = uniqid('img_', true) . '.' . $extension;  // Generar un nombre único usando `uniqid` y la extensión original
 
-    $rutaDestino = $ruta . $nombreFich;  // Ruta de destino con el nuevo nombre único
+    $rutaDestino = $ruta . $nombreUnico;  // Ruta de destino con el nuevo nombre único
 
     // Lista de tipos MIME permitidos
     $tiposPermitidos = ["image/jpeg", "image/png"];
