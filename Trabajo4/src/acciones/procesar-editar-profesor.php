@@ -78,6 +78,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Actualización de los datos del profesor
     try {
         actualizarProfesor($db, $idProfesor, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL);
+        if($idProfesor == $_SESSION['profesor']['IdProfesor']){
+            $_SESSION['profesor']['ImgPerfilURL'] = $imgPerfilURL;
+            $_SESSION['correcto'] = "Perfil cambiado con exito. Vuelva a loguearse para ver los cambios aplicados.";
+            header("Location: ../profesores.php");
+            exit();
+        }
     } catch (Exception $e) {
         $_SESSION['error_general'] = "Error al actualizar el profesor.";
     } finally {

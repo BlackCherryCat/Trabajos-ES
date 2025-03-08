@@ -35,9 +35,7 @@ require_once 'funciones.php';
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="mi-perfil.php">Mi perfil</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
+                        <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="./acciones/logout.php">Cerrar sesión</a></li>
                     </ul>
                 </div>

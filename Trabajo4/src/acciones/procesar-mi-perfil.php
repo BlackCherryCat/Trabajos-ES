@@ -13,21 +13,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['profesor']['Nombre'] = $nombre;
     if (empty($nombre)) {
         $_SESSION['error_general'] = "El nombre no puede estar vacío.";
-        header("Location: ../editar-profesor.php?id=$idProfesor");
+        header("Location: ../mi-perfil.php");
         exit();
     }
     
     $apellidos = htmlspecialchars(trim($_POST['apellidos']), ENT_QUOTES, 'UTF-8');
     if (empty($apellidos)) {
         $_SESSION['error_general'] = "Los apellidos no pueden estar vacíos.";
-        header("Location: ../editar-profesor.php?id=$idProfesor");
+        header("Location: ../mi-perfil.php");
         exit();
     }
     
     $email = filter_var(trim($_POST['email']), FILTER_VALIDATE_EMAIL);
     if (!$email) {
         $_SESSION['error_general'] = "El email no es válido.";
-        header("Location: ../editar-profesor.php?id=$idProfesor");
+        header("Location: ../mi-perfil.php");
         exit();
     }
 
@@ -61,8 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Actualización de los datos del profesor
     try {
         actualizarProfesor($db, $idProfesor, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL);
+        $_SESSION['profesor']['ImgPerfilURL'] = $imgPerfilURL;
         $_SESSION['correcto'] = "Perfil cambiado con exito. Vuelva a loguearse para ver los cambios aplicados.";
-        header("Location: ../login.php");
+        header("Location: ../mi-perfil.php");
         exit();
     } catch (Exception $e) {
         $_SESSION['error_general'] = "Error al actualizar el profesor.";

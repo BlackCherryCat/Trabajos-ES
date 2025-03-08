@@ -213,7 +213,6 @@ function subirImagen($fichero)
     } elseif ($sizeFich > $maxSize) {
         $_SESSION['error_general'] = "Error: El archivo es demasiado grande (máximo: 1 MB).";
     } elseif (move_uploaded_file($tempFich, $rutaDestino)) {
-        $_SESSION['profesor']['ImgPerfilURL'] = $rutaDestino;
         return $nombreUnico;
     } else {
         $_SESSION['error_general'] = "Error: No se pudo subir el archivo.";
