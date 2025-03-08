@@ -194,8 +194,8 @@ function subirImagen($fichero)
     $sizeFich = $fichero["size"];     // Tamaño
     $tipoFich = $fichero["type"];     // Tipo MIME
 
-    // Comprobar que el tamaño no exceda los 1 MB
-    $maxSize = 2 * 1024 * 1024; // 1 MB en bytes
+    // Comprobar que el tamaño no exceda los 2 MB
+    $maxSize = 2 * 1024 * 1024; // 2 MB en bytes
 
     // Mover el archivo subido a la carpeta del servidor "subidasFile"
     // Mostrar el archivo subido
