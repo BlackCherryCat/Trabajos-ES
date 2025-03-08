@@ -96,7 +96,7 @@ function actualizarProfesor($conexion, $idProfesor, $nombre, $apellidos, $email,
         $actualizacion = mysqli_query($conexion, $consulta);
 
         if ($actualizacion) {
-            $_SESSION['correcto'] = "Profesor actualizado con éxito";
+            $_SESSION['correcto'] = "Profesor actualizado con éxito.";
         } else {
             $_SESSION['error_general'] = "Error al actualizar el profesor.";
         }
@@ -141,7 +141,7 @@ function borrarProfesor($conexion, $idProfesor)
     $borrar = mysqli_query($conexion, $consulta);
 
     if ($borrar && mysqli_affected_rows($conexion) == 1) {
-        $_SESSION['correcto'] = "Profesor borrado con éxito";
+        $_SESSION['correcto'] = "Profesor borrado con éxito.";
     } else {
         $_SESSION['error_general'] = "El profesor con ID $idProfesor no existe o no pudo ser borrado.";
     }
@@ -179,7 +179,7 @@ function crearProfesor($conexion, $nombre, $apellidos, $email, $passwd, $esAdmin
     $insertar = mysqli_query($conexion, $consulta);
 
     if ($insertar) {
-        $_SESSION['correcto'] = "Profesor creado con éxito";
+        $_SESSION['correcto'] = "Profesor creado con éxito.";
     }
 }
 

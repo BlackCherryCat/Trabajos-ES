@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         actualizarProfesor($db, $idProfesor, $nombre, $apellidos, $email, $passwd, $esAdmin, $esAlta, $imgPerfilURL);
         if($idProfesor == $_SESSION['profesor']['IdProfesor']){
             $_SESSION['profesor']['ImgPerfilURL'] = $imgPerfilURL;
-            $_SESSION['correcto'] = "Perfil cambiado con exito. Vuelva a loguearse para ver los cambios aplicados.";
+            $_SESSION['correcto'] = "Perfil cambiado con exito.";
             header("Location: ../profesores.php");
             exit();
         }

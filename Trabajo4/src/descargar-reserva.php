@@ -8,6 +8,5 @@ if (isset($_GET['id']) && isset($_GET['op'])) {
     descargarPDF($op, $db, $reserva_id);
 }
 
-
 header('Location: mis-reservas.php');
 exit();
