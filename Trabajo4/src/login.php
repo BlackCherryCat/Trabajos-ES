@@ -29,6 +29,12 @@
                 echo "<p class='error'>".$_SESSION['error_login']."</p>";
                 unset($_SESSION['error_login']);
             }
+
+            if (isset($_SESSION['correcto']) && !empty($_SESSION['correcto'])) {
+                echo "<p class='correcto'>" .$_SESSION['correcto']."</p>";
+                unset($_SESSION['correcto']);
+            }
+            
             ?>
         </form>
     </div>
