@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } catch (Exception $e) {
         $_SESSION['error_general'] = "Error al actualizar el profesor.";
-        header("Location: ../profesores.php");
+        header("Location: ../mi-perfil.php");
         exit();
     }
 }
